@@ -1,0 +1,12 @@
+node_modules
+.DS_Store
+.idea
+dist
+dist-ssr
+*.local
+.nyc_output
+.eslintcache
+
+coverage
+cypress/screenshots
+cypress/videos
