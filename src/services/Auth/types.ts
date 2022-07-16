@@ -1,18 +1,3 @@
-export interface ApiResult<Data> {
-	config: { [key: string]: any }
-	data: Data | { [key: string]: any } | any[]
-	headers: { [key: string]: any }
-	request: XMLHttpRequest
-	status: number
-	statusText: string
-}
-
-export interface ApiError {
-	success: boolean;
-	message: string;
-	data: { [key: string]: any } | any[];
-}
-
 export interface RegisterResult {
 	token: {
 		tokenType: string

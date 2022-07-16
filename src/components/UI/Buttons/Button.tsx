@@ -21,12 +21,12 @@ const darkStyle = `dark:text-gray-200
 
 const Button = (props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) => {
 	const {children, className} = props
-	
+
 	return (
-		<button{...props}
-		       className={`${style} ${lightStyle} ${darkStyle} ${clsx(className)}`}
-		       type="button">
-			
+		<button type="button"
+		        {...props}
+		       className={`${style} ${lightStyle} ${darkStyle} ${clsx(className)}`}>
+
 			{children}
 		</button>
 	)

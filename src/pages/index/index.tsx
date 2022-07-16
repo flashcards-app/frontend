@@ -1,24 +1,28 @@
-import {useFormik} from "formik";
-import * as Yup from "yup";
-import TextArea from "../../components/UI/Form/TextArea";
-import {questionsEndpoint} from "../../services";
-import Button from "../../components/UI/Buttons/Button";
+import { useFormik } from "formik"
+import * as Yup from "yup"
+import TextArea from "../../components/UI/Form/TextArea"
+import { questionsEndpoint } from "../../services"
+import Button from "../../components/UI/Buttons/Button"
+import Question from "../../modules/Entities/Question"
+
 
 export default () => {
 	const formik = useFormik({
-		initialValues: {
+		initialValues:    {
 			question: '',
-			answer: ''
+			answer:   ''
 		},
 		validationSchema: Yup.object({
 			question: Yup.string().required('יש להזין שאלה'),
-			answer: Yup.string().required('יש להזין תשובה')
+			answer:   Yup.string().required('יש להזין תשובה')
 		}),
 		validateOnChange: false,
-		validateOnBlur: false,
-		onSubmit: async (values) => {
-			const {question, answer} = values
-			await questionsEndpoint.create(question, answer)
+		validateOnBlur:   false,
+		onSubmit:         async (values) => {
+			const { question, answer } = values
+			const questionObject       = new Question({ question, answer })
+			await questionsEndpoint.create(questionObject)
+			formik.handleReset
 		}
 	})
 
@@ -33,7 +37,7 @@ export default () => {
 						שאלה
 					</label>
 					<TextArea
-						id='question'
+						id="question"
 						placeholder={'שאלה'}
 						value={formik.values.question}
 						onChange={formik.handleChange}
@@ -46,7 +50,7 @@ export default () => {
 						תשובה
 					</label>
 					<TextArea
-						id='answer'
+						id="answer"
 						placeholder={'תשובה'}
 						value={formik.values.answer}
 						onChange={formik.handleChange}
@@ -56,7 +60,7 @@ export default () => {
 				</section>
 
 				<div className="flex justify-center">
-					<Button className="" type="submit">
+					<Button type="submit">
 						שמירה
 					</Button>
 				</div>

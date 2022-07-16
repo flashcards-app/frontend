@@ -1,8 +1,18 @@
-class Question {
+import Entity from "./Entity"
+
+
+export interface QuestionProps {
+	isDeleted?: boolean
 	question: string
 	answer: string
-	
-	constructor(data: Question) {
+}
+
+class Question extends Entity {
+	question: string
+	answer: string
+
+	constructor(data: QuestionProps) {
+		super(data)
 		this.question = data.question
 		this.answer = data.answer
 	}
