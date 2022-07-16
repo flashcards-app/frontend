@@ -1,15 +1,5 @@
 # Documentation
 
-[![Viterect](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/rtddw4&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/rtddw4/runs)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![license](https://img.shields.io/badge/license-MIT-green.svg)]()
-
-## Description
-
-This is a boilerplate/template I built from scratch with a lot of usefull tools configured and ready to use. <br/>
-So if you wanna start a new project and don't want to waste time on configuration and figure out how to set it all up, <br/>
-just clone and start to code! 😉
-
 ## Features
 
 - ![Alt text](https://api.iconify.design/vscode-icons:file-type-light-pnpm.svg) [pnpm](https://pnpm.io/)
@@ -44,32 +34,16 @@ just clone and start to code! 😉
 
 ## Getting Started
 
-> Viterect requires Node >= 14
+> requires Node >= 14
 
-[Create a repo from this template on GitHub](https://github.com/refaelbenzvi24/viterect/generate).
-
-or
-
-clone the repo `git clone git@github.com:Refaelbenzvi24/Viterect.git my-viterect-app`
-\ `npx degit refaelbenzvi24/viterect my-viterect-app`ג
+clone the repo `git clone git@github.com:Refaelbenzvi24/anki-frontend.git anki-frontend`
 
 then
 
 ```bash
-cd my-viterect-app
+cd anki-frontend
 pnpm i # If you don't have pnpm installed, run: npm install -g pnpm
 ```
-
-### Before you start coding
-
-When you use this template, try follow the checklist to update your info properly
-
-- [ ] Modify or delete the `LICENSE` file.
-- [ ] Change `VITE_APP_NAME` in the `.env` file.
-- [ ] Change the favicon in `public`
-- [ ] If you don't plan to use GitHub Actions, delete the .github directory.
-- [ ] Clean up the READMEs and remove routes
-- [ ] Change the name field in package.json.
 
 And, enjoy :)
 
