@@ -1,7 +1,7 @@
 import type { ReactElementProps } from 'types'
 import i18n from 'i18next'
 import {
-	CSSProperties, useContext, useEffect, useState,
+	CSSProperties, useContext, useEffect, useRef, useState,
 } from 'react'
 import { MainContext } from './MainContext'
 import WindowVars from '../../../hooks/WindowVars'
@@ -12,11 +12,12 @@ import clsx from 'clsx'
 const Main = (props: ReactElementProps) => {
 	const {
 		      sideBarState: sideBar,
+		      setSideBarState,
 		      sideBarOpts,
 		      overlayState,
 		      setOverlayState,
-		      overlays,
 	      }                         = useContext(MainContext)
+	const overlaysRoot              = document.getElementById('portals-root')
 	const [mainStyle, setMainStyle] = useState<CSSProperties>({})
 	const { windowWidth }           = WindowVars()
 
@@ -26,18 +27,13 @@ const Main = (props: ReactElementProps) => {
 	const dir = i18n.dir()
 
 	useEffect(() => {
-		if (overlays.length > 0) {
+		if (overlaysRoot?.childNodes && overlaysRoot?.childNodes.length > 0) {
 			setOverlayState(true)
-		} else if (overlays.length === 0) {
+		} else if (overlaysRoot?.childNodes.length === 0) {
 			setOverlayState(false)
 		}
-	}, [overlays])
+	}, [])
 
-	const overlayToggle = () => {
-		if (overlays.length > 0) {
-			overlays[overlays.length - 1].onClick()
-		}
-	}
 
 	useEffect(() => {
 		if (shrinkPoint && sideBar && windowWidth > shrinkPoint) {
@@ -55,16 +51,22 @@ const Main = (props: ReactElementProps) => {
 		}
 	}, [sideBar, dir])
 
+	const overlayAction = () => {
+		if (sideBar) {
+			setSideBarState(false)
+			if (overlaysRoot?.childNodes.length === 0) setOverlayState(false)
+		}
+	}
+
 	return (
 		<MainProvider>
-			<div {...props} id="main" className={`h-full ${clsx(className)}`} style={mainStyle}>
+			<div {...props} id="main" className={`h-full transition-all ease-out-in duration- ${clsx(className)}`} style={mainStyle}>
 
-				<div id="overlay"
+				<div id="overlay-background"
 				     role="presentation"
+				     onClick={overlayAction}
 				     className={`opacity transition-opacity ease-out-in duration-400 dark:bg-dark-800
-		                    ${overlayState ? 'fixed h-full w-full bg-dark-200 opacity-40 z-20' : 'opacity-0'}`}
-				     onClick={overlayToggle}/>
-
+		                    ${overlayState ? 'fixed h-full w-full bg-dark-200 opacity-40 z-20' : 'opacity-0'}`}/>
 				{children}
 			</div>
 		</MainProvider>

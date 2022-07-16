@@ -1,5 +1,4 @@
 import { useContext } from 'react'
-import Overlay from '../Overlay/Overlay'
 import type { ReactElementProps } from '../../../types'
 import { defaultMainData, MainContext } from '../Main/MainContext'
 import windowVariables from '../../../hooks/WindowVars'
@@ -11,7 +10,6 @@ const { shrinkPoint: defaultShrinkPoint }    = defaultSideBarOptions
 const SideBarLink = (props: ReactElementProps) => {
 	const { children, ...restProps } = props
 
-	const { removeOverlay }                              = Overlay()
 	const { sideBarState, sideBarOpts, setSideBarState } = useContext(MainContext)
 
 	const { windowWidth } = windowVariables()
@@ -21,7 +19,6 @@ const SideBarLink = (props: ReactElementProps) => {
 	const action = () => {
 		if (sideBarState && shrinkPoint && shrinkPoint > windowWidth) {
 			setSideBarState(false)
-			removeOverlay()
 		}
 	}
 

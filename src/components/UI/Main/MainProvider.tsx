@@ -3,19 +3,19 @@ import type { ReactElement } from 'react'
 import { defaultMainData, MainContext } from './MainContext'
 import type { MainProviderOptions } from './types'
 
+const {
+	      sideBarState: defaultSideBarState,
+	      sideBarOpts:  defaultSideBarOptions,
+	      overlayState: defaultOverlayState,
+      } = defaultMainData
+
 
 const MainProvider = (props: MainProviderOptions): ReactElement => {
-	const {
-		      sideBarState: defaultSideBarState,
-		      sideBarOpts:  defaultSideBarOptions,
-		      overlayState: defaultOverlayState,
-		      overlays:     defaultOverlays,
-	      } = defaultMainData
+
 
 	const { children } = props
 
 	const [sideBarState, setSideBarState]     = useState(defaultSideBarState)
-	const [overlays, setOverlays]             = useState(defaultOverlays)
 	const [overlayState, setOverlayState]     = useState(defaultOverlayState)
 	const [sideBarOptions, setSideBarOptions] = useState(defaultSideBarOptions)
 
@@ -29,9 +29,7 @@ const MainProvider = (props: MainProviderOptions): ReactElement => {
 				sideBarOpts:    sideBarOptions,
 				setSideBarOpts: setSideBarOptions,
 				overlayState,
-				setOverlayState,
-				overlays,
-				setOverlays,
+				setOverlayState
 			}
 		}>
 			{children}

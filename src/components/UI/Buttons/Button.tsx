@@ -16,7 +16,7 @@ const darkStyle = `dark:text-gray-200
 									dark:hover:text-white
 									dark:hover:bg-dark-200
 									dark:active:bg-dark-100
-									dark:bg-transparent `
+									dark:bg-transparent`
 
 
 const Button = (props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) => {

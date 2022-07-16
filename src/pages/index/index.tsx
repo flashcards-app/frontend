@@ -21,7 +21,7 @@ export default () => {
 			await questionsEndpoint.create(question, answer)
 		}
 	})
-	
+
 	return (
 		<div className="h-full w-full mx-auto px-50 pt-40">
 			<form onSubmit={(event) => {
@@ -40,6 +40,7 @@ export default () => {
 						onBlur={() => formik.validateField('question')}
 						error={formik.errors.question}/>
 				</section>
+
 				<section>
 					<label>
 						תשובה
@@ -51,9 +52,9 @@ export default () => {
 						onChange={formik.handleChange}
 						onBlur={() => formik.validateField('answer')}
 						error={formik.errors.answer}/>
-				
+
 				</section>
-				
+
 				<div className="flex justify-center">
 					<Button className="" type="submit">
 						שמירה

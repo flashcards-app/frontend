@@ -5,7 +5,6 @@ import IconButton from '../Buttons/IconButton'
 import { CSSProperties, useContext, useEffect } from 'react'
 import { defaultMainData, MainContext } from '../Main/MainContext'
 import windowVariables from '../../../hooks/WindowVars'
-import Overlay from '../Overlay/Overlay'
 import clsx from 'clsx'
 
 
@@ -28,11 +27,8 @@ const defaultProps = { width: defaultWidth, shrinkPoint: defaultShrinkPoint }
  */
 const SideBar = (props: SideBarProps = defaultProps) => {
 	const dir             = i18n.dir()
-	const {
-		      addOverlay,
-		      removeOverlay,
-	      }               = Overlay()
 	const { windowWidth } = windowVariables()
+	const overlayEl       = document.getElementById('[portals-root')
 
 	const {
 		      children,
@@ -50,7 +46,8 @@ const SideBar = (props: SideBarProps = defaultProps) => {
 		      sideBarState:    state,
 		      setSideBarState: setState,
 		      setSideBarOpts,
-		      overlays,
+		      overlayState,
+		      setOverlayState
 	      } = useContext(MainContext)
 
 	const setOpenState = (state: boolean) => {
@@ -58,14 +55,9 @@ const SideBar = (props: SideBarProps = defaultProps) => {
 
 		if (shrinkPoint && windowWidth < shrinkPoint) {
 			if (state) {
-				addOverlay({
-					onClick: () => {
-						setOpenState(false)
-						removeOverlay()
-					},
-				})
-			} else if (overlays.length > 0) {
-				removeOverlay()
+				setOverlayState(true)
+			} else if (overlayEl?.childNodes && overlayEl?.childNodes.length === 0) {
+				setOverlayState(false)
 			}
 		}
 	}
@@ -96,8 +88,7 @@ const SideBar = (props: SideBarProps = defaultProps) => {
 				className={`fixed h-full overflow-x-hidden text-gray-700 bg-white dark:bg-dark-500
                               ${state ? 'translate-x-0' : ((dir === 'ltr' ? '-translate-x-full' : 'translate-x-full'))} transform z-30 shadow-lg
                               transition-transform ease-in-out duration-400 ${clsx(className)}`}
-				style={style}
-			>
+				style={style}>
 				<nav className="h-full">
 					{children}
 				</nav>
