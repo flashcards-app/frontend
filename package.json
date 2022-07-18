@@ -1,5 +1,5 @@
 {
-	"name": "anki-frontend",
+	"name": "flashcards-app-frontend",
 	"version": "1.0.0",
 	"description": "",
 	"main": "./dist/main.tsx",
@@ -172,13 +172,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/Refaelbenzvi24/Viterect-vite-react-boilerplate.git"
+		"url": "git+https://github.com/flashcards-app/frontend.git"
 	},
 	"keywords": [],
 	"bugs": {
-		"url": "https://github.com/Refaelbenzvi24/anki-frontend/issues"
+		"url": "https://github.com/flashcards-app/frontend/issues"
 	},
-	"homepage": "https://github.com/Refaelbenzvi24/anki-frontend/#readme",
+	"homepage": "https://github.com/flashcards-app/frontend/#readme",
 	"msw": {
 		"workerDirectory": "public"
 	}
