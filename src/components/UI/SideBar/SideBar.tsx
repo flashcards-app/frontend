@@ -2,10 +2,11 @@ import type { ReactElementProps } from 'types'
 import i18n from 'i18next'
 import Col from '../Grid/Col'
 import IconButton from '../Buttons/IconButton'
-import { CSSProperties, useContext, useEffect } from 'react'
-import { defaultMainData, MainContext } from '../Main/MainContext'
+import { CSSProperties, useEffect } from 'react'
+import { defaultMainData } from '../Main/MainContext'
 import windowVariables from '../../../hooks/WindowVars'
 import clsx from 'clsx'
+import { useMain } from "../../../context"
 
 
 interface SideBarProps extends ReactElementProps {
@@ -48,7 +49,7 @@ const SideBar = (props: SideBarProps = defaultProps) => {
 		      setSideBarOpts,
 		      overlayState,
 		      setOverlayState
-	      } = useContext(MainContext)
+	      } = useMain()
 
 	const setOpenState = (state: boolean) => {
 		setState(state)

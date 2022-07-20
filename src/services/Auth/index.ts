@@ -37,7 +37,7 @@ export default class Auth extends ApiUrlService {
 
 			await http.post(`${this.endpoint}/logout`, { email, refreshToken }, await TokenStorage.getAuthentication())
 
-			User.clearUserData()
+			TokenStorage.clearUserData()
 		} catch (error) {
 			throw ApiError.handleError(error)
 		}
