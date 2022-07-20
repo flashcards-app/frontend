@@ -7,10 +7,11 @@ import TextField from "../components/UI/Form/TextField"
 import { useEffect } from "react"
 import { TokenStorage } from "../modules/TokenStorage"
 import Button from "../components/UI/Buttons/Button"
+import ApiError from "../modules/ApiError"
 
 
 export default () => {
-	const navigate               = useNavigate()
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		if (TokenStorage.isAuthenticated()) {
@@ -39,21 +40,23 @@ export default () => {
 				TokenStorage.storeUserData(result.data)
 				navigate('/')
 			} catch (error) {
-				console.log(error)
-				//TODO: handle error
+				if (error instanceof ApiError) {
+					// display error message
+				}
 			}
 		}
 	})
 
 	return (
 		<Row className="w-full h-full justify-center">
-			<Col className="my-auto min-w-70">
+			<Col className="my-auto min-w-75">
 				<form onSubmit={formik.handleSubmit}>
 					<TextField id="email"
 					           className="p-1 pt-4"
 					           placeholder={"כתובת מייל"}
 					           value={formik.values.email}
 					           onChange={formik.handleChange}
+					           onInput={() => !formik.isValid && formik.validateField('email')}
 					           onBlur={() => formik.validateField('email')}
 					           error={formik.errors.email}/>
 
@@ -62,12 +65,13 @@ export default () => {
 					           placeholder={"סיסמא"}
 					           value={formik.values.password}
 					           onChange={formik.handleChange}
+					           onInput={() => !formik.isValid && formik.validateField('password')}
 					           onBlur={() => formik.validateField('password')}
 					           error={formik.errors.password}
 					           type="password"/>
 
 					<div className="w-full flex justify-center pt-2">
-						<Button className="w-40 h-10"
+						<Button className="w-60 h-10"
 						        disabled={!formik.isValid}
 						        type="submit">
 							התחברות
@@ -77,7 +81,7 @@ export default () => {
 
 				<div className="place-self-center pt-1 text-gray-400">
 					עדיין אין לך משתמש?
-					<Link className="text-blue-500 cursor-pointer active:text-blue-400" to="/register"> להרשמה</Link>
+					<Link className="text-blue-500 cursor-pointer active:text-blue-400" to="/register"> הרשם</Link>
 				</div>
 			</Col>
 		</Row>

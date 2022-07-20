@@ -31,9 +31,9 @@ export class TokenStorage {
 		return {'Authorization': 'Bearer ' + await this.getToken()}
 	}
 
-	static async checkForToken() {
+	static async getNew () {
 		if (TokenStorage.getRefreshToken()) {
-			await authEndpoint.refreshToken()
+			return await authEndpoint.refreshToken()
 		}
 	}
 

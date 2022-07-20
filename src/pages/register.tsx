@@ -8,12 +8,11 @@ import TextField from "../components/UI/Form/TextField"
 import { TokenStorage } from "../modules/TokenStorage"
 import { useEffect, useState } from "react"
 import Button from "../components/UI/Buttons/Button"
-import { useAuth } from "../context"
 import ApiError from "../modules/ApiError"
 
 
 export default () => {
-	const navigate = useNavigate()
+	const navigate                      = useNavigate()
 	const [noSuchEmail, setNoSuchEmail] = useState(false)
 
 
@@ -72,36 +71,41 @@ export default () => {
 
 	return (
 		<Row className="w-full h-full justify-center">
-			<Col className="my-auto min-w-70">
+			<Col className="my-auto min-w-75">
 				<form onSubmit={formik.handleSubmit}>
+
+
 					<TextField placeholder={"כתובת מייל"}
-					           className="p-1 pt-4"
+					           className="pt-4"
 					           value={formik.values.email}
 					           id="email"
 					           onChange={formik.handleChange}
+					           onInput={() => !formik.isValid && formik.validateField('email')}
 					           onBlur={() => formik.validateField('email')}
 					           error={formik.errors.email}/>
 
 
 					<TextField placeholder={"שם משתמש"}
-					           className="p-1 pt-4"
+					           className="pt-4"
 					           id="username"
 					           value={formik.values.username}
 					           onChange={formik.handleChange}
+					           onInput={() => !formik.isValid && formik.validateField('username')}
 					           onBlur={() => formik.validateField('username')}
 					           error={formik.errors.username}/>
 
 					<TextField placeholder={"סיסמא"}
-					           className="p-1 pt-4"
+					           className="pt-4"
 					           id="password"
 					           value={formik.values.password}
 					           onChange={formik.handleChange}
+					           onInput={() => !formik.isValid && formik.validateField('password')}
 					           onBlur={() => formik.validateField('password')}
 					           type="password"
 					           error={formik.errors.password}/>
 
 					<div className="w-full flex justify-center pt-4">
-						<Button className="w-40 h-10" type="submit" disabled={!formik.isValid}>
+						<Button className="w-60 h-10" type="submit" disabled={!formik.isValid}>
 							הרשמה
 						</Button>
 					</div>
@@ -109,7 +113,7 @@ export default () => {
 
 				<div className="place-self-center pt-1 text-gray-400">
 					יש לך משתמש קיים?
-					<Link className="text-blue-500 cursor-pointer active:text-blue-400" to="/login"> להתחברות</Link>
+					<Link className="text-blue-500 cursor-pointer active:text-blue-400" to="/login"> התחבר</Link>
 				</div>
 			</Col>
 		</Row>
