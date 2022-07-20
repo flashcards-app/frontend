@@ -1,7 +1,7 @@
 # Documentation
 
 - [Our workflow](https://github.com/flashcards-app/backend/.github/docs/workflow.md#workflow)
-- [Features used in the project](https://github.com/Refaelbenzvi24/Viterect-vite-react-boilerplate/#features)
+- [Features used in the project](https://github.com/Refaelbenzvi24/Viterect-vite-react-boilerplate#features)
 
 ## Getting Started
 
