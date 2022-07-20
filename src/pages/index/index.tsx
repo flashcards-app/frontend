@@ -19,19 +19,18 @@ export default () => {
 		validateOnChange: false,
 		validateOnBlur:   false,
 		onSubmit:         async (values) => {
-			const { question, answer } = values
-			const questionObject       = new Question({ question, answer })
-			await questionsEndpoint.create(questionObject)
-			formik.handleReset
+			if (formik.isValid) {
+				const { question, answer } = values
+				const questionObject       = new Question({ question, answer })
+				await questionsEndpoint.create(questionObject)
+				formik.handleReset
+			}
 		}
 	})
 
 	return (
 		<div className="h-full w-full mx-auto px-50 pt-40">
-			<form onSubmit={(event) => {
-				event.preventDefault()
-				formik.handleSubmit()
-			}}>
+			<form onSubmit={formik.handleSubmit}>
 				<section>
 					<label>
 						שאלה
@@ -56,11 +55,10 @@ export default () => {
 						onChange={formik.handleChange}
 						onBlur={() => formik.validateField('answer')}
 						error={formik.errors.answer}/>
-
 				</section>
 
 				<div className="flex justify-center">
-					<Button type="submit">
+					<Button type="submit" disabled={!formik.isValid}>
 						שמירה
 					</Button>
 				</div>

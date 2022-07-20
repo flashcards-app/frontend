@@ -1,12 +1,12 @@
 import { useContext } from 'react'
-import { ThemeContext } from './ThemeContext'
 import Tooltip from '../Tooltip/Tooltip'
 import IconButton from '../Buttons/IconButton'
 import type { ReactElementProps } from 'types'
+import { useTheme } from "../../../context"
 
 
 const ThemeToggle = (props: ReactElementProps) => {
-	const { theme, setTheme } = useContext(ThemeContext)
+	const { theme, setTheme } = useTheme()
 	const { t }               = useTranslation()
 
 	const themeToggle = () => {

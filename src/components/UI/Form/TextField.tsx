@@ -34,7 +34,7 @@ const TextField = (props: TextFieldProps) => {
 				</Row>
 				<Row className="w-full min-h-[20px]">
 					<Col className="w-full">
-						<span className="text-sm text-[#ff6767] dark:text-[#ff5050]">{error}</span>
+						<span className="mx-1 mt-1 text-sm text-[#ff6767] dark:text-[#ff5050]">{error}</span>
 					</Col>
 				</Row>
 			</Col>

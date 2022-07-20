@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import SideBar from './UI/SideBar/SideBar'
 import LinkButton from './UI/Buttons/LinkButton'
@@ -10,10 +10,17 @@ import Tooltip from './UI/Tooltip/Tooltip'
 import Row from './UI/Grid/Row'
 import Col from './UI/Grid/Col'
 import SideBarLink from './UI/SideBar/SideBarLink'
+import { TokenStorage } from "../modules/TokenStorage"
 
 
 const sideBar = () => {
 	const { t } = useTranslation()
+	const navigate = useNavigate()
+
+	const signOut = () => {
+		TokenStorage.clearUserData()
+		navigate("/login")
+	}
 
 	return (
 		<div>
@@ -73,7 +80,9 @@ const sideBar = () => {
 
 							<LanguageSelector/>
 
-							<Tooltip className="bottom-[40px] right-[-60%]" tooltip={t('Logout')}>
+							<Tooltip className="bottom-[40px] right-[-60%]"
+							         onClick={signOut}
+							         tooltip={t('Logout')}>
 								<IconButton>
 									<IconMdiLogout/>
 								</IconButton>
