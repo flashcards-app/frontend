@@ -20,9 +20,7 @@ const IconButton = (props: IconButtonProps) => {
             active:text-gray-500
             dark:active:text-gray-300
             hover:opacity-100
-            active:opacity-70
-            "
-			>
+            active:opacity-70">
 				{props.children}
 			</div>
 		</div>

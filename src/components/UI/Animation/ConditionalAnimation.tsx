@@ -25,7 +25,7 @@ const ConditionalAnimation = (props: ConditionalAnimationProps): JSX.Element => 
 		}
 	}, [condition])
 
-	return render ? children : <div/>
+	return render ? children : <></>
 }
 
 export default ConditionalAnimation

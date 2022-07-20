@@ -18,15 +18,18 @@ const darkStyle = `dark:text-gray-200
 									dark:active:bg-dark-100
 									dark:bg-transparent`
 
+interface ButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
 
-const Button = (props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) => {
+}
+
+
+const Button = (props: ButtonProps) => {
 	const {children, className} = props
 
 	return (
 		<button type="button"
 		        {...props}
 		       className={`${style} ${lightStyle} ${darkStyle} ${clsx(className)}`}>
-
 			{children}
 		</button>
 	)

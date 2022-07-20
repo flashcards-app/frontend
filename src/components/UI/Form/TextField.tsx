@@ -1,5 +1,5 @@
 import {Col, Row} from "../Grid";
-import {DetailedHTMLProps, InputHTMLAttributes} from "react";
+import { DetailedHTMLProps, InputHTMLAttributes, useState } from "react"
 import clsx from "clsx";
 
 interface TextFieldProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
@@ -17,6 +17,8 @@ const styleDark = "dark:bg-dark-800 dark:border-dark-400 dark:focus:border-dark-
 
 const TextField = (props: TextFieldProps) => {
 	const {className, placeholder, onChange, value, error, ...restProps} = props;
+
+
 
 	return (
 		<Row className={`w-full ${clsx(className)}`}>
