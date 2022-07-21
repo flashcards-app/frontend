@@ -22,22 +22,24 @@ export default () => {
 		validateOnChange: false,
 		validateOnBlur: false,
 		onSubmit: async (values) => {
+			console.log('here')
 			const { question, answer, subject } = values
 			const questionObject = new Question({ question, answer, subject })
 			await questionsEndpoint.create(questionObject)
-			formik.handleReset()
+			formik.resetForm()
 		}
 	})
-
+	const options = ['React.js', 'Javascript', 'Angular']
 
 	return (
 		<div className="h-full w-full mx-auto px-50 pt-40">
 			<form onSubmit={formik.handleSubmit}>
 				<section>
 					<Select
+						dir="ltr"
 						label={'נושא'}
-						options={['React.js', 'Javascript', 'Angular']}
-						onSelect={(ev)=>formik.values.subject = ev}
+						options={options}
+						onChange={(ev) => formik.setFieldValue('subject', ev.target.value)}
 						id="subject"
 						onBlur={() => formik.validateField('subject')}
 						error={formik.errors.subject} />
