@@ -22,7 +22,6 @@ export default () => {
 		validateOnChange: false,
 		validateOnBlur: false,
 		onSubmit: async (values) => {
-			console.log('here')
 			const { question, answer, subject } = values
 			const questionObject = new Question({ question, answer, subject })
 			await questionsEndpoint.create(questionObject)
@@ -39,6 +38,8 @@ export default () => {
 						dir="ltr"
 						label={'נושא'}
 						options={options}
+						placeholder="בחר נושא"
+						defaultValue = {formik.values.subject}
 						onChange={(ev) => formik.setFieldValue('subject', ev.target.value)}
 						id="subject"
 						onBlur={() => formik.validateField('subject')}
