@@ -1,6 +1,7 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import TextArea from "../../components/UI/Form/TextArea"
+import Select from "../../components/UI/Form/Select"
 import { questionsEndpoint } from "../../services"
 import Button from "../../components/UI/Buttons/Button"
 import Question from "../../modules/Entities/Question"
@@ -8,29 +9,42 @@ import Question from "../../modules/Entities/Question"
 
 export default () => {
 	const formik = useFormik({
-		initialValues:    {
+		initialValues: {
+			subject: '',
 			question: '',
-			answer:   ''
+			answer: '',
 		},
 		validationSchema: Yup.object({
+			subject: Yup.string().required('יש להזין נושא'),
 			question: Yup.string().required('יש להזין שאלה'),
-			answer:   Yup.string().required('יש להזין תשובה')
+			answer: Yup.string().required('יש להזין תשובה'),
 		}),
 		validateOnChange: false,
-		validateOnBlur:   false,
-		onSubmit:         async (values) => {
-			if (formik.isValid) {
-				const { question, answer } = values
-				const questionObject       = new Question({ question, answer })
-				await questionsEndpoint.create(questionObject)
-				formik.handleReset
-			}
+		validateOnBlur: false,
+		onSubmit: async (values) => {
+			const { question, answer, subject } = values
+			const questionObject = new Question({ question, answer, subject })
+			await questionsEndpoint.create(questionObject)
+			formik.resetForm()
 		}
 	})
+	const options = ['React.js', 'Javascript', 'Angular']
 
 	return (
 		<div className="h-full w-full mx-auto px-50 pt-40">
 			<form onSubmit={formik.handleSubmit}>
+				<section>
+					<Select
+						dir="ltr"
+						label={'נושא'}
+						options={options}
+						placeholder="בחר נושא"
+						defaultValue = {formik.values.subject}
+						onChange={(ev) => formik.setFieldValue('subject', ev.target.value)}
+						id="subject"
+						onBlur={() => formik.validateField('subject')}
+						error={formik.errors.subject} />
+				</section>
 				<section>
 					<label>
 						שאלה
@@ -41,7 +55,7 @@ export default () => {
 						value={formik.values.question}
 						onChange={formik.handleChange}
 						onBlur={() => formik.validateField('question')}
-						error={formik.errors.question}/>
+						error={formik.errors.question} />
 				</section>
 
 				<section>

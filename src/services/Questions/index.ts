@@ -1,6 +1,6 @@
-import ApiUrlService, {ApiUrlServiceProps} from "../../modules/ApiUrlService";
-import {LoginResult} from "../Auth/types";
-import {ApiResult} from "../types";
+import ApiUrlService, { ApiUrlServiceProps } from "../../modules/ApiUrlService";
+import { LoginResult } from "../Auth/types";
+import { ApiResult } from "../types";
 import ApiError from "../../modules/ApiError"
 import Question from "../../modules/Entities/Question"
 import { TokenStorage } from "../../modules/TokenStorage"
