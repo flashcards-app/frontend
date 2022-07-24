@@ -68,12 +68,7 @@ export default () => {
 						value={formik.values.answer}
 						onChange={formik.handleChange}
 						onBlur={() => formik.validateField('answer')}
-<<<<<<< HEAD
 						error={formik.errors.answer}/>
-=======
-						error={formik.errors.answer} />
-
->>>>>>> a1ee624 (feat(questions page): created select menu for subject)
 				</section>
 
 				<div className="flex justify-center">
