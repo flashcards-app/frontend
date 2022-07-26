@@ -15,4 +15,12 @@ export default class Auth extends ApiUrlService {
 			throw ApiError.handleError(error)
 		}
 	}
+
+	async get(subject: string): Promise<ApiResult<LoginResult>> {
+		try {
+			return await http.get(`${this.endpoint}${this.buildUrlParams({subject})}`, await TokenStorage.getAuthentication())
+		} catch (error) {
+			throw ApiError.handleError(error)
+		}
+	}
 }
