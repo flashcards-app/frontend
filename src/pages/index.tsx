@@ -13,9 +13,9 @@ export default () => {
 	const navigate              = useNavigate()
 
 	useEffect(() => {
-		if (!TokenStorage.isAuthenticated()) {
-			navigate("/login")
-		}
+		// if (!TokenStorage.isAuthenticated()) {
+		// 	navigate("/login")
+		// }
 	}, [])
 
 	return (
