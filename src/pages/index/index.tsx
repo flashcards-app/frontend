@@ -21,12 +21,7 @@ export default () => {
 		}),
 		validateOnBlur:   false,
 		validateOnChange: false,
-<<<<<<< HEAD
 		onSubmit:         async (values) => {
-=======
-		validateOnBlur: false,
-		onSubmit: async (values) => {
->>>>>>> c283941 (feat(additional changes to select cmp): -added placeholder, defaultValue, and className props)
 			const { question, answer, subject } = values
 			const questionObject                = new Question({ question, answer, subject })
 			await questionsEndpoint.create(questionObject)
