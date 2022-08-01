@@ -2,7 +2,7 @@ import tw from 'twin.macro'
 import styled from "@emotion/styled"
 import theme from "../Utils/theme"
 import { css } from "@emotion/react"
-import { isDark } from "../index"
+import { isDark } from ".."
 import { HTMLMotionProps, motion } from "framer-motion"
 
 

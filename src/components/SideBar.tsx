@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 
 import SideBar from './UI/SideBar/SideBar'
-import LinkButton from './UI/Buttons/LinkButton'
 import LanguageSelector from './LanguageSelector'
 import ThemeToggle from './UI/Theme/ThemeToggle'
 import LongDivider from './UI/Dividers/LongDivider'
@@ -10,8 +9,8 @@ import Tooltip from './UI/Tooltip/Tooltip'
 import Row from './UI/Grid/Row'
 import Col from './UI/Grid/Col'
 import SideBarLink from './UI/SideBar/SideBarLink'
+import SideBarLinkWrapper from './UI/SideBar/SideBarLinkWrapper'
 import TokenStorage from "../modules/TokenStorage"
-import FavIcon from "*.svg"
 import { css } from "@emotion/css"
 import tw from "twin.macro"
 import { authEndpoint } from "../services"
@@ -38,25 +37,25 @@ const sideBar = () => {
 						</h3>
 					</Link>
 
-					<SideBarLink id="home-button">
-						<LinkButton to="/">{t('Home')}</LinkButton>
-					</SideBarLink>
+					<SideBarLinkWrapper id="home-button">
+						<SideBarLink to="/">{t('Home')}</SideBarLink>
+					</SideBarLinkWrapper>
 
-					<SideBarLink id="crypto-button">
-						<LinkButton to="/cryptocurrencies">{t('Cryptocurrencies')}</LinkButton>
-					</SideBarLink>
+					<SideBarLinkWrapper id="crypto-button">
+						<SideBarLink to="/cryptocurrencies">{t('Cryptocurrencies')}</SideBarLink>
+					</SideBarLinkWrapper>
 
-					<SideBarLink id="news-button">
-						<LinkButton to="/news">{t('News')}</LinkButton>
-					</SideBarLink>
+					<SideBarLinkWrapper id="news-button">
+						<SideBarLink to="/news">{t('News')}</SideBarLink>
+					</SideBarLinkWrapper>
 
-					<SideBarLink id="about-button">
-						<LinkButton to="/about">{t('About')}</LinkButton>
-					</SideBarLink>
+					<SideBarLinkWrapper id="about-button">
+						<SideBarLink to="/about">{t('About')}</SideBarLink>
+					</SideBarLinkWrapper>
 
-					<SideBarLink id="404-button">
-						<LinkButton to="/someNonExistingPage">{t('404')}</LinkButton>
-					</SideBarLink>
+					<SideBarLinkWrapper id="404-button">
+						<SideBarLink to="/someNonExistingPage">{t('404')}</SideBarLink>
+					</SideBarLinkWrapper>
 				</Col>
 
 				<Col>

@@ -9,7 +9,7 @@ import { LocalStorage } from 'modules/LocalStorage'
 export type Language = 'en' | 'he';
 
 const language = () => {
-	const lang = LocalStorage.getLanguage()
+	const lang = LocalStorage.getLanguage() as string | undefined
 
 	if (lang && !lang.includes('-')) return lang
 
@@ -19,39 +19,37 @@ const language = () => {
 }
 
 
-(async () => {
-	await i18n
-		.use(Backend)
-		.use(LanguageDetector)
-		.use(initReactI18next)
-		.init({
-			lng: language(),
-			fallbackLng: 'en',
-			returnEmptyString: false,
-			keySeparator: '.',
-			interpolation: {
-				escapeValue: false,
-				format: (value, format): string => {
-					if (value instanceof Date) {
-						return moment(value)
-							.format(format)
-					}
-					return value as string
-				},
+(async () => await i18n
+	.use(Backend)
+	.use(LanguageDetector)
+	.use(initReactI18next)
+	.init({
+		lng:               language(),
+		fallbackLng:       'en',
+		returnEmptyString: false,
+		keySeparator:      '.',
+		interpolation:     {
+			escapeValue: false,
+			format:      (value, format): string => {
+				if (value instanceof Date) {
+					return moment(value)
+						.format(format)
+				}
+				return value as string
 			},
-			react: {
-				useSuspense: true,
+		},
+		react:             {
+			useSuspense: true,
+		},
+		backend:           {
+			loadPath:       '/locales/{{lng}}/{{ns}}.yaml',
+			requestOptions: {
+				mode:        'cors',
+				credentials: 'same-origin',
+				cache:       'default',
 			},
-			backend: {
-				loadPath: '/locales/{{lng}}/{{ns}}.yaml',
-				requestOptions: {
-					mode: 'cors',
-					credentials: 'same-origin',
-					cache: 'default',
-				},
-			},
-		})
-})()
+		},
+	}))()
 
 export const i18nInstall = () => {
 	const { i18n } = useTranslation()

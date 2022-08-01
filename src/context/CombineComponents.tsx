@@ -1,5 +1,5 @@
 // combineComponents.tsx
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { ReactComponentProps } from "../types"
 
 

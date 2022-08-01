@@ -14,7 +14,7 @@ export default class Entity {
 	isDeleted: boolean
 
 	transformExclude(params: string[] = []) {
-		const transformedObject: { [key: string]: any } = this
+		const transformedObject: Record<string, any> = this
 
 		params.forEach((param) => delete transformedObject[param])
 

@@ -15,9 +15,7 @@ const QueryHandler = ({ children, status }: QueryHandlerProps) => {
 				<ProgressSpinner/>
 			)}
 
-			{status === 'error' && (
-				<>Error occurred while getting the data!</>
-			)}
+			{status === 'error' && 'Error occurred while getting the data!'}
 
 			{status === 'success' && (
 				children

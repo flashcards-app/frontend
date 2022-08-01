@@ -1,9 +1,7 @@
 import './404ServerSide.css'
-import { ReactDivProps } from '../../../types'
 import { useState, useEffect } from 'react'
 import clsx from 'clsx'
-import { HTMLMotionProps } from "framer-motion"
-import { motion } from "framer-motion"
+import { HTMLMotionProps, motion } from "framer-motion"
 
 
 const ServerError403Page = (props: HTMLMotionProps<"div">) => {
@@ -38,7 +36,8 @@ const ServerError403Page = (props: HTMLMotionProps<"div">) => {
 
 
 	return (
-		<motion.div {...props} className={`error-404-ss ${clsx(props.className)}`}
+		<motion.div {...props}
+			className={`error-404-ss ${clsx(props.className)}`}
 		            initial={{
 			            opacity: 0,
 		            }}

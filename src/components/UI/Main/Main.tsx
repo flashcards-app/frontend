@@ -12,7 +12,6 @@ import Backdrop from "../Backdrop"
 
 
 interface MainProps extends ReactDivProps {
-	disableAnimations?: boolean
 	dark?: boolean
 }
 
@@ -20,14 +19,14 @@ interface MainProps extends ReactDivProps {
 const Main = (props: MainProps) => {
 	const { sideBarState: sideBar, sideBarOpts, overlayState, setSideBarState, setOverlayState } = useMain()
 
-	const overlaysRoot    = document.getElementById('portals-root')
+	const overlaysRoot    = document.querySelector('#portals-root')
 	const { windowWidth } = WindowVars()
 
 	const { children, className, dark } = props
 	const { shrinkPoint }               = sideBarOpts
 
 	useEffect(() => {
-		if (overlaysRoot?.childNodes && overlaysRoot?.childNodes.length > 0) {
+		if (overlaysRoot?.childNodes && overlaysRoot.childNodes.length > 0) {
 			setOverlayState(true)
 		} else if (overlaysRoot?.childNodes.length === 0) {
 			setOverlayState(false)
@@ -53,7 +52,7 @@ const Main = (props: MainProps) => {
 				     ${tw`h-full`}
 				     ${[
 					     theme.transitions([marginTransition()]),
-					     theme.utils.conditionalMargins(shouldApplyMargins(), `${sideBarOpts.width as number}px`)
+					     theme.utils.conditionalMargins(shouldApplyMargins(), `${sideBarOpts.width as number}px`),
 				     ]}
 				     ${clsx(className)}
 			     `}>
@@ -70,6 +69,10 @@ const Main = (props: MainProps) => {
 			</div>
 		</MainProvider>
 	)
+}
+
+Main.defaultProps = {
+	dark:              undefined,
 }
 
 export default Main

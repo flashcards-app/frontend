@@ -1,18 +1,15 @@
 import "./500.css"
 import { useEffect } from "react"
 import { css } from "@emotion/css"
-import { ReactDivProps } from "../../../types"
 import tw from "twin.macro"
 import clsx from "clsx"
 import { HTMLMotionProps, motion } from "framer-motion"
 
+function randomIntFromInterval(min: number, max: number) {
+	return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
 const Error500Page = (props: HTMLMotionProps<"div">) => {
-	function randomIntFromInterval(min: number, max: number) {
-		return Math.floor(Math.random() * (max - min + 1) + min)
-	}
-
-
 	useEffect(() => {
 		const stackContainer = document.querySelector('.stack-container') as HTMLDivElement
 		const cardNodes      = document.querySelectorAll('.card-container') as unknown as HTMLDivElement[]
@@ -22,24 +19,23 @@ const Error500Page = (props: HTMLMotionProps<"div">) => {
 
 		let counter = stackContainer.children.length
 
-		card.addEventListener('animationend', function () {
-			perspecNodes.forEach(function (elem, index) {
+		card.addEventListener('animationend', () => {
+			perspecNodes.forEach((elem) => {
 				elem.classList.add('explode')
 			})
 		})
 
-		perspec.addEventListener('animationend', function (e) {
+		perspec.addEventListener('animationend', (e) => {
 			if (e.animationName === 'explode') {
-				cardNodes.forEach(function (elem, index) {
-
-					//add hover animation class
+				cardNodes.forEach((elem) => {
+					// add hover animation class
 					elem.classList.add('pokeup')
 
-					//add event listner to throw card on click
-					elem.addEventListener('click', function () {
-						let updown            = [800, -800]
-						let randomY           = updown[Math.floor(Math.random() * updown.length)]
-						let randomX           = Math.floor(Math.random() * 1000) - 1000
+					// add event listner to throw card on click
+					elem.addEventListener('click', () => {
+						const updown          = [800, -800]
+						const randomY         = updown[Math.floor(Math.random() * updown.length)]
+						const randomX         = Math.floor(Math.random() * 1000) - 1000
 						elem.style.transform  = `translate(${randomX}px, ${randomY}px) rotate(-540deg)`
 						elem.style.transition = "transform 1s ease, opacity 2s"
 						elem.style.opacity    = "0"
@@ -50,25 +46,25 @@ const Error500Page = (props: HTMLMotionProps<"div">) => {
 						}
 					})
 
-					//generate random number of lines of code between 4 and 10 and add to each card
-					let numLines = randomIntFromInterval(5, 10)
+					// generate random number of lines of code between 4 and 10 and add to each card
+					const numLines = randomIntFromInterval(5, 10)
 
-					//loop through the lines and add them to the DOM
+					// loop through the lines and add them to the DOM
 					for (let index = 0; index < numLines; index++) {
-						let lineLength = randomIntFromInterval(25, 97)
-						var node       = document.createElement("li")
-						node.classList.add('node-' + index)
+						const lineLength = randomIntFromInterval(25, 97)
+						const node       = document.createElement("li")
+						node.classList.add(`node-${index}`)
 						const codeEl = elem.querySelector('.code ul') as HTMLUListElement
-						codeEl.appendChild(node).setAttribute('style', '--linelength: ' + lineLength + '%;')
+						codeEl.appendChild(node).setAttribute('style', `--linelength: ${lineLength}%;`)
 
-						//draw lines of code 1 by 1
-						if (index == 0) {
-							const codeElNode = elem.querySelector('.code ul .node-' + index) as HTMLUListElement
+						// draw lines of code 1 by 1
+						if (index === 0) {
+							const codeElNode = elem.querySelector(`.code ul .node-${index}`) as HTMLUListElement
 							codeElNode.classList.add('writeLine')
 						} else {
-							const codeElNode = elem.querySelector('.code ul .node-' + (index - 1)) as HTMLUListElement
-							codeElNode.addEventListener('animationend', function (e) {
-								const codeElNode = elem.querySelector('.code ul .node-' + index) as HTMLUListElement
+							const codeElNode = elem.querySelector(`.code ul .node-${index - 1}`) as HTMLUListElement
+							codeElNode.addEventListener('animationend', () => {
+								const codeElNode = elem.querySelector(`.code ul .node-${index}`) as HTMLUListElement
 								codeElNode.classList.add('writeLine')
 							})
 						}
@@ -80,7 +76,10 @@ const Error500Page = (props: HTMLMotionProps<"div">) => {
 
 	return (
 		<motion.div {...props}
-		            className={`main-container ${css`${tw`flex xl:flex-row sm:flex-col xs:flex-col w-full h-full justify-around px-52`}`} ${clsx(props.className)}`}
+		            className={`
+		            main-container
+		            ${css`${tw`flex xl:flex-row sm:flex-col xs:flex-col w-full h-full justify-around px-52`}`}
+		             ${clsx(props.className)}`}
 		            initial={{
 			            opacity: 0,
 		            }}
@@ -96,8 +95,10 @@ const Error500Page = (props: HTMLMotionProps<"div">) => {
 			<div className="error_500">
 				<h1>500</h1>
 				<h2>Server error</h2>
-				<p>Ruh-roh, something just isn't right... Time to paw through your logs and get down and dirty in your
-					stack-trace;)</p>
+				<p>
+					Ruh-roh, something just isn&apos;t right... Time to paw through your logs and get down and dirty in your
+					stack-trace;)
+				</p>
 			</div>
 			<div className={`stack-container ${
 				css`
@@ -120,8 +121,7 @@ const Error500Page = (props: HTMLMotionProps<"div">) => {
 									<div className="green"/>
 								</div>
 								<div className="code">
-									<ul>
-									</ul>
+									<ul/>
 								</div>
 							</div>
 						</div>
@@ -143,8 +143,7 @@ const Error500Page = (props: HTMLMotionProps<"div">) => {
 									<div className="green"/>
 								</div>
 								<div className="code">
-									<ul>
-									</ul>
+									<ul/>
 								</div>
 							</div>
 						</div>
@@ -166,8 +165,7 @@ const Error500Page = (props: HTMLMotionProps<"div">) => {
 									<div className="green"/>
 								</div>
 								<div className="code">
-									<ul>
-									</ul>
+									<ul/>
 								</div>
 							</div>
 						</div>
@@ -189,8 +187,7 @@ const Error500Page = (props: HTMLMotionProps<"div">) => {
 									<div className="green"/>
 								</div>
 								<div className="code">
-									<ul>
-									</ul>
+									<ul/>
 								</div>
 							</div>
 						</div>
@@ -212,8 +209,7 @@ const Error500Page = (props: HTMLMotionProps<"div">) => {
 									<div className="green"/>
 								</div>
 								<div className="code">
-									<ul>
-									</ul>
+									<ul/>
 								</div>
 							</div>
 						</div>
@@ -235,8 +231,7 @@ const Error500Page = (props: HTMLMotionProps<"div">) => {
 									<div className="green"/>
 								</div>
 								<div className="code">
-									<ul>
-									</ul>
+									<ul/>
 								</div>
 							</div>
 						</div>

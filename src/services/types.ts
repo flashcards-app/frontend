@@ -1,12 +1,3 @@
-export interface ApiResult<Data> {
-	config: Record<string, any>
-	data: Data
-	headers: Record<string, any>
-	request: XMLHttpRequest
-	status: number
-	statusText: string
-}
-
 export interface ApiErrorData {
 	code: number
 	errors: ApiErrorsOptions

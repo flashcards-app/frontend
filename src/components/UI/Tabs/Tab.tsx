@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 
 
 const Tab = styled(motion.a)(() => [
-	tw`tab cursor-pointer z-[11] !bg-transparent`
+	tw`tab cursor-pointer z-[11] !bg-transparent`,
 ])
 
 export default Tab

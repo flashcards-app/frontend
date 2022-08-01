@@ -5,7 +5,7 @@ interface ConditionalAnimationProps {
 	children: ReactElement
 	instantEntrance?: boolean
 	condition: boolean;
-	timeout: number;
+	timeout?: number;
 }
 
 const ConditionalAnimation: FC<ConditionalAnimationProps> = (props) => {
@@ -16,7 +16,8 @@ const ConditionalAnimation: FC<ConditionalAnimationProps> = (props) => {
 	const renderController = () => {
 		if (condition) {
 			if (instantEntrance) {
-				return setRender(() => true)
+				setRender(() => true)
+				return
 			}
 
 			return setTimeout(() => {
@@ -38,7 +39,7 @@ const ConditionalAnimation: FC<ConditionalAnimationProps> = (props) => {
 
 ConditionalAnimation.defaultProps = {
 	instantEntrance: false,
-	timeout:         500
+	timeout:         500,
 }
 
 export default ConditionalAnimation
