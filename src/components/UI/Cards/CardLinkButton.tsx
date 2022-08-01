@@ -4,7 +4,7 @@ import tw from "twin.macro"
 import clsx from "clsx"
 import { motion } from "framer-motion"
 import i18n from "i18next"
-import { isDark } from "../index"
+import { isDark } from '..'
 import { css } from "@emotion/react"
 import theme from "../Utils/theme"
 
@@ -40,7 +40,7 @@ const CardLinkWrapper = styled(motion.div)(({ dir, dark }: { dir?: "ltr" | "rtl"
 			background-color: ${theme.colors.gray_600};
 			color: ${theme.colors.white};
 		}
-	`
+	`,
 ])
 
 interface CardLinkProps extends LinkProps {
@@ -57,6 +57,11 @@ const CardLinkButton = ({ children, className, to, dir, dark, ...restProps }: Ca
 			</Link>
 		</CardLinkWrapper>
 	)
+}
+
+CardLinkButton.defaultProps = {
+	dark: undefined,
+	dir: undefined,
 }
 
 export default CardLinkButton

@@ -1,9 +1,7 @@
-import type { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react'
 import styled from "@emotion/styled"
 import tw, { css } from "twin.macro"
 import theme from "../Utils/theme"
-import { isDark } from "../index"
-import { ButtonHTMLAttributes } from "react"
+import { isDark } from '..'
 import { HTMLMotionProps, motion } from "framer-motion"
 
 export interface IconButtonProps extends HTMLMotionProps<"button"> {
@@ -35,7 +33,7 @@ const IconButton = styled(motion.button)(({ dark }: IconButtonProps) => [
 		&:active {
 			color: ${theme.colors.gray_300};
 		}
-	`
+	`,
 ])
 
 

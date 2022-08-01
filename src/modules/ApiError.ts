@@ -1,12 +1,13 @@
 import { ApiErrorData, ApiErrorsOptions, ApiErrorObject } from "../services/types"
+import { AxiosError, AxiosRequestConfig, AxiosResponseHeaders } from "axios"
 
 
 export default class ApiError {
-	config: { [key: string]: any }
+	config: AxiosRequestConfig
 
 	data: ApiErrorData
 
-	headers: { [key: string]: any }
+	headers: AxiosResponseHeaders | Record<string, any>
 
 	request: XMLHttpRequest
 
@@ -24,9 +25,11 @@ export default class ApiError {
 		this.statusText = error.statusText
 	}
 
-	static handleError(error: any) {
-		if (error.response) return new ApiError(error.response as ApiError)
-
+	static handleError(error: any): ApiError | any {
+		if (error?.response) {
+			const axiosError = error as AxiosError<ApiErrorData>
+			return new ApiError(axiosError.response as ApiError)
+		}
 		return error
 	}
 

@@ -1,15 +1,9 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps, useContext } from 'react'
+import { useContext } from 'react'
 import { ThemeContext } from './ThemeContext'
-import Tooltip from '../Tooltip/Tooltip'
-import IconButton from '../Buttons/IconButton'
-import type { ReactDivProps } from 'types'
-import clsx from "clsx"
+import IconButton, { IconButtonProps } from '../Buttons/IconButton'
 
 
-
-
-const ThemeToggle = (props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) => {
-	const { className }       = props
+const ThemeToggle = (props: IconButtonProps) => {
 	const { theme, setTheme } = useContext(ThemeContext)
 
 	const themeToggle = () => {
@@ -17,9 +11,9 @@ const ThemeToggle = (props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonEle
 	}
 
 	return (
-			<IconButton {...props} id="theme-toggle-button" onClick={themeToggle}>
-				{theme === 'light' ? <IconCarbonLight/> : <IconCarbonMoon/>}
-			</IconButton>
+		<IconButton {...props} id="theme-toggle-button" onClick={themeToggle}>
+			{theme === 'light' ? <IconCarbonLight/> : <IconCarbonMoon/>}
+		</IconButton>
 	)
 }
 

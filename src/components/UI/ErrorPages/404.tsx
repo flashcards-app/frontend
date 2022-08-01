@@ -3,7 +3,6 @@ import planet from '../../../assets/planet.svg'
 import { Link } from 'react-router-dom'
 import { Vars } from '../../../modules/vars'
 import './404.css'
-import { ReactDivProps } from '../../../types'
 import clsx from 'clsx'
 import { HTMLMotionProps, motion } from "framer-motion"
 
@@ -13,7 +12,8 @@ const Error404Page = (props: HTMLMotionProps<"div">) => {
 
 
 	return (
-		<motion.div {...props} className={`permission_denied ${clsx(props.className)}`}
+		<motion.div {...props}
+			className={`permission_denied ${clsx(props.className)}`}
 		            dir="ltr"
 		            initial={{
 			            opacity: 0,

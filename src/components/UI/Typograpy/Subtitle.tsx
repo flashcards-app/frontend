@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 import tw, { css } from "twin.macro"
-import { isDark } from "../index"
+import { isDark } from '..'
 import theme from "../Utils/theme"
 import { motion } from "framer-motion"
 
@@ -14,7 +14,7 @@ const Subtitle = styled(motion.p)(({ dark }: { dark?: boolean }) => [
 
 	(dark || isDark()) && css`
 		color: ${theme.colors.gray_300};
-	`
+	`,
 ])
 
 export default Subtitle

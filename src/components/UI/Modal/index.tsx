@@ -19,7 +19,7 @@ const ModalWrapper = styled.div(({ centered }: ModalWrapperProps) => [
 		z-index: ${theme.zIndex.modal};
 	`,
 	centered && tw`flex justify-center items-center`,
-	tw`fixed h-full w-full`
+	tw`fixed h-full w-full`,
 ])
 
 interface ModalProps extends HTMLMotionProps<"div"> {
@@ -27,23 +27,23 @@ interface ModalProps extends HTMLMotionProps<"div"> {
 	width?: `${number}px` | `${number}%`
 	onBackdropClick?: () => void
 	centered?: boolean
-	shadow?: boolean
 }
 
 const Modal = (props: ModalProps) => {
-	const { children, className, centered, shadow, height, width, onBackdropClick, ...restProps } = props
+	const { children, className, centered, height, width, onBackdropClick, ...restProps } = props
 
 	return (
 		<Portal>
-			<ModalWrapper  {...{ centered }}>
+			<ModalWrapper {...{ centered }}>
 				<Backdrop onClick={onBackdropClick}
-				          active={true}/>
-				<Card {...restProps} className={`${css`${tw`relative`}`} ${clsx(className)}`}
+				          active/>
+				<Card {...restProps}
+				      className={`${css`${tw`relative`}`} ${clsx(className)}`}
 				      initial={{
 					      opacity: 0,
 				      }}
 				      transition={{
-					      duration: 0.4
+					      duration: 0.4,
 				      }}
 				      animate={{
 					      opacity: 1,
@@ -57,8 +57,10 @@ const Modal = (props: ModalProps) => {
 }
 
 Modal.defaultProps = {
-	height: "200px",
-	width:  "200px",
+	height:          "200px",
+	width:           "200px",
+	onBackdropClick: () => {},
+	centered:        false,
 }
 
 export default Modal

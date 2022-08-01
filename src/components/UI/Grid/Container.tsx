@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 
 
 const Container = styled(motion.div)(() => [
-	tw`flex mx-auto`
+	tw`flex mx-auto`,
 ])
 
 export default Container

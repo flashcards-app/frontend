@@ -46,7 +46,6 @@ export default () => {
 		onSubmit:         async (values) => {
 			try {
 				const { username, email, password } = values
-
 				const result = await authEndpoint.register(email, username, password)
 				TokenStorage.storeUserData(result.data)
 				navigate('/')

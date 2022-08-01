@@ -1,27 +1,26 @@
 import type { ReactElement } from 'react'
-import type { ReactDivProps } from 'types'
 import type { TFunctionResult } from 'i18next'
-import styled from "@emotion/styled"
 import tw from "twin.macro"
-import { isDark } from "../index"
+import { isDark } from '..'
 import theme from "../Utils/theme"
 import Portal from "../Portal"
 import { css } from "@emotion/css"
 import { useEffect, useRef, useState } from "react"
-import { motion } from "framer-motion"
+import { motion, HTMLMotionProps } from "framer-motion"
 
 
 const defaultProps = {
+	dark:      undefined,
 	placement: 'center-center',
 	offsetX:   15,
-	offsetY:   15
+	offsetY:   15,
 }
 
 const getCoords = (elem: Element) => {
 	const box = elem.getBoundingClientRect()
 
-	const body  = document.body
-	const docEl = document.documentElement
+	const { body } = document
+	const docEl    = document.documentElement
 
 	const scrollTop  = docEl.scrollTop || body.scrollTop
 	const scrollLeft = docEl.scrollLeft || body.scrollLeft
@@ -34,6 +33,8 @@ const getCoords = (elem: Element) => {
 
 	return { top: Math.round(top), left: Math.round(left) }
 }
+
+type Placement = `${'top' | 'bottom' | 'center'}-${'left' | 'right' | 'center'}`
 
 interface CalcPlacementProps {
 	placement: Placement
@@ -52,9 +53,10 @@ const calcPlacement = ({
 	tooltipWidth,
 	tooltipHeight,
 	offsetX,
-	offsetY
+	offsetY,
 }: CalcPlacementProps): { top: number, left: number } => {
-	let top            = 0, left = 0
+	let top
+	let left
 	const placementArr = placement.split('-')
 
 	switch (placementArr[0]) {
@@ -63,6 +65,9 @@ const calcPlacement = ({
 		break
 	case 'bottom':
 		top = (((elementHeight + tooltipHeight) / 2) + (offsetX))
+		break
+	default:
+		top = 0
 		break
 	}
 
@@ -73,30 +78,32 @@ const calcPlacement = ({
 	case 'right':
 		left = (((elementWidth + tooltipWidth) / 2) + (offsetY))
 		break
+	default:
+		left = 0
+		break
 	}
 
 	return { left, top }
 }
 
-type Placement = `${'top' | 'bottom' | 'center'}-${'left' | 'right' | 'center'}`
+interface TooltipProps extends HTMLMotionProps<"div"> {
+	dark?: boolean
+	children: ReactElement
+	tooltip: TFunctionResult | number | string
+	placement?: Placement
+	offsetX?: number
+	offsetY?: number
+}
 
-type TooltipProps = {
-	                    dark?: boolean
-	                    children: ReactElement
-	                    tooltip: TFunctionResult | number | string
-	                    placement?: Placement
-	                    offsetX?: number
-	                    offsetY?: number
-                    } & ReactDivProps & typeof defaultProps
+const Tooltip = (props: TooltipProps & typeof defaultProps) => {
+	const { children, tooltip, placement, className, offsetY, offsetX, ...restProps } = props
 
-const Tooltip = (props: TooltipProps) => {
-	const { children, tooltip, placement, className, offsetY, offsetX, ...rest } = props
-	const dark                                                                   = props.dark || isDark()
-	const [visible, setVisible]                                                  = useState(false)
-	const [top, setTop]                                                          = useState<number>()
-	const [left, setLeft]                                                        = useState<number>()
-	const elementWrapper                                                         = useRef<HTMLDivElement>(null)
-	const tooltipElement                                                         = useRef<HTMLDivElement>(null)
+	const dark                  = props.dark || isDark()
+	const [visible, setVisible] = useState(false)
+	const [top, setTop]         = useState<number>()
+	const [left, setLeft]       = useState<number>()
+	const elementWrapper        = useRef<HTMLDivElement>(null)
+	const tooltipElement        = useRef<HTMLDivElement>(null)
 
 
 	useEffect(() => {
@@ -111,7 +118,7 @@ const Tooltip = (props: TooltipProps) => {
 				tooltipWidth,
 				tooltipHeight,
 				offsetX,
-				offsetY
+				offsetY,
 			})
 
 
@@ -124,30 +131,33 @@ const Tooltip = (props: TooltipProps) => {
 		<>
 			<Portal>
 				{
-					visible &&
-					<motion.div ref={tooltipElement}
-					     className={css([
-						     tw`inline-block rounded shadow-2xl p-1`,
+					visible
+					&& (
+						<motion.div {...restProps}
+						            ref={tooltipElement}
+						            className={css([
+							            tw`inline-block rounded shadow-2xl p-1`,
 
-						     css`
-							     background-color: ${theme.colors.gray_100};
-							     color: ${theme.colors.blue_500};
-						     `,
+							            css`
+								            background-color: ${theme.colors.gray_100};
+								            color: ${theme.colors.blue_500};
+							            `,
 
-						     dark && css`
-							     color: ${theme.colors.white};
-							     background-color: ${theme.colors.dark_200};
-						     `,
+							            dark && css`
+								            color: ${theme.colors.white};
+								            background-color: ${theme.colors.dark_200};
+							            `,
 
-						     css`
-							     position: absolute;
-							     z-index: ${theme.zIndex.tooltip};
-							     top: ${top}px;
-							     left: ${left}px;
-						     `
-					     ])}>
-						{tooltip}
-					</motion.div>
+							            css`
+								            position: absolute;
+								            z-index: ${theme.zIndex.tooltip};
+								            top: ${top}px;
+								            left: ${left}px;
+							            `,
+						            ])}>
+							{tooltip}
+						</motion.div>
+					)
 				}
 			</Portal>
 			<div ref={elementWrapper}

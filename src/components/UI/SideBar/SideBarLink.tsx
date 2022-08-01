@@ -1,38 +1,38 @@
-import { defaultMainData } from '../Main/MainContext'
-import windowVariables from '../../../hooks/WindowVars'
-import { useMain } from "../../../context"
-import { HTMLMotionProps, motion } from "framer-motion"
+import type { LinkProps } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import i18n from 'i18next'
+import clsx from 'clsx'
+import styled from "@emotion/styled"
+import tw, { css } from "twin.macro"
+import { motion } from "framer-motion"
 
 
-const { sideBarOpts: defaultSideBarOptions } = defaultMainData
-const { shrinkPoint: defaultShrinkPoint }    = defaultSideBarOptions
-
-const SideBarLink = (props: HTMLMotionProps<"div">) => {
-	const { children, ...restProps } = props
-
-	const { sideBarState, sideBarOpts, setSideBarState, setOverlayState } = useMain()
-
-	const { windowWidth } = windowVariables()
-
-	const { shrinkPoint } = {
-		shrinkPoint: defaultShrinkPoint,
-		...sideBarOpts
-	}
-
-	const action = () => {
-		if (sideBarState && shrinkPoint && shrinkPoint > windowWidth) {
-			setSideBarState(false)
-			setOverlayState(false)
+const LinkWrapper = styled(motion.div)(({ dir }: { dir?: string }) => [
+	tw`px-6 cursor-pointer block text-sm font-semibold dark:text-white
+	dark:hover:(bg-gray-100/[0.1]) dark:focus:bg-gray-600 dark:focus:text-gray-100 dark:hover:text-gray-200
+	hover:text-gray-500 focus:text-gray-400 hover:(bg-gray-100/[0.1]) focus:bg-gray-200 focus:outline-none`,
+	
+	css`
+		.link-element {
+			${((dir || i18n.dir()) === 'ltr') && tw`hover:translate-x-2`}
+			${((dir || i18n.dir()) === 'rtl') && tw`hover:(-translate-x-2)`}
+			${tw`block px-4 py-2 mt-2 transform transition-transform ease-in duration-200 opacity-100`}
 		}
-	}
+	`,
+])
 
+const LinkButton = (props: LinkProps) => {
+	const { to, children, className, dir, ...rest } = props
+	const linkWrapperProps                          = { dir }
+	
 	return (
-		<motion.div {...restProps}
-		     role="presentation"
-		     onClick={action}>
-			{children}
-		</motion.div>
+		<LinkWrapper className={clsx(className)} {...linkWrapperProps}>
+			<Link className="link-element" {...rest} to={to}>
+				{children}
+			</Link>
+		</LinkWrapper>
 	)
 }
 
-export default SideBarLink
+export default LinkButton
+

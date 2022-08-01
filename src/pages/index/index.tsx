@@ -40,7 +40,6 @@ export default () => {
 		{ value: 'Javascript', label: 'Javascript' },
 		{ value: 'Angular', label: 'Angular' },
 	]
-
 	return (
 		<div className="h-full w-full mx-auto lg:px-[20%] sm:px-[50px] xs:px-[30px] pt-40">
 			<form onSubmit={formik.handleSubmit}>

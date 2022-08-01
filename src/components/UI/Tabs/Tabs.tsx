@@ -7,7 +7,7 @@ import { HTMLMotionProps, motion } from "framer-motion"
 
 
 const Tabs = (props: HTMLMotionProps<"div">) => {
-	const {className, children, ...restProps} = props
+	const { className, children, ...restProps } = props
 	const [tabsIndex, setTabsIndex] = useState<number | null>(1)
 	const [style, setStyle]         = useState<CSSProperties>({})
 	const tabsRef                   = useRef<HTMLDivElement>(null)

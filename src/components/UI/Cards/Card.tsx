@@ -1,7 +1,7 @@
 import styled from "@emotion/styled"
 import tw from "twin.macro"
 import { css } from "@emotion/react"
-import { isDark } from "../index"
+import { isDark } from '..'
 import theme from "../Utils/theme"
 import { HTMLMotionProps, motion } from "framer-motion"
 
@@ -22,13 +22,13 @@ const Card = styled(motion.div)(({ dark, height, width }: CardProps) => [
 	(dark || isDark()) && css`
 		background-color: ${theme.colors.dark_400};
 	`,
-	({ className }) => className
+	({ className }) => className,
 ])
 
 Card.defaultProps = {
 	dark: false,
 	height: "300px",
-	width: "200px"
+	width: "200px",
 }
 
 export default Card

@@ -19,11 +19,11 @@ const NumberTooltip = (props: NumberTooltipProps): JSX.Element => {
 		return (
 			<Tooltip placement={dir === "ltr" ? "center-right" : "center-left"}
 			         id={convertToElId(`${id}-tooltip`)}
-			         tooltip={
+			         tooltip={(
 				         <NumberFormat value={number}
 				                       displayType="text"
 				                       thousandSeparator/>
-			         }>
+			         )}>
 				<h2 className="text-4xl w-fit cursor-default" id={convertToElId(`${id}-number`)}>
 					{millify(number)}
 				</h2>

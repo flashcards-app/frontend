@@ -1,19 +1,18 @@
 import { useEffect, useRef, useState } from "react"
-import autoAnimate from "@formkit/auto-animate"
 import HelperText from "./HelperText"
 import theme from "../Utils/theme"
-import { isDark } from "../index"
+import { isDark } from '..'
 import Select, {
-	defaultTheme, ControlProps, components, DropdownIndicatorProps, SingleValueProps, ContainerProps, MenuProps, Props
+	defaultTheme, ControlProps, components, DropdownIndicatorProps, SingleValueProps, ContainerProps, MenuProps, Props,
 } from "react-select"
-import { css, cx } from "@emotion/css"
+import { css } from "@emotion/css"
 import { conditionalRotate } from "../Utils/utils"
 import { transformTransition } from "../Utils/transitions"
 import produce from "immer"
 import Label from "./Label"
 import tw from "twin.macro"
 import clsx from "clsx"
-import { FormikErrors, FormikTouched } from "formik"
+import { FormikErrors } from "formik"
 
 
 const DropdownIndicator = (props: DropdownIndicatorProps<any>) => {
@@ -23,11 +22,11 @@ const DropdownIndicator = (props: DropdownIndicatorProps<any>) => {
 		<components.DropdownIndicator {...props}>
 			<div className={css`
 				${[
-					theme.transitions([transformTransition('300ms')]),
-					theme.transforms([
-						conditionalRotate(isFocused, 180),
-					])
-				]}
+			theme.transitions([transformTransition('300ms')]),
+			theme.transforms([
+				conditionalRotate(isFocused, 180),
+			]),
+		]}
 			`}>
 				<IconIonChevronDown/>
 			</div>
@@ -65,7 +64,7 @@ const Control = (props: ControlProps<any>) => {
 				                    background-color: ${theme.colors.dark_800} !important;
 			                    `}
 		                    `}
-		                    theme={produce(props.theme, draft => {
+		                    theme={produce(props.theme, (draft) => {
 			                    draft.borderRadius     = 8
 			                    draft.colors.primary   = theme.colors.gray_300
 			                    draft.colors.neutral20 = theme.colors.gray_200
@@ -87,7 +86,7 @@ const SelectContainer = (props: ContainerProps) => {
 
 	return (
 		<components.SelectContainer {...restProps}
-		                            theme={produce(props.theme, draft => {
+		                            theme={produce(props.theme, (draft) => {
 			                            draft.colors.primary = theme.colors.gray_300
 		                            })}
 		                            className={css`
@@ -107,7 +106,7 @@ const Menu = (props: MenuProps) => {
 
 	return (
 		<components.Menu {...restProps}
-		                 theme={produce(props.theme, draft => {
+		                 theme={produce(props.theme, (draft) => {
 			                 draft.colors.primary25 = theme.colors.gray_200
 		                 })}
 		                 className={css`
@@ -124,9 +123,11 @@ const Menu = (props: MenuProps) => {
 
 interface SelectProps extends Omit<Props, 'isRtl' | 'onChange'> {
 	label?: string
-	touched?: FormikTouched<any> | boolean
 	persistentLabel?: boolean
 	dir?: "rtl" | "ltr"
+	disableLabel?: boolean
+	dark?: boolean
+	disableHelperText?: boolean
 	options: { label: string, value: string }[]
 	error?: boolean
 	onBlur?: () => void
@@ -135,7 +136,23 @@ interface SelectProps extends Omit<Props, 'isRtl' | 'onChange'> {
 }
 
 const SelectWithLabel = (props: SelectProps) => {
-	const { label, dir, className, placeholder, persistentLabel, onFocus, onBlur, onChange, touched, error, value, helperText, ...restProps } = props
+	const {
+		      label,
+		      dir,
+		      className,
+		      placeholder,
+		      persistentLabel,
+		      disableHelperText,
+		      disableLabel,
+		      onFocus,
+		      dark,
+		      onBlur,
+		      onChange,
+		      error,
+		      value,
+		      helperText,
+		      ...restProps
+	      } = props
 
 	const [isFocused, setIsFocused] = useState(false)
 	const wasFocused                = useRef(false)
@@ -143,8 +160,8 @@ const SelectWithLabel = (props: SelectProps) => {
 	const sectionRef                = useRef(null)
 
 	const blurController = () => {
-		if (!firstUpdate.current && wasFocused.current && !isFocused) {
-			onBlur && onBlur()
+		if (!firstUpdate.current && wasFocused.current && !isFocused && onBlur) {
+			onBlur()
 		}
 
 		if (!firstUpdate.current) {
@@ -160,39 +177,45 @@ const SelectWithLabel = (props: SelectProps) => {
 
 	return (
 		<section ref={sectionRef}>
-			{label && ((isFocused || !!value) || persistentLabel) && <Label
-				initial={{
-					opacity: 0,
-				}}
-				transition={{
-					duration: 0.2
-				}}
-				animate={{
-					opacity: 1,
-				}}
-				exit={{
-					opacity: 0,
-				}}>
-				{label}
-			</Label>}
+			{!disableLabel && (label && ((isFocused || !!value) || persistentLabel))
+				&& (
+					<Label
+						{...{ dir, dark }}
+						initial={{
+							opacity: 0,
+						}}
+						transition={{
+							duration: 0.2,
+						}}
+						animate={{
+							opacity: 1,
+						}}
+						exit={{
+							opacity: 0,
+						}}>
+						{label}
+					</Label>
+				)}
 			<div className={`${css`
-				${(label && ((isFocused || !!value) || persistentLabel)) ? tw`mt-0` : tw`mt-6`}
-				${helperText ? tw`mb-0` : tw`mb-6`}
+				${(!disableLabel && !!label && ((isFocused || !!value) || persistentLabel)) ? tw`mt-0` : tw`mt-6`}
+				${!disableHelperText && !!helperText ? tw`mb-0` : tw`mb-6`}
 			`} ${clsx(className)}`}>
 				<Select blurInputOnSelect
 				        {...restProps}
 				        isSearchable={false}
-				        placeholder={placeholder || !isFocused && (label)}
+				        placeholder={(placeholder || !isFocused) && (label)}
 				        onFocus={(event) => {
 					        setIsFocused(true)
-					        onFocus && onFocus(event)
+					        if (onFocus) {
+						        onFocus(event)
+					        }
 				        }}
 				        onBlur={() => {
 					        setIsFocused(false)
 				        }}
 				        onChange={(value) => !!onChange && onChange(value as { label: string, value: string })}
 				        isRtl={dir && dir === "rtl"}
-				        theme={produce(defaultTheme, draft => {
+				        theme={produce(defaultTheme, (draft) => {
 					        if (isDark()) {
 						        draft.colors.primary   = theme.colors.dark_400
 						        draft.colors.primary50 = theme.colors.dark_300
@@ -207,24 +230,39 @@ const SelectWithLabel = (props: SelectProps) => {
 					        Menu,
 				        }}/>
 			</div>
-			{helperText && <HelperText
-				initial={{
-					opacity: 0,
-				}}
-				transition={{
-					duration: 0.2
-				}}
-				animate={{
-					opacity: 1,
-				}}
-				exit={{
-					opacity: 0,
-				}}
-				{...{ error }}>
-				{helperText}
-			</HelperText>}
+			{!disableHelperText && helperText && (
+				<HelperText
+					initial={{
+						opacity: 0,
+					}}
+					transition={{
+						duration: 0.2,
+					}}
+					animate={{
+						opacity: 1,
+					}}
+					exit={{
+						opacity: 0,
+					}}
+					{...{ error }}>
+					{helperText}
+				</HelperText>
+			)}
 		</section>
 	)
+}
+
+SelectWithLabel.defaultProps = {
+	label:             undefined,
+	persistentLabel:   false,
+	dir:               undefined,
+	disableLabel:      false,
+	dark:              undefined,
+	disableHelperText: false,
+	error:             false,
+	onBlur:            () => {},
+	onChange:          () => {},
+	helperText:        undefined,
 }
 
 export default SelectWithLabel

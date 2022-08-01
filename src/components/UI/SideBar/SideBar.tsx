@@ -7,7 +7,7 @@ import { useMain } from "../../../context"
 import { css } from "@emotion/css"
 import tw from "twin.macro"
 import theme from "../Utils/theme"
-import { isDark } from "../index"
+import { isDark } from '..'
 import { transformTransition } from "../Utils/transitions"
 import { conditionalTranslate } from "../Utils/utils"
 
@@ -28,17 +28,15 @@ const SideBar = (props: SideBarProps) => {
 
 	const { dark, children, width, className, shrinkPoint, showButton, ...restProps } = props
 
-	const overlayEl       = document.getElementById('portals-root')
 	const { windowWidth } = windowVariables()
 
 
 	const setOpenState = (state: boolean) => {
 		setState(state)
 
-		if (shrinkPoint && windowWidth < shrinkPoint) {
-			if (state) {
-				return setOverlayState(true)
-			}
+		if (shrinkPoint && windowWidth < shrinkPoint && state) {
+			setOverlayState(true)
+			return
 		}
 
 		setOverlayState(false)
@@ -76,7 +74,7 @@ const SideBar = (props: SideBarProps) => {
 
 				     tw`fixed h-full z-30 shadow-lg`,
 				     theme.transitions([transformTransition()]),
-				     theme.transforms([conditionalTranslate(!state, `-100%`)])
+				     theme.transforms([conditionalTranslate(!state, `-100%`)]),
 			     ]}
 		     ` + clsx(className)}>
 			{children}
@@ -85,6 +83,11 @@ const SideBar = (props: SideBarProps) => {
 }
 
 
-SideBar.defaultProps = { width: defaultWidth, shrinkPoint: defaultShrinkPoint, showButton: true }
+SideBar.defaultProps = {
+	dark:        undefined,
+	width:       defaultWidth,
+	shrinkPoint: defaultShrinkPoint,
+	showButton:  true,
+}
 
 export default SideBar

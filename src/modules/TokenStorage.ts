@@ -26,19 +26,23 @@ export default class TokenStorage {
 		return this.getRefreshToken() !== null
 	}
 
-	static async getAuthentication() {
+	static getAuthentication() {
 		return {
-			headers: { Authorization: `Bearer ${await this.getToken()}` },
+
+			headers: { Authorization: `Bearer ${this.accessToken}` },
 		}
 	}
 
 	static async getAuthenticationObject() {
-		return { Authorization: `Bearer ${await this.getToken()}` }
+		return { Authorization: `Bearer ${this.accessToken}` }
 	}
 
-	static async getNew(): Promise<string | undefined> {
+	static async getNewToken(): Promise<string | undefined> {
 		if (TokenStorage.getRefreshToken()) {
-			return authEndpoint.refreshToken()
+			const response = await authEndpoint.refreshToken()
+			TokenStorage.storeToken(response.data.accessToken)
+			TokenStorage.storeRefreshToken(response.data.refreshToken)
+			return response.data.accessToken
 		}
 	}
 
@@ -93,7 +97,7 @@ export default class TokenStorage {
 		if (TokenStorage.accessToken) {
 			return TokenStorage.accessToken
 		}
-		return authEndpoint.refreshToken()
+		return await TokenStorage.getNewToken()
 	}
 
 	static getUserEmail(): string {

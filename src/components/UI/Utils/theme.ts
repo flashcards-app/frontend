@@ -6,7 +6,7 @@ const theme = {
 	utils: {
 		conditionalTranslate,
 		conditionalMargins,
-		conditionalRotate
+		conditionalRotate,
 	},
 
 	zIndex: {
@@ -296,7 +296,7 @@ const theme = {
 		rose_700: '#be123c',
 		rose_800: '#9f1239',
 		rose_900: '#881337',
-	}
+	},
 }
 
 export type ThemeColor = typeof theme.colors[keyof typeof theme.colors]

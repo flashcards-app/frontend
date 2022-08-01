@@ -5,7 +5,7 @@ interface UserProps extends EntityProps {
 	id: string
 	email: string
 	name: string
-	password: string
+	password?: string
 }
 
 const defaultData = {
@@ -15,7 +15,7 @@ const defaultData = {
 	password: '',
 }
 
-export class User extends Entity {
+export default class User extends Entity {
 	constructor(user: UserProps = cloneDeep(defaultData)) {
 		super(user)
 		this.id = user.id
@@ -30,7 +30,7 @@ export class User extends Entity {
 
 	name: string
 
-	password: string
+	password?: string
 
 	transformExclude(params: string[] = ['password']) {
 		return super.transformExclude(params)

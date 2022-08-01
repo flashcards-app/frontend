@@ -7,7 +7,7 @@ const {
 	      sideBarState: defaultSideBarState,
 	      sideBarOpts:  defaultSideBarOptions,
 	      overlayState: defaultOverlayState,
-      } = defaultMainData
+} = defaultMainData
 
 
 const MainProvider = (props: MainProviderOptions): ReactElement => {

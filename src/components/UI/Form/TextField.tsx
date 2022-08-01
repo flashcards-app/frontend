@@ -3,7 +3,7 @@ import { HTMLMotionProps, motion } from "framer-motion"
 import tw from "twin.macro"
 import { css } from "@emotion/react"
 import theme from "../Utils/theme"
-import { isDark } from "../index"
+import { isDark } from '..'
 import HelperText from "./HelperText"
 import autoAnimate from '@formkit/auto-animate'
 import { useEffect, useRef } from "react"
@@ -34,7 +34,7 @@ export const TextFieldInput = styled(motion.input)(({ dark, centered }: { dark?:
 		&:focus {
 			border-color: ${theme.colors.dark_200};
 		}
-	`
+	`,
 ])
 
 
@@ -42,17 +42,15 @@ interface TextFieldProps extends HTMLMotionProps<"input"> {
 	placeholder?: string
 	persistentLabel?: boolean
 	centered?: boolean
-	height?: number | `${number}px`
-	value?: string | ReadonlyArray<string> | number | undefined
+	value?: string | readonly string[] | number | undefined
 	error?: boolean
 	helperText?: string
 	label?: string
 }
 
 
-
 const TextField = (props: TextFieldProps) => {
-	const { height, label, className, persistentLabel, placeholder, centered, onChange, value, error, helperText, ...restProps } = props
+	const { label, className, persistentLabel, placeholder, centered, onChange, value, error, helperText, ...restProps } = props
 
 	const sectionRef = useRef(null)
 
@@ -71,11 +69,21 @@ const TextField = (props: TextFieldProps) => {
 				                ${helperText ? tw`mb-0` : tw`mb-6`}
 			                `} ${clsx(className)}`}
 			                placeholder={placeholder || (!persistentLabel ? label : '')}
-			                {...{ height, centered, onChange, value }}/>
+			                {...{ centered, onChange, value }}/>
 
 			{helperText && <HelperText {...{ error }}>{helperText}</HelperText>}
 		</section>
 	)
+}
+
+TextField.defaultProps = {
+	placeholder:     undefined,
+	centered:        false,
+	persistentLabel: false,
+	value:           undefined,
+	error:           false,
+	helperText:      undefined,
+	label:           undefined,
 }
 
 export default TextField

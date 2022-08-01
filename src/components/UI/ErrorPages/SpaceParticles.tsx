@@ -7,7 +7,6 @@ import { loadFull } from "tsparticles"
 let initialized = false
 
 const SpaceParticles = () => {
-
 	const particlesInit = async (engine: Engine) => {
 		if (!initialized) {
 			initialized = true
@@ -16,7 +15,7 @@ const SpaceParticles = () => {
 	}
 
 	return (
-		<Particles id="tsparticles" className={"z-[1]"} init={particlesInit} options={particles}/>
+		<Particles id="tsparticles" className="z-[1]" init={particlesInit} options={particles}/>
 	)
 }
 

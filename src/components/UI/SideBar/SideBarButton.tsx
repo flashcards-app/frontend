@@ -1,11 +1,10 @@
-import styled from "@emotion/styled"
 import tw from "twin.macro"
 import { css } from "@emotion/css"
 import i18n from "i18next"
 import { useMain } from "../../../context"
 import IconButton from "../Buttons/IconButton"
 import theme from "../Utils/theme"
-import { isDark } from "../index"
+import { isDark } from '..'
 import clsx from "clsx"
 import { conditionalRotate, conditionalTranslate } from "../Utils/utils"
 import { transformTransition } from "../Utils/transitions"
@@ -19,8 +18,6 @@ interface SideBarButtonProps extends ReactDivProps {
 }
 
 const SideBarButton = ({ className, dir, dark }: SideBarButtonProps) => {
-	dir = dir || i18n.dir()
-
 	const { sideBarState: state, setSideBarState: setState, setOverlayState, sideBarOpts } = useMain()
 
 	const { windowWidth }        = windowVariables()
@@ -30,7 +27,10 @@ const SideBarButton = ({ className, dir, dark }: SideBarButtonProps) => {
 		setState(state)
 
 		if (shrinkPoint && windowWidth < shrinkPoint) {
-			if (state) return setOverlayState(true)
+			if (state) {
+				setOverlayState(true)
+				return
+			}
 
 			setOverlayState(false)
 		}
@@ -41,27 +41,31 @@ const SideBarButton = ({ className, dir, dark }: SideBarButtonProps) => {
 			css`
 				background-color: ${theme.colors.white};
 				color: ${theme.colors.gray_700};
-
 				${
-					[
-						tw`self-center fixed mt-10 z-30 shadow-lg`,
-						(dark || isDark()) && css`
+		[
+			tw`self-center fixed mt-10 z-30 shadow-lg`,
+			(dark || isDark()) && css`
 							background-color: ${theme.colors.dark_500};
 						`,
-						theme.transitions([transformTransition()]),
-						theme.transforms([
-							conditionalRotate(!state, 180),
-							conditionalTranslate(state, `${width as number}px`),
-						])
-					]
-				}
+			theme.transitions([transformTransition()]),
+			theme.transforms([
+				conditionalRotate(!state, 180),
+				conditionalTranslate(state, `${width as number}px`),
+			]),
+		]
+		}
 			` + clsx(className)
 		}>
 			<IconButton onClick={() => setOpenState(!state)}>
-				{dir === 'ltr' ? <IconCarbonChevronLeft/> : <IconCarbonChevronRight/>}
+				{(dir || i18n.dir()) === 'ltr' ? <IconCarbonChevronLeft/> : <IconCarbonChevronRight/>}
 			</IconButton>
 		</div>
 	)
+}
+
+SideBarButton.defaultProps = {
+	dir:  undefined,
+	dark: undefined,
 }
 
 export default SideBarButton

@@ -4,11 +4,12 @@ import type { MainContextType, MainDataType } from './types'
 
 export const defaultMainData: MainDataType = {
 	sideBarState: false,
-	sideBarOpts:  {
-		width:       260,
+	sideBarOpts: {
+		width: 260,
 		shrinkPoint: 1300,
 	},
 	overlayState: false,
+	disableAnimations: false,
 }
 
 export const MainContext = createContext<MainContextType>({} as MainContextType)
