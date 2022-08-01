@@ -100,6 +100,7 @@ specifiers:
   postcss-import: ^14.0.2
   react: ^18.1.0
   react-dom: ^18.1.0
+  react-error-boundary: ^3.1.4
   react-i18next: ^11.15.1
   react-number-format: ^4.9.1
   react-query: ^3.34.6
@@ -157,6 +158,7 @@ dependencies:
   nprogress: 0.2.0
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
+  react-error-boundary: 3.1.4_react@18.1.0
   react-i18next: 11.15.5_pf75ilvod3yzajposlxvl5mr5a
   react-number-format: 4.9.1_ef5jwxihqo6n7gxfmzogljlgcm
   react-query: 3.34.16_ef5jwxihqo6n7gxfmzogljlgcm
@@ -3183,7 +3185,7 @@ packages:
       '@babel/plugin-transform-runtime': 7.17.0_@babel+core@7.18.9
       '@babel/preset-env': 7.16.11_@babel+core@7.18.9
       '@babel/preset-react': 7.16.7_@babel+core@7.18.9
-      '@babel/runtime': 7.17.2
+      '@babel/runtime': 7.18.9
       babel-plugin-add-module-exports: 1.0.4
       babelify: 10.0.0_@babel+core@7.18.9
       bluebird: 3.7.2
@@ -5796,7 +5798,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       '@babel/code-frame': 7.18.6
-      '@babel/runtime': 7.17.2
+      '@babel/runtime': 7.18.9
       '@types/aria-query': 4.2.2
       aria-query: 4.2.2
       chalk: 4.1.2
@@ -5810,7 +5812,7 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@babel/code-frame': 7.18.6
-      '@babel/runtime': 7.17.2
+      '@babel/runtime': 7.18.9
       '@types/aria-query': 4.2.2
       aria-query: 5.0.0
       chalk: 4.1.2
@@ -6993,7 +6995,7 @@ packages:
     resolution: {integrity: sha512-o/HelwhuKpTj/frsOsbNLNgnNGVIFsVP/SW2BSF14gVl7kAfMOJ6/8wUAUvG1R1NHKrfG+2sHZTu0yauT1qBrA==}
     engines: {node: '>=6.0'}
     dependencies:
-      '@babel/runtime': 7.17.2
+      '@babel/runtime': 7.18.9
       '@babel/runtime-corejs3': 7.17.2
     dev: true
 
@@ -7361,7 +7363,7 @@ packages:
     resolution: {integrity: sha512-Cg7TFGpIr01vOQNODXOOaGz2NpCU5gl8x1qJFbb6hbZxR7XrcE2vtbAsTAbJ7/xwJtUuJEw8K8Zr/AE0LHlesg==}
     engines: {node: '>=10', npm: '>=6'}
     dependencies:
-      '@babel/runtime': 7.17.2
+      '@babel/runtime': 7.18.9
       cosmiconfig: 7.0.1
       resolve: 1.22.1
 
@@ -7493,14 +7495,14 @@ packages:
   /babel-plugin-transform-vite-meta-env/1.0.3:
     resolution: {integrity: sha512-eyfuDEXrMu667TQpmctHeTlJrZA6jXYHyEJFjcM0yEa60LS/LXlOg2PBbMb8DVS+V9CnTj/j9itdlDVMcY2zEg==}
     dependencies:
-      '@babel/runtime': 7.17.2
+      '@babel/runtime': 7.18.9
       '@types/babel__core': 7.1.18
     dev: true
 
   /babel-plugin-transform-vite-meta-glob/1.0.3:
     resolution: {integrity: sha512-JW3VnwUjJqpj0FM0vJFxrGdxSBcHOa0j5YMvvtXYPmFshroq53nbK9dqRETgjXlMrfIz0oU/6ki+u1GdVWdNHA==}
     dependencies:
-      '@babel/runtime': 7.17.2
+      '@babel/runtime': 7.18.9
       '@types/babel__core': 7.1.18
       glob: 7.2.0
     dev: true
@@ -17101,6 +17103,16 @@ packages:
       react-is: 17.0.2
     dev: true
 
+  /react-error-boundary/3.1.4_react@18.1.0:
+    resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
+    engines: {node: '>=10', npm: '>=6'}
+    peerDependencies:
+      react: '>=16.13.1'
+    dependencies:
+      '@babel/runtime': 7.18.9
+      react: 18.1.0
+    dev: false
+
   /react-fast-compare/2.0.4:
     resolution: {integrity: sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==}
     dev: false
@@ -20964,7 +20976,7 @@ packages:
       '@apideck/better-ajv-errors': 0.3.3_ajv@8.10.0
       '@babel/core': 7.18.9
       '@babel/preset-env': 7.16.11_@babel+core@7.18.9
-      '@babel/runtime': 7.17.2
+      '@babel/runtime': 7.18.9
       '@rollup/plugin-babel': 5.3.1_oqwheajkaay7jaqpswtfouael4
       '@rollup/plugin-node-resolve': 11.2.1_rollup@2.77.2
       '@rollup/plugin-replace': 2.4.2_rollup@2.77.2

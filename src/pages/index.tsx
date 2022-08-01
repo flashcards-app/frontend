@@ -28,12 +28,12 @@ export default () => {
 				transition: none !important;
 			}`}`
 		}>
-			<SideBar/>
-			<SideBarButton/>
+				<SideBar/>
+				<SideBarButton/>
 
-			<Main>
-				<Outlet/>
-			</Main>
+				<Main>
+					<Outlet/>
+				</Main>
 		</div>
 	)
 }
