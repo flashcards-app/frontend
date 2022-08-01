@@ -1,17 +1,12 @@
-import ApiUrlService, { ApiUrlServiceProps } from "../../modules/ApiUrlService";
+import ApiUrlService  from "../../modules/ApiUrlService";
 import { LoginResult } from "../Auth/types";
 import { ApiResult } from "../types";
 import ApiError from "../../modules/ApiError"
 import Question from "../../modules/Entities/Question"
-import { TokenStorage } from "../../modules/TokenStorage"
+import TokenStorage from "../../modules/TokenStorage"
 
 export default class Auth extends ApiUrlService {
-
-	endpoint: string = `${this.apiFullRootUrl}/questions`
-
-	constructor(AuthEndpoint: ApiUrlServiceProps) {
-		super(AuthEndpoint)
-	}
+	endpoint = `${this.apiFullRootUrl}/questions`
 
 	async create(question: Question): Promise<ApiResult<LoginResult>> {
 		try {

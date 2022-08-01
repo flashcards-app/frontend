@@ -3,10 +3,15 @@ import { ApiErrorData, ApiErrorsOptions, ApiErrorObject } from "../services/type
 
 export default class ApiError {
 	config: { [key: string]: any }
+
 	data: ApiErrorData
+
 	headers: { [key: string]: any }
+
 	request: XMLHttpRequest
+
 	status: number
+
 	statusText: string
 
 
@@ -20,8 +25,7 @@ export default class ApiError {
 	}
 
 	static handleError(error: any) {
-		if (error.response)
-			return new ApiError(error.response as ApiError)
+		if (error.response) return new ApiError(error.response as ApiError)
 
 		return error
 	}
@@ -35,10 +39,10 @@ export default class ApiError {
 	}
 
 	private static flattenErrors(errors: ApiErrorsOptions): string[] {
-		if (errors instanceof Array) {
+		if (Array.isArray(errors)) {
 			let flattenErrors: string[] = []
 
-			errors.forEach(errorObject => {
+			errors.forEach((errorObject) => {
 				flattenErrors = [...flattenErrors, ...ApiError.getMessages(errorObject as ApiErrorObject)]
 			})
 
@@ -49,8 +53,7 @@ export default class ApiError {
 	}
 
 	private static getMessages(error: ApiErrorObject): string[] {
-		if (error.messages)
-			return error.messages
+		if (error.messages) return error.messages
 
 		return [error.message as string]
 	}

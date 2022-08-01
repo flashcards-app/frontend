@@ -1,15 +1,20 @@
-import {authEndpoint} from "../services";
+import { authEndpoint } from "../services"
 import { LoginResult, RegisterResult } from "../services/Auth/types"
 
 
-export class TokenStorage {
-
+export default class TokenStorage {
 	static accessToken = ''
+
 	static LOCAL_STORAGE_TOKEN = 'token'
+
 	static LOCAL_STORAGE_REFRESH_TOKEN = 'refresh_token'
+
 	static LOCAL_USER_EMAIL = 'user_email'
+
 	static LOCAL_USER_NAME = 'user_name'
+
 	static LOCAL_USER_ID = 'user_id'
+
 	static LOCAL_PUBLIC_ID = 'public_id'
 
 
@@ -23,17 +28,17 @@ export class TokenStorage {
 
 	static async getAuthentication() {
 		return {
-			headers: {'Authorization': 'Bearer ' + await this.getToken()},
+			headers: { Authorization: `Bearer ${await this.getToken()}` },
 		}
 	}
 
 	static async getAuthenticationObject() {
-		return {'Authorization': 'Bearer ' + await this.getToken()}
+		return { Authorization: `Bearer ${await this.getToken()}` }
 	}
 
-	static async getNew () {
+	static async getNew(): Promise<string | undefined> {
 		if (TokenStorage.getRefreshToken()) {
-			return await authEndpoint.refreshToken()
+			return authEndpoint.refreshToken()
 		}
 	}
 
@@ -87,9 +92,8 @@ export class TokenStorage {
 	static async getToken() {
 		if (TokenStorage.accessToken) {
 			return TokenStorage.accessToken
-		} else {
-			return await authEndpoint.refreshToken()
 		}
+		return authEndpoint.refreshToken()
 	}
 
 	static getUserEmail(): string {

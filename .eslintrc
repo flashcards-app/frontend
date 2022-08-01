@@ -5,9 +5,14 @@
 		"node": true,
 		"es2021": true
 	},
-	"ignorePatterns": ["src/*.d.ts"],
+	"ignorePatterns": [
+		"src/*.d.ts"
+	],
 	"parser": "@typescript-eslint/parser",
-	"plugins": ["react-prefer-function-component", "editorconfig"],
+	"plugins": [
+		"react-prefer-function-component",
+		"editorconfig"
+	],
 	"extends": [
 		"eslint:all",
 		"plugin:@typescript-eslint/all",
@@ -37,10 +42,14 @@
 			"error",
 			"tab"
 		],
-		"react/jsx-indent": ["error", "tab"],
+		"react/jsx-indent": [
+			"error",
+			"tab"
+		],
 		"no-multi-spaces": "off",
 		"no-multiple-empty-lines": [
-			"error", {
+			"error",
+			{
 				"max": 2
 			}
 		],
@@ -122,21 +131,12 @@
 		"@typescript-eslint/quotes": "off",
 		"@typescript-eslint/no-shadow": "off",
 		"@typescript-eslint/no-unsafe-call": "off",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/prefer-nullish-coalescing": "off",
 		"import/no-deprecated": "error",
 		"import/order": "off",
 		"import/no-absolute-path": "off",
-		"import/no-extraneous-dependencies": [
-			"error",
-			{
-				"devDependencies": [
-					"vite.config.ts",
-					"src/setupTests.ts",
-					"src/testUtils.tsx",
-					"src/mocks/**",
-					"**/__tests__/*.{ts,tsx}"
-				]
-			}
-		],
+		"import/no-extraneous-dependencies": "off",
 		"react/jsx-no-undef": "off",
 		"react/no-did-update-set-state": "off",
 		"react/jsx-props-no-spreading": "off",
@@ -200,7 +200,9 @@
 		"unicorn/no-null": "off",
 		"unicorn/prefer-at": "off",
 		"unicorn/consistent-destructuring": "off",
-		"unicorn/no-nested-ternary": ["error"],
+		"unicorn/no-nested-ternary": [
+			"error"
+		],
 		"unicorn/prevent-abbreviations": "off"
 	},
 	"settings": {
@@ -210,13 +212,19 @@
 	},
 	"overrides": [
 		{
-			"files": ["*.ts?(x)"],
+			"files": [
+				"*.ts?(x)"
+			],
 			"parserOptions": {
-				"project": ["./tsconfig.json"]
+				"project": [
+					"./tsconfig.json"
+				]
 			}
 		},
 		{
-			"files": ["**/__tests__/**/*.ts?(x)"],
+			"files": [
+				"**/__tests__/**/*.ts?(x)"
+			],
 			"env": {
 				"jest": true
 			},

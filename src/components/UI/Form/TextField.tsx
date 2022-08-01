@@ -1,37 +1,80 @@
-import { Col } from "../Grid"
-import { DetailedHTMLProps, InputHTMLAttributes } from "react"
+import styled from "@emotion/styled"
+import { HTMLMotionProps, motion } from "framer-motion"
+import tw from "twin.macro"
+import { css } from "@emotion/react"
+import theme from "../Utils/theme"
+import { isDark } from "../index"
+import HelperText from "./HelperText"
+import autoAnimate from '@formkit/auto-animate'
+import { useEffect, useRef } from "react"
+import { css as classCss } from "@emotion/css"
+import ConditionalLabel from "./ConditionalLabel"
 import clsx from "clsx"
 
 
-interface TextFieldProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
-	placeholder: string
+export const TextFieldInput = styled(motion.input)(({ dark, centered }: { dark?: boolean, centered?: boolean }) => [
+	tw`w-full p-2 border border-2 rounded-md shadow-sm resize-none place-self-center`,
+	centered && tw`text-center`,
+
+	css`
+		background-color: ${theme.colors.gray_50};
+		border-color: ${theme.colors.gray_200};
+
+		&:focus {
+			border-color: ${theme.colors.gray_300};
+
+			${tw`outline-none ring-transparent`}
+		}
+	`,
+
+	(dark || isDark()) && css`
+		background-color: ${theme.colors.dark_800};
+		border-color: ${theme.colors.dark_400};
+
+		&:focus {
+			border-color: ${theme.colors.dark_200};
+		}
+	`
+])
+
+
+interface TextFieldProps extends HTMLMotionProps<"input"> {
+	placeholder?: string
+	persistentLabel?: boolean
+	centered?: boolean
 	height?: number | `${number}px`
 	value?: string | ReadonlyArray<string> | number | undefined
-	error?: string
+	error?: boolean
+	helperText?: string
+	label?: string
 }
 
-const style = "w-full py-2 border border-2 rounded-md shadow-sm focus:outline-none " +
-	"focus:ring-transparent resize-none text-center place-self-center"
 
-const styleLight = "border-gray-200 bg-gray-50 focus:border-gray-300"
-
-const styleDark = "dark:bg-dark-800 dark:border-dark-400 dark:focus:border-dark-200"
 
 const TextField = (props: TextFieldProps) => {
-	const { height, className, placeholder, onChange, value, error, ...restProps } = props
+	const { height, label, className, persistentLabel, placeholder, centered, onChange, value, error, helperText, ...restProps } = props
+
+	const sectionRef = useRef(null)
+
+	useEffect(() => {
+		sectionRef.current && autoAnimate(sectionRef.current)
+	}, [sectionRef])
+
 
 	return (
-		<Col className={`"w-full ${clsx(className)}`}>
-			<input {...restProps}
-			       placeholder={placeholder}
-			       onChange={onChange}
-			       value={value}
-			       style={{
-							 height: height || "45px",
-			       }}
-			       className={`${style} ${styleLight} ${styleDark}`}/>
-			<span className={`mx-1 mt-1 text-sm text-[#ff6767] dark:text-[#ff5050] min-h-[20px]`}>{error}</span>
-		</Col>
+		<section ref={sectionRef}>
+			<ConditionalLabel {...{ label, persistentLabel, value }}/>
+
+			<TextFieldInput {...restProps}
+			                className={`${classCss`
+				                ${(value && label) || (label && persistentLabel) ? tw`mt-0` : tw`mt-6`}
+				                ${helperText ? tw`mb-0` : tw`mb-6`}
+			                `} ${clsx(className)}`}
+			                placeholder={placeholder || (!persistentLabel ? label : '')}
+			                {...{ height, centered, onChange, value }}/>
+
+			{helperText && <HelperText {...{ error }}>{helperText}</HelperText>}
+		</section>
 	)
 }
 

@@ -1,6 +1,6 @@
 import nProgress from './nprogress'
 import { i18nInstall } from './i18n'
-import { refreshTokenHandler } from "./RefreshToken"
+import refreshTokenHandler from "./RefreshToken"
 // import './pwa';
 
 export default (): void => {

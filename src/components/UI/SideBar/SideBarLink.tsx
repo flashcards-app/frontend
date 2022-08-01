@@ -1,17 +1,16 @@
-import { useContext } from 'react'
-import type { ReactElementProps } from '../../../types'
 import { defaultMainData } from '../Main/MainContext'
 import windowVariables from '../../../hooks/WindowVars'
 import { useMain } from "../../../context"
+import { HTMLMotionProps, motion } from "framer-motion"
 
 
 const { sideBarOpts: defaultSideBarOptions } = defaultMainData
 const { shrinkPoint: defaultShrinkPoint }    = defaultSideBarOptions
 
-const SideBarLink = (props: ReactElementProps) => {
+const SideBarLink = (props: HTMLMotionProps<"div">) => {
 	const { children, ...restProps } = props
 
-	const { sideBarState, sideBarOpts, setSideBarState } = useMain()
+	const { sideBarState, sideBarOpts, setSideBarState, setOverlayState } = useMain()
 
 	const { windowWidth } = windowVariables()
 
@@ -23,15 +22,16 @@ const SideBarLink = (props: ReactElementProps) => {
 	const action = () => {
 		if (sideBarState && shrinkPoint && shrinkPoint > windowWidth) {
 			setSideBarState(false)
+			setOverlayState(false)
 		}
 	}
 
 	return (
-		<div {...restProps}
+		<motion.div {...restProps}
 		     role="presentation"
 		     onClick={action}>
 			{children}
-		</div>
+		</motion.div>
 	)
 }
 

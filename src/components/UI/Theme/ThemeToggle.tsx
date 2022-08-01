@@ -1,26 +1,25 @@
-import { useContext } from 'react'
+import { ButtonHTMLAttributes, DetailedHTMLProps, useContext } from 'react'
+import { ThemeContext } from './ThemeContext'
 import Tooltip from '../Tooltip/Tooltip'
 import IconButton from '../Buttons/IconButton'
-import type { ReactElementProps } from 'types'
-import { useTheme } from "../../../context"
+import type { ReactDivProps } from 'types'
+import clsx from "clsx"
 
 
-const ThemeToggle = (props: ReactElementProps) => {
-	const { theme, setTheme } = useTheme()
-	const { t }               = useTranslation()
+
+
+const ThemeToggle = (props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) => {
+	const { className }       = props
+	const { theme, setTheme } = useContext(ThemeContext)
 
 	const themeToggle = () => {
 		setTheme(theme === 'dark' ? 'light' : 'dark')
 	}
 
 	return (
-		<div {...props}>
-			<Tooltip className="bottom-[40px] left-[-80%]" tooltip={t('Theme')}>
-				<IconButton id="theme-toggle-button" onClick={themeToggle}>
-					{theme === 'light' ? <IconCarbonLight/> : <IconCarbonMoon/>}
-				</IconButton>
-			</Tooltip>
-		</div>
+			<IconButton {...props} id="theme-toggle-button" onClick={themeToggle}>
+				{theme === 'light' ? <IconCarbonLight/> : <IconCarbonMoon/>}
+			</IconButton>
 	)
 }
 

@@ -12,7 +12,7 @@ export interface ProvidersProps {
 
 const providers = [
 	ThemeProvider,
-	MainProvider
+	MainProvider,
 ]
 
 export const AppContextProvider = CombineComponents(...providers as FC[])
@@ -25,8 +25,10 @@ const Providers = (props: ProvidersProps) => {
 	)
 }
 
+export const useTheme = () => useContext(ThemeContext)
+
 export const useMain = () => useContext(MainContext)
 
-export const useTheme = () => useContext(ThemeContext)
+export const useThemeValue = () => useTheme().theme
 
 export default Providers

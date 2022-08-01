@@ -1,4 +1,4 @@
-import {Vars} from '../modules/vars'
+import { Vars } from '../modules/vars'
 import Auth from './Auth'
 import Questions from './Questions'
 

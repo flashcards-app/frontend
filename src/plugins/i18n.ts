@@ -1,9 +1,9 @@
 import i18n from 'i18next'
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import Backend from 'i18next-http-backend'
 import moment from 'moment'
-import {LocalStorage} from 'modules/LocalStorage'
+import { LocalStorage } from 'modules/LocalStorage'
 
 
 export type Language = 'en' | 'he';
@@ -11,12 +11,11 @@ export type Language = 'en' | 'he';
 const language = () => {
 	const lang = LocalStorage.getLanguage()
 
-	if (lang && !lang.includes('-'))
-		return lang
+	if (lang && !lang.includes('-')) return lang
 
 	return (navigator.language).toString()
 		.includes('-') ? (navigator.language).toString()
-		.split('-')[0] as Language : (navigator.language).toString() as Language
+			.split('-')[0] as Language : (navigator.language).toString() as Language
 }
 
 
@@ -55,7 +54,7 @@ const language = () => {
 })()
 
 export const i18nInstall = () => {
-	const {i18n} = useTranslation()
+	const { i18n } = useTranslation()
 
 	useEffect(() => {
 		const language = LocalStorage.getLanguage()

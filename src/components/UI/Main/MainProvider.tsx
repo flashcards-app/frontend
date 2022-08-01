@@ -11,13 +11,12 @@ const {
 
 
 const MainProvider = (props: MainProviderOptions): ReactElement => {
-
-
 	const { children } = props
 
 	const [sideBarState, setSideBarState]     = useState(defaultSideBarState)
 	const [overlayState, setOverlayState]     = useState(defaultOverlayState)
 	const [sideBarOptions, setSideBarOptions] = useState(defaultSideBarOptions)
+	const [disableAnimations, setDisableAnimations] = useState(false)
 
 
 	return (
@@ -29,7 +28,9 @@ const MainProvider = (props: MainProviderOptions): ReactElement => {
 				sideBarOpts:    sideBarOptions,
 				setSideBarOpts: setSideBarOptions,
 				overlayState,
-				setOverlayState
+				setOverlayState,
+				disableAnimations,
+				setDisableAnimations,
 			}
 		}>
 			{children}

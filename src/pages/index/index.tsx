@@ -9,67 +9,69 @@ import Question from "../../modules/Entities/Question"
 
 export default () => {
 	const formik = useFormik({
-		initialValues: {
-			subject: '',
+		initialValues:    {
+			subject:  '',
 			question: '',
-			answer: '',
+			answer:   '',
 		},
 		validationSchema: Yup.object({
-			subject: Yup.string().required('יש להזין נושא'),
+			subject:  Yup.string().required('יש לבחור נושא'),
 			question: Yup.string().required('יש להזין שאלה'),
-			answer: Yup.string().required('יש להזין תשובה'),
+			answer:   Yup.string().required('יש להזין תשובה'),
 		}),
+		validateOnBlur:   false,
 		validateOnChange: false,
-		validateOnBlur: false,
-		onSubmit: async (values) => {
+		onSubmit:         async (values) => {
 			const { question, answer, subject } = values
-			const questionObject = new Question({ question, answer, subject })
+			const questionObject                = new Question({ question, answer, subject })
 			await questionsEndpoint.create(questionObject)
-			formik.resetForm()
-		}
+			formik.resetForm({
+				values: {
+					subject:  formik.values.subject,
+					question: '',
+					answer:   '',
+				},
+			})
+		},
 	})
-	const options = ['React.js', 'Javascript', 'Angular']
+
+	const options = [
+		{ value: 'React.js', label: 'React.js' },
+		{ value: 'Javascript', label: 'Javascript' },
+		{ value: 'Angular', label: 'Angular' },
+	]
 
 	return (
-		<div className="h-full w-full mx-auto px-50 pt-40">
+		<div className="h-full w-full mx-auto lg:px-[20%] sm:px-[50px] xs:px-[30px] pt-40">
 			<form onSubmit={formik.handleSubmit}>
-				<section>
-					<Select
-						dir="ltr"
-						label={'נושא'}
-						options={options}
-						placeholder="בחר נושא"
-						defaultValue = {formik.values.subject}
-						onChange={(ev) => formik.setFieldValue('subject', ev.target.value)}
-						id="subject"
-						onBlur={() => formik.validateField('subject')}
-						error={formik.errors.subject} />
-				</section>
-				<section>
-					<label>
-						שאלה
-					</label>
-					<TextArea
-						id="question"
-						placeholder={'שאלה'}
-						value={formik.values.question}
-						onChange={formik.handleChange}
-						onBlur={() => formik.validateField('question')}
-						error={formik.errors.question} />
-				</section>
+				<Select
+					id="subject"
+					label="נושא"
+					options={options}
+					placeholder="בחר נושא"
+					value={formik.values.subject}
+					onChange={async (value) => formik.setFieldValue("subject", value.value)}
+					onBlur={async () => formik.validateField('subject')}
+					error={!!formik.errors.subject}
+					helperText={formik.errors.subject}/>
 
-				<section>
-					<label>
-						תשובה
-					</label>
-					<TextArea
-						id="answer"
-						placeholder={'תשובה'}
-						value={formik.values.answer}
-						onChange={formik.handleChange}
-						onBlur={() => formik.validateField('answer')}
-						error={formik.errors.answer}/>
-				</section>
+				<TextArea
+					id="question"
+					label="שאלה"
+					value={formik.values.question}
+					onChange={formik.handleChange}
+					onBlur={async () => formik.validateField("question")}
+					helperText={formik.errors.question}
+					error={!!formik.errors.question}/>
+
+				<TextArea
+					id="answer"
+					label="תשובה"
+					value={formik.values.answer}
+					onChange={formik.handleChange}
+					onBlur={async () => formik.validateField("answer")}
+					helperText={formik.errors.answer}
+					error={!!formik.errors.answer}/>
 
 				<div className="flex justify-center">
 					<Button type="submit" disabled={!formik.isValid}>

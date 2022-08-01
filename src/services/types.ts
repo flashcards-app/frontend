@@ -1,7 +1,7 @@
 export interface ApiResult<Data> {
-	config: { [key: string]: any }
+	config: Record<string, any>
 	data: Data
-	headers: { [key: string]: any }
+	headers: Record<string, any>
 	request: XMLHttpRequest
 	status: number
 	statusText: string
