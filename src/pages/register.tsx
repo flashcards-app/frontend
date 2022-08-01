@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Col, Row } from "../components/UI/Grid"
 import { authEndpoint } from "../services"
-import { useNavigate } from "react-router-dom"
+
 import { useFormik } from "formik"
 import * as Yup from 'yup'
 import TextField from "../components/UI/Form/TextField"
-import { TokenStorage } from "../modules/TokenStorage"
+import TokenStorage from "../modules/TokenStorage"
 import { useEffect, useState } from "react"
 import Button from "../components/UI/Buttons/Button"
 import ApiError from "../modules/ApiError"
@@ -38,7 +38,7 @@ export default () => {
 		initialValues:    {
 			username: '',
 			email:    '',
-			password: ''
+			password: '',
 		},
 		validationSchema: Yup.object({
 			username: Yup.string()
@@ -50,7 +50,7 @@ export default () => {
 			password: Yup.string()
 				          .required('יש להזין סיסמא')
 				          .min(6, 'סיסמא חייבת להכיל לפחות 6 תווים')
-				          .max(128, 'סיסמא חייבת להכיל לכל היותר 128 תווים')
+				          .max(128, 'סיסמא חייבת להכיל לכל היותר 128 תווים'),
 		}),
 		validateOnChange: false,
 		validateOnBlur:   false,
@@ -66,43 +66,43 @@ export default () => {
 					checkForDuplicatedEmail(error)
 				}
 			}
-		}
+		},
 	})
 
 	return (
 		<Row className="w-full h-full justify-center">
-			<Col className="my-auto min-w-75">
+			<Col className="my-auto w-[300px]">
 				<form onSubmit={formik.handleSubmit}>
 
 
-					<TextField placeholder={"כתובת מייל"}
-					           className="pt-4"
+					<TextField label="כתובת מייל"
 					           value={formik.values.email}
 					           id="email"
 					           onChange={formik.handleChange}
 					           onInput={() => !formik.isValid && formik.validateField('email')}
-					           onBlur={() => formik.validateField('email')}
-					           error={formik.errors.email}/>
+					           onBlur={async () => formik.validateField('email')}
+					           helperText={formik.errors.email}
+					           error={!!formik.errors.email}/>
 
 
-					<TextField placeholder={"שם משתמש"}
-					           className="pt-4"
+					<TextField label="שם משתמש"
 					           id="username"
 					           value={formik.values.username}
 					           onChange={formik.handleChange}
 					           onInput={() => !formik.isValid && formik.validateField('username')}
-					           onBlur={() => formik.validateField('username')}
-					           error={formik.errors.username}/>
+					           onBlur={async () => formik.validateField('username')}
+					           helperText={formik.errors.username}
+					           error={!!formik.errors.username}/>
 
-					<TextField placeholder={"סיסמא"}
-					           className="pt-4"
+					<TextField label="סיסמא"
 					           id="password"
 					           value={formik.values.password}
 					           onChange={formik.handleChange}
 					           onInput={() => !formik.isValid && formik.validateField('password')}
-					           onBlur={() => formik.validateField('password')}
-					           type="password"
-					           error={formik.errors.password}/>
+					           onBlur={async () => formik.validateField('password')}
+					           helperText={formik.errors.password}
+					           error={!!formik.errors.password}
+					           type="password"/>
 
 					<div className="w-full flex justify-center pt-4">
 						<Button className="w-60 h-10" type="submit" disabled={!formik.isValid}>

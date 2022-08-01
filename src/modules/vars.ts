@@ -1,4 +1,4 @@
-import {ThemeName} from '../components/UI/Theme/types'
+import { ThemeName } from '../components/UI/Theme/types'
 
 
 export interface EnvFileProps {
@@ -26,7 +26,7 @@ export class Vars {
 	static setupVars(envVars: EnvFileProps) {
 		Vars.appName = envVars.VITE_APP_NAME
 		Vars.env = envVars.VITE_ENV
-		Vars.theme = {defaultTheme: envVars.VITE_DEFAULT_THEME as ThemeName}
+		Vars.theme = { defaultTheme: envVars.VITE_DEFAULT_THEME as ThemeName }
 		Vars.api = {
 			url: envVars.VITE_API_URL,
 			version: envVars.VITE_API_VERSION,

@@ -1,35 +1,62 @@
-import type { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
-
-import clsx from 'clsx'
-
-
-const style = `rounded-lg block px-4 py-2 mt-2 text-sm font-semibold`
-
-const lightStyle = `text-gray-900 bg-gray-200 bg-transparent hover:bg-light-700 active:bg-light-800`
-
-const darkStyle = 'dark:text-gray-200 dark:bg-dark-400 dark:hover:text-white dark:hover:bg-dark-200' +
-	'dark:active:bg-dark-100 dark:bg-transparent dark:disabled:opacity-50'
-
-const lightDisabledStyle = `disabled:opacity-50 disabled:cursor-default disabled:hover:bg-gray-200 disabled:active:text-gray-200 disabled:active:text-gray-900`
-
-const darkDisabledStyle = `disabled:opacity-50 dark:disabled:cursor-default disabled:hover:dark:bg-dark-400 disabled:hover:dark:text-gray-200`
+import tw from 'twin.macro'
+import styled from "@emotion/styled"
+import theme from "../Utils/theme"
+import { css } from "@emotion/react"
+import { isDark } from "../index"
+import { ButtonHTMLAttributes } from "react"
+import { motion } from "framer-motion"
 
 
-interface ButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
-
+export interface ButtonProps extends HTMLMotionProps<"button"> {
+	dark?: boolean
 }
 
+const Button = styled(motion.button)(({ dark }: ButtonProps) => [
+	tw`rounded-lg block px-4 py-2 mt-2 text-sm font-semibold cursor-pointer border-none bg-transparent`,
+	css`
+		color: ${theme.colors.gray_900};
+		background-color: ${theme.colors.gray_200};
 
-const Button = (props: ButtonProps) => {
-	const { children, className } = props
+		&:hover {
+			background-color: ${theme.colors.light_700};
+		}
 
-	return (
-		<button type="button"
-		        {...props}
-		        className={`${style}  ${lightStyle} ${darkStyle} ${lightDisabledStyle} ${darkDisabledStyle} ${clsx(className)}`}>
-			{children}
-		</button>
-	)
-}
+		&:active {
+			background-color: ${theme.colors.light_600};
+		}
+
+		&:disabled {
+			${tw`opacity-50 cursor-default`}
+			&:hover {
+				background-color: ${theme.colors.gray_200};
+			}
+		}
+	`,
+
+	(dark || isDark()) && css`
+		background-color: ${theme.colors.dark_400};
+		color: ${theme.colors.gray_200};
+
+		&:hover {
+			color: ${theme.colors.white};
+			background-color: ${theme.colors.dark_200};
+		}
+
+		&:active {
+			background-color: ${theme.colors.dark_100}
+		}
+
+		&:disabled {
+			color: ${theme.colors.gray_200};
+
+			&:hover {
+				background-color: ${theme.colors.dark_400};
+			}
+		}
+	`
+])
+
 
 export default Button
+
+

@@ -1,16 +1,15 @@
 import axios from 'axios'
-import { TokenStorage } from '../modules/TokenStorage'
+import TokenStorage from '../modules/TokenStorage'
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
 
-
-export const refreshTokenHandler = () => {
+const refreshTokenHandler = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
 		if (TokenStorage.isAuthenticated()) {
-			(async () => await TokenStorage.getToken())()
+			(async () => TokenStorage.getToken())()
 		}
 
 		const interceptor = axios.interceptors.response.use((response) => {
@@ -24,7 +23,7 @@ export const refreshTokenHandler = () => {
 			// Logout user if token refresh didn't work or user is disabled
 			if (error.config.url.includes('v1/auth/refresh-token') || error.response.message === 'Account is disabled.') {
 				TokenStorage.clearUserData()
-				await navigate('/login')
+				navigate('/login')
 
 				return new Promise((resolve, reject) => {
 					reject(error)
@@ -39,16 +38,18 @@ export const refreshTokenHandler = () => {
 			}
 
 			if (!originalRequest._retry && status === 401) {
-				originalRequest._retry                   = true
-				const token                              = await TokenStorage.getNew()
-				originalRequest.headers['Authorization'] = `Bearer ${token}`
-				originalRequest.baseURL                  = undefined
+				originalRequest._retry                = true
+				const token                           = await TokenStorage.getNew()
+				originalRequest.headers.Authorization = `Bearer ${token}`
+				originalRequest.baseURL               = undefined
 				return axios.request(originalRequest)
-			} else {
-				TokenStorage.clearUserData()
-				await navigate('/login')
 			}
+			TokenStorage.clearUserData()
+			navigate('/login')
+
 			axios.interceptors.response.eject(interceptor)
 		})
 	}, [])
 }
+
+export default refreshTokenHandler

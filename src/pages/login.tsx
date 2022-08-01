@@ -5,7 +5,7 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import TextField from "../components/UI/Form/TextField"
 import { useEffect } from "react"
-import { TokenStorage } from "../modules/TokenStorage"
+import TokenStorage from "../modules/TokenStorage"
 import Button from "../components/UI/Buttons/Button"
 import ApiError from "../modules/ApiError"
 
@@ -22,14 +22,14 @@ export default () => {
 	const formik = useFormik({
 		initialValues:    {
 			email:    '',
-			password: ''
+			password: '',
 		},
 		validationSchema: Yup.object({
 			email:    Yup.string()
 				          .required('יש להזין כתובת מייל')
 				          .email('כתובת המייל שהזנת אינה תקינה'),
 			password: Yup.string()
-				          .required('יש להזין סיסמא')
+				          .required('יש להזין סיסמא'),
 		}),
 		validateOnChange: false,
 		validateOnBlur:   false,
@@ -44,30 +44,30 @@ export default () => {
 					// display error message
 				}
 			}
-		}
+		},
 	})
 
 	return (
 		<Row className="w-full h-full justify-center">
-			<Col className="my-auto min-w-75">
+			<Col className="my-auto w-[300px]">
 				<form onSubmit={formik.handleSubmit}>
 					<TextField id="email"
-					           className="p-1 pt-4"
-					           placeholder={"כתובת מייל"}
+					           label="כתובת מייל"
 					           value={formik.values.email}
 					           onChange={formik.handleChange}
 					           onInput={() => !formik.isValid && formik.validateField('email')}
-					           onBlur={() => formik.validateField('email')}
-					           error={formik.errors.email}/>
+					           onBlur={async () => formik.validateField('email')}
+					           helperText={formik.errors.email}
+					           error={!!formik.errors.email}/>
 
 					<TextField id="password"
-					           className="p-1 pt-4"
-					           placeholder={"סיסמא"}
+					           label="סיסמא"
 					           value={formik.values.password}
 					           onChange={formik.handleChange}
 					           onInput={() => !formik.isValid && formik.validateField('password')}
-					           onBlur={() => formik.validateField('password')}
-					           error={formik.errors.password}
+					           onBlur={async () => formik.validateField('password')}
+					           helperText={formik.errors.password}
+					           error={!!formik.errors.password}
 					           type="password"/>
 
 					<div className="w-full flex justify-center pt-2">

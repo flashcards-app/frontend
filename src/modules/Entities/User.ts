@@ -1,13 +1,18 @@
-import Entity, {EntityProps} from './Entity'
-import {cloneDeep} from 'lodash'
-import {TokenStorage} from "../TokenStorage";
-import {LoginResult, RegisterResult} from "../../services/Auth/types";
+import Entity, { EntityProps } from './Entity'
+import { cloneDeep } from 'lodash'
 
 interface UserProps extends EntityProps {
 	id: string
 	email: string
 	name: string
 	password: string
+}
+
+const defaultData = {
+	id: '',
+	email: '',
+	name: '',
+	password: '',
 }
 
 export class User extends Entity {
@@ -20,18 +25,14 @@ export class User extends Entity {
 	}
 
 	id: string
+
 	email: string
+
 	name: string
+
 	password: string
 
 	transformExclude(params: string[] = ['password']) {
 		return super.transformExclude(params)
 	}
-}
-
-const defaultData = {
-	id: '',
-	email: '',
-	name: '',
-	password: '',
 }

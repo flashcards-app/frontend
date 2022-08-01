@@ -2,6 +2,10 @@ export interface EntityProps {
 	isDeleted?: boolean
 }
 
+const defaultData = {
+	isDeleted: false,
+}
+
 export default class Entity {
 	constructor(object: EntityProps = defaultData) {
 		this.isDeleted = object.isDeleted ?? false
@@ -10,7 +14,7 @@ export default class Entity {
 	isDeleted: boolean
 
 	transformExclude(params: string[] = []) {
-		const transformedObject: {[key: string]: any} = this
+		const transformedObject: { [key: string]: any } = this
 
 		params.forEach((param) => delete transformedObject[param])
 
@@ -20,12 +24,8 @@ export default class Entity {
 	transform(fields = [], object = this) {
 		const transformed = {}
 
-		fields.forEach(field => transformed[field] = object[field])
+		fields.forEach((field) => transformed[field] = object[field])
 
 		return transformed
 	}
-}
-
-const defaultData = {
-	isDeleted: false
 }

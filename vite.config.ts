@@ -1,17 +1,17 @@
 import * as path from 'path'
-import {defineConfig} from 'vite'
+import { defineConfig } from 'vite'
 import React from '@vitejs/plugin-react'
 import Pages from 'vite-plugin-pages'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
-import WindiCSS from 'vite-plugin-windicss'
-import {VitePWA} from 'vite-plugin-pwa'
+import { VitePWA } from 'vite-plugin-pwa'
 import Markdown from 'vite-plugin-react-md'
 import Inspect from 'vite-plugin-inspect'
 import TsconfigPaths from 'vite-tsconfig-paths'
 import istanbul from 'rollup-plugin-istanbul'
-import {extendRoute, onRouteGenerate} from './router.config'
+import macrosPlugin from 'vite-plugin-babel-macros'
+import { extendRoute, onRouteGenerate } from './router.config'
 import highlightJs from 'highlight.js'
 
 
@@ -23,18 +23,19 @@ export default defineConfig({
 			'~/': `${path.resolve(__dirname, 'src')}/`,
 		}
 	},
-	
+
 	plugins: [
 		// https://github.com/vitejs/vite/tree/main/packages/plugin-react#vitejsplugin-react-
-		React({
-			fastRefresh: process.env.NODE_ENV !== 'test'
-		}),
-		
+		React(),
+
+		// https://github.com/itsMapleLeaf/vite-plugin-babel-macros
+		macrosPlugin(),
+
 		// https://github.com/hannoeru/vite-plugin-pages
 		Pages({
-			pagesDir: [
+			pagesDir:   [
 				{
-					dir: 'src/pages',
+					dir:       'src/pages',
 					baseRoute: ''
 				},
 			],
@@ -46,39 +47,36 @@ export default defineConfig({
 				return extendRoute(route, parent)
 			}
 		}),
-		
+
 		// https://github.com/antfu/unplugin-auto-import
 		AutoImport({
 			resolvers: [
 				IconsResolver({
-					prefix: 'Icon',
+					prefix:    'Icon',
 					extension: 'jsx'
 				})
 			],
-			include: [
+			include:   [
 				/\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
 				/\.md$/, // .md
 			],
-			imports: [
+			imports:   [
 				{
-					'axios': [
+					'axios':         [
 						['default', 'http']
 					],
 					'react-i18next': ['useTranslation', 'initReactI18next']
 				}
 			],
-			dts: 'src/auto-imports.d.ts',
+			dts:       'src/auto-imports.d.ts',
 		}),
-		
+
 		// https://github.com/antfu/unplugin-icons
 		Icons({
-			compiler: 'jsx',
+			compiler:    'jsx',
 			autoInstall: true,
 		}),
-		
-		// https://github.com/windicss/windicss
-		WindiCSS(),
-		
+
 		// https://github.com/Leonewu/vite-plugin-react-md
 		Markdown({
 			markdownIt: {
@@ -87,7 +85,7 @@ export default defineConfig({
 						try {
 							return '<pre class="language-' + lang + '">' +
 								highlightJs.highlight(str, {
-									language: lang,
+									language:       lang,
 									ignoreIllegals: true
 								}).value +
 								'</pre>'
@@ -98,65 +96,61 @@ export default defineConfig({
 				}
 			}
 		}),
-		
+
 		// https://github.com/antfu/vite-plugin-pwa
 		VitePWA({
-			registerType: 'autoUpdate',
+			registerType:  'autoUpdate',
 			includeAssets: [
 				'favicon.svg',
 				'locales/**/*.yaml',
 				'apple-touch-icon.png'
 			],
-			manifest: {
+			manifest:      {
 				theme_color: '#ffffff',
-				icons: [
+				icons:       [
 					{
-						src: '/android-chrome-192x192.png',
-						sizes: '192x192',
-						type: 'image/png',
+						src:     '/android-chrome-192x192.png',
+						sizes:   '192x192',
+						type:    'image/png',
 						purpose: 'any maskable'
 					},
 					{
-						src: '/android-chrome-512x512.png',
+						src:   '/android-chrome-512x512.png',
 						sizes: '512x512',
-						type: 'image/png'
+						type:  'image/png'
 					}
 				],
 			},
 		}),
-		
+
 		// https://github.com/antfu/vite-plugin-inspect
-		Inspect({enabled: false,}),
-		
+		Inspect({ enabled: false, }),
+
 		// https://github.com/nabla/vite-plugin-eslint#readme
 		// EslintPlugin(),
-		
+
 		// https://github.com/aleclarson/vite-tsconfig-paths
 		TsconfigPaths(),
-		
+
 		ENV === 'test' &&
 		istanbul({
 			include: ['src/**/*.{ts,tsx}']
 		})
 	],
-	
-	build: {
-		sourcemap: process.env.SOURCE_MAP === 'true',
-	},
-	
+
 	preview: {
 		open: false,
 		port: 4000
 	},
-	
+
 	server: {
 		open: false, // open in browser on server start
 		port: 8080,
-		hmr: {
+		hmr:  {
 			protocol: 'ws',
-			port: 8080,
+			port:     8080,
 		},
-		fs: {
+		fs:   {
 			strict: false,
 		},
 	},

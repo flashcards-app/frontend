@@ -31,3 +31,18 @@ export interface LoginResult {
 		createdAt: string
 	}
 }
+
+export interface LogoutResult {
+	expires: string
+	token: string
+	userEmail: string
+	userId: string
+	_id: string
+}
+
+export interface RefreshToken {
+	accessToken: string
+	expiresIn: string
+	refreshToken: string
+	tokenType: string
+}

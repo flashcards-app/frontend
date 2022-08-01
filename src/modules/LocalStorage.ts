@@ -1,9 +1,10 @@
-import type {ThemeName} from '../components/UI/Theme/types'
-import type {Language} from '../plugins/i18n'
+import type { ThemeName } from '../components/UI/Theme/types'
+import type { Language } from '../plugins/i18n'
 
 
 export class LocalStorage {
 	static THEME = 'theme'
+
 	static LANGUAGE = 'i18nextLng'
 
 	static getTheme(): ThemeName | undefined {
