@@ -17,7 +17,7 @@ const refreshTokenHandler = () => {
 			return response
 		}, async (error) => {
 			const originalRequest = error.config
-			const status          = error.response ? error.response.status : null
+			const status = error.response ? error.response.status : null
 
 
 			// Logout user if token refresh didn't work or user is disabled
@@ -32,10 +32,11 @@ const refreshTokenHandler = () => {
 
 			// Return any error which is not due to authentication back to the calling service
 			if (status !== 401) {
-				return new Promise((resolve) => {
-					resolve(error)
+				return new Promise((resolve, reject) => {
+					reject(error)
 				})
 			}
+
 
 			if (!originalRequest._retry && status === 401) {
 				originalRequest._retry                = true

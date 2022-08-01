@@ -3,8 +3,7 @@ import styled from "@emotion/styled"
 import theme from "../Utils/theme"
 import { css } from "@emotion/react"
 import { isDark } from "../index"
-import { ButtonHTMLAttributes } from "react"
-import { motion } from "framer-motion"
+import { HTMLMotionProps, motion } from "framer-motion"
 
 
 export interface ButtonProps extends HTMLMotionProps<"button"> {

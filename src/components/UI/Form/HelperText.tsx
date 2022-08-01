@@ -6,7 +6,7 @@ import { isDark } from "../index"
 
 
 const HelperText = styled(motion.p)(({ error, dark }: { error?: boolean, dark?: boolean }) => [
-	tw`mx-1 mt-1 text-sm min-h-[20px]`,
+	tw`mx-1 mt-1 text-sm min-h-[20px] !w-fit`,
 
 	error && css`
 		color: #ff6767;

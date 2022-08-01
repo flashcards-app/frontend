@@ -6,18 +6,16 @@ import * as Yup from "yup"
 import TextField from "../components/UI/Form/TextField"
 import { useEffect } from "react"
 import TokenStorage from "../modules/TokenStorage"
-import Button from "../components/UI/Buttons/Button"
 import ApiError from "../modules/ApiError"
+import FormButton from "../components/UI/Buttons/FormButton"
+import useErrorsHandler from "../hooks/useErrorsHandler"
+import useFormikGeneralError from "../hooks/useFormikGeneralError"
 
 
-export default () => {
-	const navigate = useNavigate()
+const useLoginFormik = () => {
+	const navigate             = useNavigate()
+	const { handleLoginError } = useErrorsHandler()
 
-	useEffect(() => {
-		if (TokenStorage.isAuthenticated()) {
-			navigate("/")
-		}
-	}, [])
 
 	const formik = useFormik({
 		initialValues:    {
@@ -41,11 +39,29 @@ export default () => {
 				navigate('/')
 			} catch (error) {
 				if (error instanceof ApiError) {
-					// display error message
+					const errorMessage = handleLoginError(error)
+
+					errorMessage && setGeneralError(errorMessage)
 				}
 			}
 		},
 	})
+
+	const [generalError, setGeneralError] = useFormikGeneralError(formik, '')
+
+	return { formik, generalError }
+}
+
+export default () => {
+	const navigate                 = useNavigate()
+	const { formik, generalError } = useLoginFormik()
+
+	useEffect(() => {
+		if (TokenStorage.isAuthenticated()) {
+			navigate("/")
+		}
+	}, [])
+
 
 	return (
 		<Row className="w-full h-full justify-center">
@@ -70,13 +86,14 @@ export default () => {
 					           error={!!formik.errors.password}
 					           type="password"/>
 
-					<div className="w-full flex justify-center pt-2">
-						<Button className="w-60 h-10"
-						        disabled={!formik.isValid}
-						        type="submit">
-							התחברות
-						</Button>
-					</div>
+					<FormButton
+						className="h-10 w-60"
+						centered
+						error
+						disabled={!formik.isValid || !!generalError}
+						helperText={generalError}>
+						התחברות
+					</FormButton>
 				</form>
 
 				<div className="place-self-center pt-1 text-gray-400">

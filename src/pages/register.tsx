@@ -6,14 +6,15 @@ import { useFormik } from "formik"
 import * as Yup from 'yup'
 import TextField from "../components/UI/Form/TextField"
 import TokenStorage from "../modules/TokenStorage"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Button from "../components/UI/Buttons/Button"
 import ApiError from "../modules/ApiError"
+import useErrorsHandler from "../hooks/useErrorsHandler"
 
 
 export default () => {
-	const navigate                      = useNavigate()
-	const [noSuchEmail, setNoSuchEmail] = useState(false)
+	const navigate                = useNavigate()
+	const { handleRegisterError } = useErrorsHandler()
 
 
 	useEffect(() => {
@@ -21,17 +22,6 @@ export default () => {
 			navigate("/")
 		}
 	}, [])
-
-	const checkForDuplicatedEmail = (error: ApiError) => {
-		const errors = error.getErrorsList()
-
-		if (errors.includes("No account found with that email")) {
-			setNoSuchEmail(true)
-			return
-		}
-
-		setNoSuchEmail(false)
-	}
 
 
 	const formik = useFormik({
@@ -45,8 +35,7 @@ export default () => {
 				          .required('יש להזין שם משתמש'),
 			email:    Yup.string()
 				          .required('יש להזין כתובת מייל')
-				          .email('כתובת המייל שהזנת אינה תקינה')
-				          .test('no-such-email', 'The email you entered does not exist', () => !noSuchEmail),
+				          .email('כתובת המייל שהזנת אינה תקינה'),
 			password: Yup.string()
 				          .required('יש להזין סיסמא')
 				          .min(6, 'סיסמא חייבת להכיל לפחות 6 תווים')
@@ -63,7 +52,9 @@ export default () => {
 				navigate('/')
 			} catch (error) {
 				if (error instanceof ApiError) {
-					checkForDuplicatedEmail(error)
+					const errors = handleRegisterError(error)
+
+					errors && formik.setFieldError(...errors)
 				}
 			}
 		},

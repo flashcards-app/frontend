@@ -7,6 +7,7 @@ import ReloadPrompt from './components/ReloadPrompt'
 import { RecoilRoot } from 'recoil'
 import * as React from 'react'
 import Providers from "./context"
+import ErrorsBoundary from "./components/ErrorsBoundary"
 
 
 function Pages(): React.ReactElement | null {
@@ -15,12 +16,14 @@ function Pages(): React.ReactElement | null {
 
 const App = () => {
 	return (
-		<Providers>
-			<RecoilRoot>
-				<ReloadPrompt/>
-				<Pages/>
-			</RecoilRoot>
-		</Providers>
+		<ErrorsBoundary>
+			<Providers>
+				<RecoilRoot>
+					<ReloadPrompt/>
+					<Pages/>
+				</RecoilRoot>
+			</Providers>
+		</ErrorsBoundary>
 	)
 }
 
