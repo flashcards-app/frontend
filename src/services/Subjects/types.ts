@@ -1,7 +1,8 @@
-export interface TransformedSubject{
-	isDeleted: boolean
-	id: string
-	title: string
-	label: string
-	createdAt: string
+export interface SubjectCreateResult{
+    label: string
+}
+export interface SubjectGetResult{
+    isDeleted: boolean
+    label: string
+    createdAt: string
 }

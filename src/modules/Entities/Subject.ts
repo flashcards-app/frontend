@@ -1,14 +1,14 @@
-import Entity, { EntityProps } from "./Entity"
+import Entity from "./Entity"
 
 
-export interface SubjectProps extends EntityProps {
-	title?: string
+export interface SubjectProps {
+	isDeleted?: boolean
 	label: string
 }
 
 class Subject extends Entity {
 	label: string
-
+	
 
 	constructor(data: SubjectProps) {
 		super(data)
@@ -17,4 +17,4 @@ class Subject extends Entity {
 }
 
 
-export default Subject
+export default Subject;
