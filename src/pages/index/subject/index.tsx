@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { Col, Row } from "../../../components/UI/Grid";
 
 export default () => {
-	const subjects: string[] = ['Angular', 'Javascript', 'React.js']
+	const [subjects, setSubjects] = useState([])
 	const navigate = useNavigate()
 	
 	return (
