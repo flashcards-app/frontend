@@ -7,12 +7,13 @@ import Button from "../../components/UI/Buttons/Button"
 import Question from "../../modules/Entities/Question"
 import { useEffect, useState } from "react"
 import { ApiResult } from "services/types"
-import { SubjectGetResult } from "services/Subjects/types"
+import { TransformedSubject } from "services/Subjects/types"
 import Subject from "modules/Entities/Subject"
 
 
 export default () => {
 	const [subjects, setSubjects] = useState([])
+	const { data, status }                                = subjectsEndpoint.get()
 	const formik = useFormik({
 		initialValues: {
 			subject: '',
@@ -30,11 +31,12 @@ export default () => {
 			const { question, answer, subject } = values
 			const questionObject = new Question({ question, answer, subject })
 			await questionsEndpoint.create(questionObject)
-			if (!subjects.length){
-				const newSubject  = new Subject({label: subject})
-				await subjectsEndpoint.create(newSubject)
-				await fetchSubjects()
-			}
+			// ADD NEW SUBJECT 
+			// if (!subjects.length){
+			// 	const newSubject  = new Subject({label: subject})
+			// 	await subjectsEndpoint.create(newSubject)
+			// 	fetchSubjects()
+			// }
 			formik.resetForm({
 				values: {
 					subject: formik.values.subject,
@@ -45,19 +47,22 @@ export default () => {
 		},
 	})
 
-	const fetchSubjects = async () => {
-		const subjectsFromDB: ApiResult<SubjectGetResult[]> = await subjectsEndpoint.get()
+	const fetchSubjects = () => {
+		const subjectsFromDB: ApiResult<TransformedSubject[]> = subjectsEndpoint.get()
 		setSubjects(subjectsFromDB.data)
 	}
 
+
 	useEffect(() => {
-		(async () => await fetchSubjects())()
-	}, [])
+		if (status === "success" && data) {
+			setSubjects(data.data)
+		}
+	}, [status])
 
 	return (
 		<div className="h-full w-full mx-auto lg:px-[20%] sm:px-[50px] xs:px-[30px] pt-40">
 			<form onSubmit={formik.handleSubmit}>
-				{subjects.length && <> <Select
+				{subjects.length > 0 && <> <Select
 					id="subject"
 					label="נושא"
 					options={
@@ -73,14 +78,15 @@ export default () => {
 					onBlur={async () => formik.validateField('subject')}
 					error={!!formik.errors.subject}
 					helperText={formik.errors.subject} />
-					<Button onClick={()=>setSubjects([])}>הוסף נושא חדש</Button>
+					{/* ADD NEW SUBJECT  */}
+					{/* <Button onClick={()=>setSubjects([])}>הוסף נושא חדש</Button> */}
 				</>
 				}
-
-				{!subjects.length && <>
+				{/* ADD NEW SUBJECT  */}
+				{/* {!subjects.length && <>
 					<TextArea
 						id="subject"
-						label="נושא"
+						label="הוסף נושא"
 						value={formik.values.subject}
 						onChange={formik.handleChange}
 						onBlur={async () => formik.validateField('subject')}
@@ -88,7 +94,7 @@ export default () => {
 						helperText={formik.errors.subject} />
 						<Button onClick={async ()=>fetchSubjects()}>בחר מרשימת הנושאים</Button>
 						</>
-				}
+				} */}
 
 				<TextArea
 					id="question"
