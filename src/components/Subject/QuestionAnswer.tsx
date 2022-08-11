@@ -17,16 +17,12 @@ interface QuestionAnswerProps {
 const QuestionAnswer = (props: QuestionAnswerProps) => {
 	const { currentQuestion, currentQuestionController, currentQuestionIndex, showAns, setShowAns } = props
 
-	const colRef        = useRef(null)
-	const actionsRowRef = useRef(null)
+	const colRef       = useRef(null)
+	const difficulties = ["קל", "בינוני", "קשה"]
 
 	useEffect(() => {
 		colRef.current && autoAnimate(colRef.current)
 	}, [colRef])
-
-	useEffect(() => {
-		actionsRowRef.current && autoAnimate(actionsRowRef.current)
-	}, [actionsRowRef])
 
 	return (
 		<Col ref={colRef}>
@@ -34,15 +30,9 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 				<Label className="text-center mx-auto">
 					שאלה
 				</Label>
-				<Row className="w=full p-4">
-					<Card className="flex justify-center items-center w-full h-[200px]">
-						<p>
-							{currentQuestion.question}
-						</p>
-					</Card>
-				</Row>
-
-
+				<p className="min-h-[110px]">
+					{currentQuestion.question}
+				</p>
 			</Col>
 
 			<Row
@@ -86,21 +76,40 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 				</Col>
 			</Row>
 
+			{
+				showAns
+				&& (
+					<Col className="pt-4">
+						<Label className="text-center mx-auto">
+							תשובה
+						</Label>
+						<p className="min-h-[110px]">
+							{currentQuestion.answer}
+						</p>
 
-			{showAns && (
-				<Col className="pt-4">
-					<Label className="text-center mx-auto">
-						תשובה
-					</Label>
-					<Row className="w=full p-4">
-						<Card className="flex justify-center items-center w-full h-[200px]">
-							<p>
-								{currentQuestion.answer}
-							</p>
-						</Card>
-					</Row>
-				</Col>
-			)}
+						<Label className="text-center mx-auto">
+							בחר רמת קושי
+						</Label>
+
+						<Row className="w-full justify-around px-10">
+							{
+								difficulties.map((difficulty) => (
+									<Button className={css`
+										min-width: 100px;
+										max-width: 160px;
+										width: 100%;
+										${tw`mx-2`}
+									`}
+									        key={difficulty}
+									        onClick={() => currentQuestionController(currentQuestionIndex + 1)}>
+										{difficulty}
+									</Button>
+								))
+							}
+						</Row>
+					</Col>
+				)
+			}
 		</Col>
 	)
 }

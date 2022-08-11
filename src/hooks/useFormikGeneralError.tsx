@@ -8,7 +8,7 @@ const useFormikGeneralError: UseFormikGeneralErrorProps = (formik, initialState)
 	const [generalError, setGeneralError] = useState(initialState)
 
 	useEffect(() => {
-		if (generalError) setGeneralError('')
+		setGeneralError('')
 	}, [formik.values])
 
 	return [generalError, setGeneralError]

@@ -1,4 +1,5 @@
 import { ImpulseSpinner } from 'react-spinners-kit'
+import type { ReactDivProps } from '../../../types'
 import clsx from "clsx"
 import { css } from "@emotion/css"
 import tw from "twin.macro"
@@ -6,7 +7,7 @@ import { HTMLMotionProps, motion } from "framer-motion"
 import theme from "../Utils/theme"
 
 
-const ProgressSpinner = (props: HTMLMotionProps<"div">) => {
+const ProgressSpinner = (props: ReactDivProps) => {
 	return (
 		<motion.div {...props}
 		            className={`

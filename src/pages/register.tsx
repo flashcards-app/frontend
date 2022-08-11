@@ -7,6 +7,7 @@ import TokenStorage from "../modules/TokenStorage"
 import { useEffect } from "react"
 import ApiError from "../modules/ApiError"
 import useErrorsHandler from "../hooks/useErrorsHandler"
+import theme from "../components/UI/Utils/theme"
 
 
 export default () => {
