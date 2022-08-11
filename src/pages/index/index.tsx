@@ -1,125 +1,87 @@
-import { useFormik } from "formik"
-import * as Yup from "yup"
-import TextArea from "../../components/UI/Form/TextArea"
-import Select from "../../components/UI/Form/Select"
-import { questionsEndpoint, subjectsEndpoint } from "../../services"
-import Button from "../../components/UI/Buttons/Button"
-import Question from "../../modules/Entities/Question"
-import { useEffect, useState } from "react"
-import { ApiResult } from "services/types"
-import { TransformedSubject } from "services/Subjects/types"
-import Subject from "modules/Entities/Subject"
+import { Col, Row } from "../../components/UI/Grid"
+import questionsImage from "../../assets/question.jpg"
+import Typography from "../../components/UI/Typograpy"
+import theme from "../../components/UI/Utils/theme"
+import LinkButton from "../../components/UI/Buttons/LinkButton"
+import Tooltip from "../../components/UI/Tooltip/Tooltip"
+import IconButton from "../../components/UI/Buttons/IconButton"
+import ThemeToggle from "../../components/UI/Theme/ThemeToggle"
+import { useNavigate } from "react-router-dom"
+import { authEndpoint } from "../../services"
+import TokenStorage from "../../modules/TokenStorage"
+import { css } from "@emotion/css"
+import useWindowVars from "../../hooks/useWindowVars"
 
 
 export default () => {
-	const [subjects, setSubjects] = useState([])
-	const { data, status }                                = subjectsEndpoint.get()
-	const formik = useFormik({
-		initialValues: {
-			subject: '',
-			question: '',
-			answer: '',
-		},
-		validationSchema: Yup.object({
-			subject: Yup.string().required('יש לבחור נושא'),
-			question: Yup.string().required('יש להזין שאלה'),
-			answer: Yup.string().required('יש להזין תשובה'),
-		}),
-		validateOnBlur: false,
-		validateOnChange: false,
-		onSubmit: async (values) => {
-			const { question, answer, subject } = values
-			const questionObject = new Question({ question, answer, subject })
-			await questionsEndpoint.create(questionObject)
-			// ADD NEW SUBJECT 
-			// if (!subjects.length){
-			// 	const newSubject  = new Subject({label: subject})
-			// 	await subjectsEndpoint.create(newSubject)
-			// 	fetchSubjects()
-			// }
-			formik.resetForm({
-				values: {
-					subject: formik.values.subject,
-					question: '',
-					answer: '',
-				},
-			})
-		},
-	})
+	const { windowWidth } = useWindowVars()
+	const navigate        = useNavigate()
 
-	const fetchSubjects = () => {
-		const subjectsFromDB: ApiResult<TransformedSubject[]> = subjectsEndpoint.get()
-		setSubjects(subjectsFromDB.data)
+	const signOut = async () => {
+		await authEndpoint.logout()
+		TokenStorage.clearUserData()
+		navigate("/login")
 	}
 
-
-	useEffect(() => {
-		if (status === "success" && data) {
-			setSubjects(data.data)
-		}
-	}, [status])
-
 	return (
-		<div className="h-full w-full mx-auto lg:px-[20%] sm:px-[50px] xs:px-[30px] pt-40">
-			<form onSubmit={formik.handleSubmit}>
-				{subjects.length > 0 && <> <Select
-					id="subject"
-					label="נושא"
-					options={
-						subjects.map(subject => {
-							return {
-								label: subject.label,
-								value: subject.label
-							}
-						})}
-					placeholder="בחר נושא"
-					value={formik.values.subject}
-					onChange={async (value) => formik.setFieldValue("subject", value.value)}
-					onBlur={async () => formik.validateField('subject')}
-					error={!!formik.errors.subject}
-					helperText={formik.errors.subject} />
-					{/* ADD NEW SUBJECT  */}
-					{/* <Button onClick={()=>setSubjects([])}>הוסף נושא חדש</Button> */}
-				</>
-				}
-				{/* ADD NEW SUBJECT  */}
-				{/* {!subjects.length && <>
-					<TextArea
-						id="subject"
-						label="הוסף נושא"
-						value={formik.values.subject}
-						onChange={formik.handleChange}
-						onBlur={async () => formik.validateField('subject')}
-						error={!!formik.errors.subject}
-						helperText={formik.errors.subject} />
-						<Button onClick={async ()=>fetchSubjects()}>בחר מרשימת הנושאים</Button>
-						</>
-				} */}
+		<Row
+			{...theme.animations.fadeInOut}
+			className="h-full">
+			{
+				windowWidth >= theme.screens.md && (
+					<img className="h-[100vh] object-cover origin-right"
+					     width={windowWidth < theme.screens.xl ? windowWidth / 2 : undefined}
+					     src={questionsImage}
+						alt=""/>
+				)
+			}
 
-				<TextArea
-					id="question"
-					label="שאלה"
-					value={formik.values.question}
-					onChange={formik.handleChange}
-					onBlur={async () => formik.validateField("question")}
-					helperText={formik.errors.question}
-					error={!!formik.errors.question} />
+			<Col
+				className={`${windowWidth <= theme.screens.md && css`
+					background-image: url(${questionsImage});
+					background-repeat: no-repeat;
+					background-position: right;
+				`}`}
+				align="center"
+				cols={1}>
+				<Typography className="mt-8"
+				            color={windowWidth < theme.screens.md ? theme.colors.white : undefined}
+				            semiBold
+				            as="h1">
+					Flashcards
+				</Typography>
 
-				<TextArea
-					id="answer"
-					label="תשובה"
-					value={formik.values.answer}
-					onChange={formik.handleChange}
-					onBlur={async () => formik.validateField("answer")}
-					helperText={formik.errors.answer}
-					error={!!formik.errors.answer} />
+				<Col className="w-full h-full pt-6 space-y-8" justify="center" align="center">
+					<LinkButton to="/subject"
+					            className="w-60 text-center">
+						לשאלות
+					</LinkButton>
 
-				<div className="flex justify-center">
-					<Button type="submit" disabled={!formik.isValid}>
-						שמירה
-					</Button>
-				</div>
-			</form>
-		</div>
+					<LinkButton to="/add-questions"
+					            className="w-60 text-center">
+						להוספת שאלות
+					</LinkButton>
+
+				</Col>
+
+				<Row className="py-3 pb-28 justify-center">
+					<Tooltip placement="top-center" tooltip="התנתק">
+						<IconButton className="px-1.5"
+						            dark={windowWidth < theme.screens.md ? true : undefined}
+						            size={22}
+						            onClick={signOut}>
+							<IconMdiLogout/>
+						</IconButton>
+					</Tooltip>
+
+					<Tooltip placement="top-center" tooltip="נושא">
+						<ThemeToggle
+							size={22}
+							dark={windowWidth < theme.screens.md ? true : undefined}
+							className="px-1.5"/>
+					</Tooltip>
+				</Row>
+			</Col>
+		</Row>
 	)
 }
