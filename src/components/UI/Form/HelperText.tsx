@@ -2,7 +2,6 @@ import styled from "@emotion/styled"
 import { motion } from "framer-motion"
 import tw from "twin.macro"
 import { css } from "@emotion/react"
-import { isDark } from '..'
 
 
 const HelperText = styled(motion.p)(({ error, dark }: { error?: boolean, dark?: boolean }) => [
@@ -12,7 +11,7 @@ const HelperText = styled(motion.p)(({ error, dark }: { error?: boolean, dark?: 
 		color: #ff6767;
 	`,
 
-	(dark || isDark()) && error && css`
+	(props) => (dark || props.theme.isDark) && error && css`
 		color: #ff5050;
 	`,
 ])

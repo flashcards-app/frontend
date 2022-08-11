@@ -1,4 +1,4 @@
-import ApiUrlService from '../../modules/ApiUrlService'
+import ApiUrlService, { ApiUrlServiceProps } from '../../modules/ApiUrlService'
 import { LoginResult, LogoutResult, RefreshToken, RegisterResult } from "./types"
 import TokenStorage from "../../modules/TokenStorage"
 import ApiError from "../../modules/ApiError"
@@ -7,6 +7,10 @@ import { AxiosResponse } from "axios"
 
 export default class Auth extends ApiUrlService {
 	endpoint = `${this.apiFullRootUrl}/auth`
+
+	constructor(data: ApiUrlServiceProps) {
+		super(data)
+	}
 
 	async login(email: string, password: string): Promise<AxiosResponse<LoginResult>> {
 		try {

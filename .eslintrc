@@ -126,6 +126,11 @@
 				"ignoreArrowShorthand": true
 			}
 		],
+		"@typescript-eslint/no-use-before-define": "off",
+		"@typescript-eslint/no-useless-constructor": "off",
+		"@typescript-eslint/no-unsafe-assignment": "off",
+		"@typescript-eslint/no-unsafe-return": "off",
+		"@typescript-eslint/space-before-blocks": "off",
 		"@typescript-eslint/sort-type-union-intersection-members": "off",
 		"@typescript-eslint/explicit-function-return-type": "off",
 		"@typescript-eslint/non-nullable-type-assertion-style": "off",
@@ -227,6 +232,7 @@
 				"*.ts?(x)"
 			],
 			"parserOptions": {
+				"warnOnUnsupportedTypeScriptVersion": false,
 				"project": [
 					"./tsconfig.json"
 				]

@@ -3,7 +3,6 @@ import { HTMLMotionProps, motion } from "framer-motion"
 import tw from "twin.macro"
 import { css } from "@emotion/react"
 import theme from "../Utils/theme"
-import { isDark } from '..'
 import HelperText from "./HelperText"
 import autoAnimate from '@formkit/auto-animate'
 import { useEffect, useRef } from "react"
@@ -27,7 +26,7 @@ export const TextFieldInput = styled(motion.input)(({ dark, centered }: { dark?:
 		}
 	`,
 
-	(dark || isDark()) && css`
+	(props) => (dark || props.theme.isDark) && css`
 		background-color: ${theme.colors.dark_800};
 		border-color: ${theme.colors.dark_400};
 

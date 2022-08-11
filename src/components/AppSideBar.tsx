@@ -16,7 +16,7 @@ import tw from "twin.macro"
 import { authEndpoint } from "../services"
 
 
-const sideBar = () => {
+const AppSideBar = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 
@@ -95,4 +95,4 @@ const sideBar = () => {
 	)
 }
 
-export default sideBar
+export default AppSideBar

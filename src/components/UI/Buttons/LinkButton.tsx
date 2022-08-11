@@ -1,13 +1,8 @@
-import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
-import theme from "../Utils/theme";
-import { css } from "@emotion/react";
+import Button from "./Button"
+import { Link } from "react-router-dom"
+import { motion } from "framer-motion"
 
 
-const LinkButton = styled(Link)(() => [
-	css`
-    color: ${theme.colors.blue_500};
-	`,
-])
+const LinkButton = Button.withComponent(motion(Link))
 
 export default LinkButton

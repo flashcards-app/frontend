@@ -2,16 +2,37 @@ import tw from 'twin.macro'
 import styled from "@emotion/styled"
 import theme from "../Utils/theme"
 import { css } from "@emotion/react"
-import { isDark } from ".."
 import { HTMLMotionProps, motion } from "framer-motion"
 
 
 export interface ButtonProps extends HTMLMotionProps<"button"> {
 	dark?: boolean
+	centered?: boolean
+	fab?: boolean
+	icon?: boolean
+	height?: number
+	width?: number
+	size?: number
 }
 
-const Button = styled(motion.button)(({ dark }: ButtonProps) => [
-	tw`rounded-lg block px-4 py-2 mt-2 text-sm font-semibold cursor-pointer border-none bg-transparent`,
+const Button = styled(motion.button)(({ icon, height, size, width, fab, centered, dark }: ButtonProps) => [
+	tw`rounded-lg block text-sm font-semibold cursor-pointer border-none bg-transparent`,
+	icon && tw`p-2 w-fit h-fit`,
+	!icon && tw`px-4 py-2`,
+
+	centered && tw`text-center`,
+	fab && tw`rounded-full`,
+
+	height && css`
+		height: ${icon ? 'fit-content' : `${height}px`};
+	`,
+	width && css`
+		width: ${icon ? 'fit-content' : `${width}px`};
+	`,
+	size && css`
+		font-size: ${size}px;
+	`,
+
 	css`
 		color: ${theme.colors.gray_900};
 		background-color: ${theme.colors.gray_200};
@@ -31,8 +52,7 @@ const Button = styled(motion.button)(({ dark }: ButtonProps) => [
 			}
 		}
 	`,
-
-	(dark || isDark()) && css`
+	(props) => (dark || props.theme.isDark) && css`
 		background-color: ${theme.colors.dark_400};
 		color: ${theme.colors.gray_200};
 
@@ -52,7 +72,7 @@ const Button = styled(motion.button)(({ dark }: ButtonProps) => [
 				background-color: ${theme.colors.dark_400};
 			}
 		}
-	`
+	`,
 ])
 
 

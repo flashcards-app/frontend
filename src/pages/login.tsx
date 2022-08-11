@@ -10,6 +10,7 @@ import ApiError from "../modules/ApiError"
 import FormButton from "../components/UI/Buttons/FormButton"
 import useErrorsHandler from "../hooks/useErrorsHandler"
 import useFormikGeneralError from "../hooks/useFormikGeneralError"
+import theme from "../components/UI/Utils/theme"
 
 
 const useLoginFormik = () => {
@@ -34,14 +35,14 @@ const useLoginFormik = () => {
 		onSubmit:         async (values) => {
 			try {
 				const { email, password } = values
-				const result              = await authEndpoint.login(email, password)
-				TokenStorage.storeUserData(result.data)
+				const { data }            = await authEndpoint.login(email, password)
+				TokenStorage.storeUserData(data)
 				navigate('/')
 			} catch (error) {
 				if (error instanceof ApiError) {
 					const errorMessage = handleLoginError(error)
 
-					errorMessage && setGeneralError(errorMessage)
+					if (errorMessage) setGeneralError(errorMessage)
 				}
 			}
 		},
@@ -64,7 +65,9 @@ export default () => {
 
 
 	return (
-		<Row className="w-full h-full justify-center">
+		<Row
+			{...theme.animations.fadeInOut}
+			className="w-full h-full justify-center">
 			<Col className="my-auto w-[300px]">
 				<form onSubmit={formik.handleSubmit}>
 					<TextField id="email"

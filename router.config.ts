@@ -3,11 +3,18 @@ export const onRouteGenerate = (routes: any[]) => {
 	return routes
 }
 
+const routes = {
+	'addQuestions': 'add-questions'
+}
 
 export const extendRoute = (route: any, parent: any) => {
 	// Remove this it'll all goes to catch all page
 	if (route.routes && route.routes.length > 0) {
 		delete route.exact
+	}
+
+	if (route.path && routes[route.path as keyof typeof routes]) {
+		route.path = routes[route.path as keyof typeof routes]
 	}
 
 	if (route.index === true) {

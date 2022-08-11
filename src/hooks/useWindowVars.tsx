@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 
-export default () => {
+const useWindowVars = () => {
 	const [windowWidth, setWindowWidth]   = useState(window.innerWidth)
 	const [windowHeight, setWindowHeight] = useState(window.innerHeight)
 	const [pointerX, setPointerX]         = useState(windowWidth / 2)
@@ -42,4 +42,6 @@ export default () => {
 		pointerX,
 		pointerY,
 	}
-};
+}
+
+export default useWindowVars

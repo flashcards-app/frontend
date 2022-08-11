@@ -3,7 +3,7 @@ import HelperText from "./HelperText"
 import theme from "../Utils/theme"
 import { isDark } from '..'
 import Select, {
-	defaultTheme, ControlProps, components, DropdownIndicatorProps, SingleValueProps, ContainerProps, MenuProps, Props,
+	defaultTheme, ControlProps, components, DropdownIndicatorProps, SingleValueProps, ContainerProps, MenuProps, Props, OptionProps,
 } from "react-select"
 import { css } from "@emotion/css"
 import { conditionalRotate } from "../Utils/utils"
@@ -13,6 +13,7 @@ import Label from "./Label"
 import tw from "twin.macro"
 import clsx from "clsx"
 import { FormikErrors } from "formik"
+import { HTMLMotionProps, motion } from "framer-motion"
 
 
 const DropdownIndicator = (props: DropdownIndicatorProps<any>) => {
@@ -101,6 +102,16 @@ const SelectContainer = (props: ContainerProps) => {
 	)
 }
 
+const Option = (props: OptionProps) => {
+	return (
+		<components.Option
+			className={css`${tw`!cursor-pointer`}`}
+			{...props}>
+			{props.children}
+		</components.Option>
+	)
+}
+
 const Menu = (props: MenuProps) => {
 	const { children, ...restProps } = props
 
@@ -133,6 +144,7 @@ interface SelectProps extends Omit<Props, 'isRtl' | 'onChange'> {
 	onBlur?: () => void
 	onChange?: (value: { label: string, value: string }) => void
 	helperText?: string | FormikErrors<any>
+	wrapperProps?: HTMLMotionProps<"div">
 }
 
 const SelectWithLabel = (props: SelectProps) => {
@@ -141,6 +153,7 @@ const SelectWithLabel = (props: SelectProps) => {
 		      dir,
 		      className,
 		      placeholder,
+		      wrapperProps,
 		      persistentLabel,
 		      disableHelperText,
 		      disableLabel,
@@ -196,10 +209,12 @@ const SelectWithLabel = (props: SelectProps) => {
 						{label}
 					</Label>
 				)}
-			<div className={`${css`
-				${(!disableLabel && !!label && ((isFocused || !!value) || persistentLabel)) ? tw`mt-0` : tw`mt-6`}
-				${!disableHelperText && !!helperText ? tw`mb-0` : tw`mb-6`}
-			`} ${clsx(className)}`}>
+			<motion.div
+				{...wrapperProps}
+				className={`${css`
+					${(!disableLabel && !!label && ((isFocused || !!value) || persistentLabel)) ? tw`mt-0` : tw`mt-6`}
+					${!disableHelperText && !!helperText ? tw`mb-0` : tw`mb-6`}
+				`} ${clsx(className)}`}>
 				<Select blurInputOnSelect
 				        {...restProps}
 				        isSearchable={false}
@@ -224,12 +239,13 @@ const SelectWithLabel = (props: SelectProps) => {
 				        })}
 				        components={{
 					        DropdownIndicator,
+					        Option,
 					        Control,
 					        SingleValue,
 					        SelectContainer,
 					        Menu,
 				        }}/>
-			</div>
+			</motion.div>
 			{!disableHelperText && helperText && (
 				<HelperText
 					initial={{
@@ -260,9 +276,10 @@ SelectWithLabel.defaultProps = {
 	dark:              undefined,
 	disableHelperText: false,
 	error:             false,
-	onBlur:            () => {},
-	onChange:          () => {},
+	onBlur:            () => null,
+	onChange:          () => null,
 	helperText:        undefined,
+	wrapperProps:      {},
 }
 
 export default SelectWithLabel

@@ -6,6 +6,7 @@ dist-ssr
 *.local
 .nyc_output
 .eslintcache
+.vscode
 
 coverage
 cypress/screenshots

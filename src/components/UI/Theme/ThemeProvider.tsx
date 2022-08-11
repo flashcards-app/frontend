@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { LocalStorage } from '../../../modules/LocalStorage'
 import { ThemeContext, getInitialTheme } from './ThemeContext'
+import { ThemeProvider as EmotionThemeProvider } from '@emotion/react'
 import type { ThemeName, ThemeProviderOptions } from './types'
 
 
@@ -26,7 +27,9 @@ const ThemeProvider = ({ children }: ThemeProviderOptions): ReactElement => {
 	return (
 		// eslint-disable-next-line react/jsx-no-constructed-context-values -- should be re-rendered every time that values are changed - affects children theme
 		<ThemeContext.Provider value={{ theme, setTheme }}>
-			{children}
+			<EmotionThemeProvider theme={{ isDark: theme === 'dark' }}>
+				{children}
+			</EmotionThemeProvider>
 		</ThemeContext.Provider>
 	)
 }

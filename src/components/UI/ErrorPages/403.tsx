@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useRef, useEffect } from 'react'
-import windowVars from '../../../hooks/WindowVars'
+import windowVars from '../../../hooks/useWindowVars'
 import './403.css'
 import clsx from 'clsx'
 import { HTMLMotionProps, motion } from "framer-motion"

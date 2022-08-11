@@ -4,14 +4,43 @@ import tw from "twin.macro"
 import { isDark } from '..'
 import theme from "../Utils/theme"
 import Portal from "../Portal"
-import { css } from "@emotion/css"
 import { useEffect, useRef, useState } from "react"
 import { motion, HTMLMotionProps } from "framer-motion"
+import styled from "@emotion/styled"
+import { css } from "@emotion/react"
+
+
+interface TooltipDivProps {
+	dark?: boolean,
+	top: number | undefined,
+	left: number | undefined
+}
+
+const TooltipDiv = styled(motion.div)(({ dark, top, left }: TooltipDivProps) => [
+	tw`inline-block rounded shadow-2xl p-1`,
+
+	css`
+		background-color: ${theme.colors.gray_100};
+		color: ${theme.colors.blue_500};
+	`,
+
+	(props) => (dark || props.theme.isDark) && css`
+		color: ${theme.colors.white};
+		background-color: ${theme.colors.dark_200};
+	`,
+
+	css`
+		position: absolute;
+		white-space: nowrap;
+		z-index: ${theme.zIndex.tooltip};
+		top:${top}px;
+		left: ${left}px;
+	`,
+])
 
 
 const defaultProps = {
 	dark:      undefined,
-	placement: 'center-center',
 	offsetX:   15,
 	offsetY:   15,
 }
@@ -30,6 +59,7 @@ const getCoords = (elem: Element) => {
 
 	const top  = box.top + scrollTop - clientTop
 	const left = box.left + scrollLeft - clientLeft
+
 
 	return { top: Math.round(top), left: Math.round(left) }
 }
@@ -90,15 +120,15 @@ interface TooltipProps extends HTMLMotionProps<"div"> {
 	dark?: boolean
 	children: ReactElement
 	tooltip: TFunctionResult | number | string
-	placement?: Placement
+	placement: Placement
 	offsetX?: number
 	offsetY?: number
 }
 
 const Tooltip = (props: TooltipProps & typeof defaultProps) => {
-	const { children, tooltip, placement, className, offsetY, offsetX, ...restProps } = props
+	const { children, tooltip, placement, className, offsetY, offsetX, dark, ...restProps } = props
 
-	const dark                  = props.dark || isDark()
+	const darkMode              = dark || isDark()
 	const [visible, setVisible] = useState(false)
 	const [top, setTop]         = useState<number>()
 	const [left, setLeft]       = useState<number>()
@@ -121,9 +151,14 @@ const Tooltip = (props: TooltipProps & typeof defaultProps) => {
 				offsetY,
 			})
 
+			const tooltipTop = top + (height / 2) - (tooltipHeight / 2) + topOffset
+			const tooltipLeft = left + (width / 2) - (tooltipWidth / 2) + leftOffset
 
-			setTop(() => top + (height / 2) - (tooltipHeight / 2) + topOffset)
-			setLeft(() => left + (width / 2) - (tooltipWidth / 2) + leftOffset)
+			const tooltipTopPreventOverflow  = Math.min(Math.max(tooltipTop, 0), window.innerHeight - tooltipHeight)
+			const tooltipLeftPreventOverflow = Math.min(Math.max(tooltipLeft, 0), window.innerWidth - tooltipWidth)
+
+			setTop(() => tooltipTopPreventOverflow)
+			setLeft(() => tooltipLeftPreventOverflow)
 		}
 	}, [visible])
 
@@ -133,30 +168,14 @@ const Tooltip = (props: TooltipProps & typeof defaultProps) => {
 				{
 					visible
 					&& (
-						<motion.div {...restProps}
-						            ref={tooltipElement}
-						            className={css([
-							            tw`inline-block rounded shadow-2xl p-1`,
-
-							            css`
-								            background-color: ${theme.colors.gray_100};
-								            color: ${theme.colors.blue_500};
-							            `,
-
-							            dark && css`
-								            color: ${theme.colors.white};
-								            background-color: ${theme.colors.dark_200};
-							            `,
-
-							            css`
-								            position: absolute;
-								            z-index: ${theme.zIndex.tooltip};
-								            top: ${top}px;
-								            left: ${left}px;
-							            `,
-						            ])}>
+						<TooltipDiv
+							top={top}
+							left={left}
+							dark={darkMode}
+							{...restProps}
+							ref={tooltipElement}>
 							{tooltip}
-						</motion.div>
+						</TooltipDiv>
 					)
 				}
 			</Portal>
