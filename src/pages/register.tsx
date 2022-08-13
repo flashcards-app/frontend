@@ -1,16 +1,12 @@
 import { Link, useNavigate } from "react-router-dom"
-import { Col, Row } from "../components/UI/Grid"
+import { Button, Col, Row, TextField, theme } from "../components/UI"
 import { authEndpoint } from "../services"
-
 import { useFormik } from "formik"
 import * as Yup from 'yup'
-import TextField from "../components/UI/Form/TextField"
 import TokenStorage from "../modules/TokenStorage"
 import { useEffect } from "react"
-import Button from "../components/UI/Buttons/Button"
 import ApiError from "../modules/ApiError"
 import useErrorsHandler from "../hooks/useErrorsHandler"
-import theme from "../components/UI/Utils/theme"
 
 
 export default () => {

@@ -1,4 +1,4 @@
-import Button from "./UI/Buttons/Button"
+import { Button } from "./UI"
 
 
 const ReportProblem = () => {

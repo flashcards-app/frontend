@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { FormikProps } from "formik"
 
 
@@ -8,7 +8,7 @@ const useFormikGeneralError: UseFormikGeneralErrorProps = (formik, initialState)
 	const [generalError, setGeneralError] = useState(initialState)
 
 	useEffect(() => {
-		setGeneralError('')
+		if (generalError) setGeneralError('')
 	}, [formik.values])
 
 	return [generalError, setGeneralError]

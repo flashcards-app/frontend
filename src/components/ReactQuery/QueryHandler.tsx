@@ -19,7 +19,6 @@ interface LoadingComponents {
 interface QueryHandlerProps<LoadingComponent extends keyof typeof loadingComponents> {
 	children: ReactElement | undefined
 	status: QueryStatus
-	animateLoading?: boolean
 	loadingComponent?: LoadingComponent
 	loadingComponentProps?: LoadingComponent extends keyof LoadingComponents ? LoadingComponents[LoadingComponent] : never
 }
@@ -27,14 +26,12 @@ interface QueryHandlerProps<LoadingComponent extends keyof typeof loadingCompone
 
 const defaultProps = {
 	loadingComponent:      'spinner',
-	loadingComponentProps: {},
-	animateLoading:        true,
+	loadingComponentProps: {}
 }
 
 const QueryHandler = <LoadingComponent extends keyof typeof loadingComponents = "spinner">({
 	children,
 	status,
-	animateLoading,
 	loadingComponent,
 	loadingComponentProps,
 }: QueryHandlerProps<LoadingComponent> & typeof defaultProps) => {
@@ -42,14 +39,7 @@ const QueryHandler = <LoadingComponent extends keyof typeof loadingComponents = 
 
 	return (
 		<>
-			{animateLoading && (
-					<ConditionalAnimation condition={status === 'loading'}
-					                      instantEntrance
-					                      timeout={300}>
-						<LoadingComponent {...loadingComponentProps}/>
-					</ConditionalAnimation>
-				)}
-			{!animateLoading && status === 'loading' && <LoadingComponent {...loadingComponentProps}/>}
+			{status === 'loading' && <LoadingComponent {...loadingComponentProps}/>}
 			{status === 'error' && <div>It&apos;s seems that some error has been occurred</div>}
 			{status === 'success' && children}
 		</>

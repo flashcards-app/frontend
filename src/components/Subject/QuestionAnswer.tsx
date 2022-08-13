@@ -1,13 +1,9 @@
-import { Col, Row } from "../UI/Grid"
-import Label from "../UI/Form/Label"
-import Button from "../UI/Buttons/Button"
+import { Col, Row, Label, Button, Card, Tooltip } from "../UI"
 import { useEffect, useRef } from "react"
 import { QuestionGetResult } from "../../services/Questions/types"
 import autoAnimate from "@formkit/auto-animate"
 import { css } from "@emotion/css"
 import tw from "twin.macro"
-import Card from "../UI/Cards/Card"
-import Tooltip from "../UI/Tooltip/Tooltip"
 
 
 interface QuestionAnswerProps {
@@ -52,7 +48,7 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 			<Row
 				ref={actionsRowRef}
 				className="w-full justify-around lg:px-10 xs:px-2">
-				<Col justify="center" cols={1}>
+				<Col className="w-[45px]" justify="center">
 					{currentQuestionIndex > 0 && (
 						<Tooltip tooltip="לשאלה הקודמת" placement="center-left">
 							<Button
@@ -66,7 +62,7 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 					)}
 				</Col>
 
-				<Col className="mx-4 my-2" align="center" cols={10}>
+				<Col className="mx-4 my-2" align="center">
 					<Button
 						className={css`${tw`w-40 mx-auto my-auto mx-2`}`}
 						disabled={showAns}
@@ -75,7 +71,7 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 					</Button>
 				</Col>
 
-				<Col justify="center" cols={1}>
+				<Col className="w-[45px]" justify="center">
 					{showAns && (
 						<Tooltip tooltip="לשאלה הבאה" placement="center-right">
 							<Button

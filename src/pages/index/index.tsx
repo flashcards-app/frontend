@@ -1,11 +1,5 @@
-import { Col, Row } from "../../components/UI/Grid"
+import { Col, Row, ThemeToggle, Typography, LinkButton, Tooltip, IconButton, theme } from "../../components/UI"
 import questionsImage from "../../assets/question.jpg"
-import Typography from "../../components/UI/Typograpy"
-import theme from "../../components/UI/Utils/theme"
-import LinkButton from "../../components/UI/Buttons/LinkButton"
-import Tooltip from "../../components/UI/Tooltip/Tooltip"
-import IconButton from "../../components/UI/Buttons/IconButton"
-import ThemeToggle from "../../components/UI/Theme/ThemeToggle"
 import { useNavigate } from "react-router-dom"
 import { authEndpoint } from "../../services"
 import TokenStorage from "../../modules/TokenStorage"
@@ -32,7 +26,7 @@ export default () => {
 					<img className="h-[100vh] object-cover origin-right"
 					     width={windowWidth < theme.screens.xl ? windowWidth / 2 : undefined}
 					     src={questionsImage}
-						alt=""/>
+					     alt=""/>
 				)
 			}
 

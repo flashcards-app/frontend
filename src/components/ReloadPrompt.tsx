@@ -1,5 +1,5 @@
 import { useRegisterSW } from 'virtual:pwa-register/react'
-import Button from './UI/Buttons/Button'
+import { Card, Button } from "./UI"
 
 
 const ReloadPrompt = () => {
@@ -25,8 +25,10 @@ const ReloadPrompt = () => {
 				&& (
 					<div className="fixed w-full h-full">
 						<div className="absolute w-full h-full">
-							<div
-								className="alert shadow-lg alert bg-white dark:bg-dark-200 opacity-90 absolute w-100 h-20 right-0 bottom-0 mb-5 mr-7">
+							<Card
+								width="500px"
+								height="60px"
+								className="alert shadow-lg opacity-90 absolute right-0 bottom-0 mb-5 mr-7">
 								<div>
 									{
 										offlineReady ? <span>App ready to work offline</span>
@@ -42,7 +44,7 @@ const ReloadPrompt = () => {
 								<Button onClick={() => close()}>
 									Close
 								</Button>
-							</div>
+							</Card>
 						</div>
 					</div>
 				)}
