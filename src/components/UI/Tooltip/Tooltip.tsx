@@ -4,10 +4,12 @@ import tw from "twin.macro"
 import { isDark } from '..'
 import theme from "../Utils/theme"
 import Portal from "../Portal"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { motion, HTMLMotionProps } from "framer-motion"
 import styled from "@emotion/styled"
 import { css } from "@emotion/react"
+import useIsMobile from "../../../hooks/useIsMobile"
+import { LongPressDetectEvents, useLongPress } from "use-long-press"
 
 
 interface TooltipDivProps {
@@ -33,16 +35,18 @@ const TooltipDiv = styled(motion.div)(({ dark, top, left }: TooltipDivProps) => 
 		position: absolute;
 		white-space: nowrap;
 		z-index: ${theme.zIndex.tooltip};
-		top:${top}px;
+		top: ${top}px;
 		left: ${left}px;
 	`,
 ])
 
 
 const defaultProps = {
-	dark:      undefined,
-	offsetX:   15,
-	offsetY:   15,
+	dark:            undefined,
+	offsetX:         15,
+	offsetY:         15,
+	mobileTimeout:   1200,
+	mobileThreshold: 700
 }
 
 const getCoords = (elem: Element) => {
@@ -123,10 +127,15 @@ interface TooltipProps extends HTMLMotionProps<"div"> {
 	placement: Placement
 	offsetX?: number
 	offsetY?: number
+	mobileTimeout?: number
+	mobileThreshold?: number
 }
 
 const Tooltip = (props: TooltipProps & typeof defaultProps) => {
+	const isMobile = useIsMobile()
+
 	const { children, tooltip, placement, className, offsetY, offsetX, dark, ...restProps } = props
+
 
 	const darkMode              = dark || isDark()
 	const [visible, setVisible] = useState(false)
@@ -135,6 +144,23 @@ const Tooltip = (props: TooltipProps & typeof defaultProps) => {
 	const elementWrapper        = useRef<HTMLDivElement>(null)
 	const tooltipElement        = useRef<HTMLDivElement>(null)
 
+	const callback = useCallback(() => {
+		setVisible(true)
+	}, [])
+
+	const longPress = useLongPress(callback, {
+		onFinish:         () => {
+			if (isMobile) {
+				setTimeout(() => {
+					setVisible(false)
+				}, 1000)
+			}
+		},
+		threshold:        500,
+		captureEvent:     true,
+		cancelOnMovement: false,
+		detect:           LongPressDetectEvents.BOTH
+	})
 
 	useEffect(() => {
 		if (elementWrapper.current && tooltipElement.current) {
@@ -151,7 +177,7 @@ const Tooltip = (props: TooltipProps & typeof defaultProps) => {
 				offsetY,
 			})
 
-			const tooltipTop = top + (height / 2) - (tooltipHeight / 2) + topOffset
+			const tooltipTop  = top + (height / 2) - (tooltipHeight / 2) + topOffset
 			const tooltipLeft = left + (width / 2) - (tooltipWidth / 2) + leftOffset
 
 			const tooltipTopPreventOverflow  = Math.min(Math.max(tooltipTop, 0), window.innerHeight - tooltipHeight)
@@ -181,8 +207,9 @@ const Tooltip = (props: TooltipProps & typeof defaultProps) => {
 			</Portal>
 			<div ref={elementWrapper}
 			     className="w-fit"
-			     onMouseEnter={() => setVisible(true)}
-			     onMouseLeave={() => setVisible(false)}>
+			     onMouseEnter={() => !isMobile && setVisible(true)}
+			     {...longPress()}
+			     onMouseLeave={() => !isMobile && setVisible(false)}>
 				{children}
 			</div>
 		</>
