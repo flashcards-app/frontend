@@ -8,7 +8,6 @@ import ApiError from "../modules/ApiError"
 import { Col, Row, TextField, FormButton,theme } from "../components/UI"
 import useErrorsHandler from "../hooks/useErrorsHandler"
 import useFormikGeneralError from "../hooks/useFormikGeneralError"
-import theme from "../components/UI/Utils/theme"
 
 
 const useLoginFormik = () => {

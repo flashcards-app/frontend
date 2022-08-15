@@ -12,6 +12,8 @@ import useIsMobile from "../../../hooks/useIsMobile"
 import { LongPressDetectEvents, useLongPress } from "use-long-press"
 
 
+type Placement = `${'top' | 'bottom' | 'center'}-${'left' | 'right' | 'center'}`
+
 interface TooltipDivProps {
 	dark?: boolean,
 	top: number | undefined,
@@ -50,25 +52,20 @@ const defaultProps = {
 }
 
 const getCoords = (elem: Element) => {
-	const box = elem.getBoundingClientRect()
+	const box                       = elem.getBoundingClientRect()
+	const { body, documentElement } = document
 
-	const { body } = document
-	const docEl    = document.documentElement
+	const scrollTop  = documentElement.scrollTop || body.scrollTop
+	const scrollLeft = documentElement.scrollLeft || body.scrollLeft
 
-	const scrollTop  = docEl.scrollTop || body.scrollTop
-	const scrollLeft = docEl.scrollLeft || body.scrollLeft
+	const clientTop  = documentElement.clientTop || body.clientTop
+	const clientLeft = documentElement.clientLeft || body.clientLeft
 
-	const clientTop  = docEl.clientTop || body.clientTop
-	const clientLeft = docEl.clientLeft || body.clientLeft
+	const top  = Math.round(box.top + scrollTop - clientTop)
+	const left = Math.round(box.left + scrollLeft - clientLeft)
 
-	const top  = box.top + scrollTop - clientTop
-	const left = box.left + scrollLeft - clientLeft
-
-
-	return { top: Math.round(top), left: Math.round(left) }
+	return { top, left }
 }
-
-type Placement = `${'top' | 'bottom' | 'center'}-${'left' | 'right' | 'center'}`
 
 interface CalcPlacementProps {
 	placement: Placement
@@ -80,42 +77,18 @@ interface CalcPlacementProps {
 	offsetY: number
 }
 
-const calcPlacement = ({
-	placement,
-	elementWidth,
-	elementHeight,
-	tooltipWidth,
-	tooltipHeight,
-	offsetX,
-	offsetY,
-}: CalcPlacementProps): { top: number, left: number } => {
-	let top
-	let left
+type CalcPlacement = (props: CalcPlacementProps) => { top: number, left: number }
+
+const calcPlacement: CalcPlacement = ({ placement, elementWidth, elementHeight, tooltipWidth, tooltipHeight, offsetX, offsetY, }) => {
+	let top            = 0
+	let left           = 0
 	const placementArr = placement.split('-')
 
-	switch (placementArr[0]) {
-	case 'top':
-		top = -(((elementHeight + tooltipHeight) / 2) + (offsetX))
-		break
-	case 'bottom':
-		top = (((elementHeight + tooltipHeight) / 2) + (offsetX))
-		break
-	default:
-		top = 0
-		break
-	}
+	if (placementArr[0] === 'top') top = -(((elementHeight + tooltipHeight) / 2) + (offsetX))
+	if (placementArr[0] === 'bottom') top = ((elementHeight + tooltipHeight) / 2) + (offsetX)
 
-	switch (placementArr[1]) {
-	case 'left':
-		left = -(((elementWidth + tooltipWidth) / 2) + (offsetY))
-		break
-	case 'right':
-		left = (((elementWidth + tooltipWidth) / 2) + (offsetY))
-		break
-	default:
-		left = 0
-		break
-	}
+	if (placementArr[1] === 'left') left = -(((elementWidth + tooltipWidth) / 2) + (offsetY))
+	if (placementArr[1] === 'right') left = ((elementWidth + tooltipWidth) / 2) + (offsetY)
 
 	return { left, top }
 }
