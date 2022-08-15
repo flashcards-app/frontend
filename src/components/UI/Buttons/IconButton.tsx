@@ -1,7 +1,8 @@
 import styled from "@emotion/styled"
-import tw, { css } from "twin.macro"
-import theme from "../Utils/theme"
 import { HTMLMotionProps, motion } from "framer-motion"
+import tw, { css } from "twin.macro"
+
+import theme from "../Utils/theme"
 
 
 export interface IconButtonProps extends HTMLMotionProps<"button"> {

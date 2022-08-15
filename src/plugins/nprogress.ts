@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router'
+
 import NProgress from 'nprogress'
+import { useLocation } from 'react-router'
 
 
 export default (): void => {

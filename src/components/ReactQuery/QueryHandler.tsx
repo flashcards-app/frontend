@@ -1,6 +1,8 @@
 import type { ComponentProps, FC, ReactElement } from 'react'
-import ProgressSpinner from '../UI/Progress/ProgressSpinner'
+
 import { QueryStatus } from "react-query"
+
+import ProgressSpinner from '../UI/Progress/ProgressSpinner'
 import Skeleton from "../UI/Skeleton"
 
 
@@ -25,7 +27,7 @@ interface QueryHandlerProps<LoadingComponent extends keyof typeof loadingCompone
 
 const defaultProps = {
 	loadingComponent:      'spinner',
-	loadingComponentProps: {}
+	loadingComponentProps: {},
 }
 
 const QueryHandler = <LoadingComponent extends keyof typeof loadingComponents = "spinner">({

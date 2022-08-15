@@ -1,7 +1,8 @@
 import { createContext } from 'react'
+
 import { LocalStorage } from '../../../modules/LocalStorage'
-import type { ThemeContextType, ThemeName } from './types'
 import { Vars } from '../../../modules/vars'
+import type { ThemeContextType, ThemeName } from './types'
 
 
 export const getInitialTheme = (): ThemeName => {

@@ -1,15 +1,17 @@
 import type { ReactElement } from 'react'
+import { useCallback, useEffect, useRef, useState } from "react"
+
+import { css } from "@emotion/react"
+import styled from "@emotion/styled"
+import { motion, HTMLMotionProps } from "framer-motion"
 import type { TFunctionResult } from 'i18next'
 import tw from "twin.macro"
-import { isDark } from '..'
-import theme from "../Utils/theme"
-import Portal from "../Portal"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { motion, HTMLMotionProps } from "framer-motion"
-import styled from "@emotion/styled"
-import { css } from "@emotion/react"
-import useIsMobile from "../../../hooks/useIsMobile"
 import { LongPressDetectEvents, useLongPress } from "use-long-press"
+
+import { isDark } from '..'
+import useIsMobile from "../../../hooks/useIsMobile"
+import Portal from "../Portal"
+import theme from "../Utils/theme"
 
 
 type Placement = `${'top' | 'bottom' | 'center'}-${'left' | 'right' | 'center'}`
@@ -48,7 +50,7 @@ const defaultProps = {
 	offsetX:         15,
 	offsetY:         15,
 	mobileTimeout:   1200,
-	mobileThreshold: 700
+	mobileThreshold: 700,
 }
 
 const getCoords = (elem: Element) => {
@@ -79,7 +81,7 @@ interface CalcPlacementProps {
 
 type CalcPlacement = (props: CalcPlacementProps) => { top: number, left: number }
 
-const calcPlacement: CalcPlacement = ({ placement, elementWidth, elementHeight, tooltipWidth, tooltipHeight, offsetX, offsetY, }) => {
+const calcPlacement: CalcPlacement = ({ placement, elementWidth, elementHeight, tooltipWidth, tooltipHeight, offsetX, offsetY }) => {
 	let top            = 0
 	let left           = 0
 	const placementArr = placement.split('-')
@@ -132,7 +134,7 @@ const Tooltip = (props: TooltipProps & typeof defaultProps) => {
 		threshold:        500,
 		captureEvent:     true,
 		cancelOnMovement: false,
-		detect:           LongPressDetectEvents.BOTH
+		detect:           LongPressDetectEvents.BOTH,
 	})
 
 	useEffect(() => {

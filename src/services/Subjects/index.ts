@@ -1,10 +1,11 @@
-import ApiUrlService, { ApiUrlServiceProps } from "../../modules/ApiUrlService"
+import { AxiosResponse } from "axios"
+import { useQuery, UseQueryOptions } from "react-query"
+
 import ApiError from "../../modules/ApiError"
+import ApiUrlService, { ApiUrlServiceProps } from "../../modules/ApiUrlService"
 import Subject from "../../modules/Entities/Subject"
 import TokenStorage from "../../modules/TokenStorage"
 import { TransformedSubject } from "./types"
-import { useQuery, UseQueryOptions } from "react-query"
-import { AxiosResponse } from "axios"
 
 
 const defaultQueryConfig: UseQueryOptions = {}

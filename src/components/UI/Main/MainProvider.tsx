@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { ReactElement } from 'react'
+
 import { defaultMainData, MainContext } from './MainContext'
 import type { MainProviderOptions } from './types'
 

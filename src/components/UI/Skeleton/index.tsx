@@ -1,8 +1,9 @@
+import { css } from "@emotion/react"
 import styled from "@emotion/styled"
 import { motion } from "framer-motion"
-import { css } from "@emotion/react"
-import theme from "../Utils/theme"
 import tw from "twin.macro"
+
+import theme from "../Utils/theme"
 
 
 export interface SkeletonProps {

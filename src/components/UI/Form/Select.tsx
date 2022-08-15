@@ -1,20 +1,22 @@
 import { useEffect, useRef, useState } from "react"
-import HelperText from "./HelperText"
-import theme from "../Utils/theme"
-import { isDark } from '..'
+
+import { css } from "@emotion/css"
+import clsx from "clsx"
+import { FormikErrors } from "formik"
+import { HTMLMotionProps, motion } from "framer-motion"
+import produce from "immer"
 import Select, {
 	defaultTheme, ControlProps, components, DropdownIndicatorProps, SingleValueProps, ContainerProps, MenuProps, Props, OptionProps,
 	LoadingIndicatorProps,
 } from "react-select"
-import { css } from "@emotion/css"
-import { conditionalRotate } from "../Utils/utils"
-import { transformTransition } from "../Utils/transitions"
-import produce from "immer"
-import Label from "./Label"
 import tw from "twin.macro"
-import clsx from "clsx"
-import { FormikErrors } from "formik"
-import { HTMLMotionProps, motion } from "framer-motion"
+
+import { isDark } from '..'
+import theme from "../Utils/theme"
+import { transformTransition } from "../Utils/transitions"
+import { conditionalRotate } from "../Utils/utils"
+import HelperText from "./HelperText"
+import Label from "./Label"
 
 
 const DropdownIndicator = (props: DropdownIndicatorProps<any>) => {
@@ -24,11 +26,11 @@ const DropdownIndicator = (props: DropdownIndicatorProps<any>) => {
 		<components.DropdownIndicator {...props}>
 			<div className={css`
 				${[
-					theme.transitions([transformTransition('300ms')]),
-					theme.transforms([
-						conditionalRotate(isFocused, 180),
-					]),
-				]}
+			theme.transitions([transformTransition('300ms')]),
+			theme.transforms([
+				conditionalRotate(isFocused, 180),
+			]),
+		]}
 			`}>
 				<IconIonChevronDown/>
 			</div>
@@ -37,11 +39,13 @@ const DropdownIndicator = (props: DropdownIndicatorProps<any>) => {
 }
 
 const LoadingIndicator = (props: LoadingIndicatorProps) => {
-	return <components.LoadingIndicator
-		{...props}
-		theme={produce(props.theme, (draft) => {
-			draft.colors.neutral20   = theme.colors.gray_400
-		})}/>
+	return (
+		<components.LoadingIndicator
+			{...props}
+			theme={produce(props.theme, (draft) => {
+				draft.colors.neutral20   = theme.colors.gray_400
+			})}/>
+	)
 }
 
 const SingleValue = (props: SingleValueProps<any>) => {

@@ -1,15 +1,17 @@
 import { useEffect } from 'react'
-import { defaultMainData } from '../Main/MainContext'
-import windowVariables from '../../../hooks/useWindowVars'
+
+import { css } from "@emotion/react"
+import styled from "@emotion/styled"
 import clsx from 'clsx'
-import { useMain } from "../../../context"
+import { HTMLMotionProps, motion } from "framer-motion"
 import tw from "twin.macro"
+
+import { useMain } from "../../../context"
+import windowVariables from '../../../hooks/useWindowVars'
+import { defaultMainData } from '../Main/MainContext'
 import theme from "../Utils/theme"
 import { transformTransition } from "../Utils/transitions"
 import { conditionalTranslate } from "../Utils/utils"
-import styled from "@emotion/styled"
-import { HTMLMotionProps, motion } from "framer-motion"
-import { css } from "@emotion/react"
 
 
 interface SideBarProps extends HTMLMotionProps<"nav"> {

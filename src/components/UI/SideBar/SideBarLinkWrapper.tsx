@@ -1,7 +1,8 @@
-import { defaultMainData } from '../Main/MainContext'
-import windowVariables from '../../../hooks/useWindowVars'
-import { useMain } from "../../../context"
 import { HTMLMotionProps, motion } from "framer-motion"
+
+import { useMain } from "../../../context"
+import windowVariables from '../../../hooks/useWindowVars'
+import { defaultMainData } from '../Main/MainContext'
 
 
 const { sideBarOpts: defaultSideBarOptions } = defaultMainData

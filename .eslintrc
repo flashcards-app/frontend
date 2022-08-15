@@ -146,7 +146,25 @@
 		"@typescript-eslint/prefer-nullish-coalescing": "off",
 		"import/no-deprecated": "error",
 		"import/no-cycle": "off",
-		"import/order": "off",
+		"import/order": [
+			"error",
+			{
+				"groups": ["builtin", "external", "internal"],
+				"pathGroups": [
+					{
+						"pattern": "react",
+						"group": "external",
+						"position": "before"
+					}
+				],
+				"pathGroupsExcludedImportTypes": ["react"],
+				"newlines-between": "always",
+				"alphabetize": {
+					"order": "asc",
+					"caseInsensitive": true
+				}
+			}
+		],
 		"import/no-absolute-path": "off",
 		"import/no-extraneous-dependencies": "off",
 		"react/jsx-no-undef": "off",

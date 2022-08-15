@@ -1,9 +1,11 @@
-import { Col, Row, Label, Button, Card, Tooltip } from "../UI"
 import { useEffect, useRef } from "react"
-import { QuestionGetResult } from "../../services/Questions/types"
-import autoAnimate from "@formkit/auto-animate"
+
 import { css } from "@emotion/css"
+import autoAnimate from "@formkit/auto-animate"
 import tw from "twin.macro"
+
+import { QuestionGetResult } from "../../services/Questions/types"
+import { Col, Row, Label, Button, Card, Tooltip } from "../UI"
 
 
 interface QuestionAnswerProps {

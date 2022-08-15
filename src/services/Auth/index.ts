@@ -1,8 +1,9 @@
-import ApiUrlService, { ApiUrlServiceProps } from '../../modules/ApiUrlService'
-import { LoginResult, LogoutResult, RefreshToken, RegisterResult } from "./types"
-import TokenStorage from "../../modules/TokenStorage"
-import ApiError from "../../modules/ApiError"
 import { AxiosResponse } from "axios"
+
+import ApiError from "../../modules/ApiError"
+import ApiUrlService, { ApiUrlServiceProps } from '../../modules/ApiUrlService'
+import TokenStorage from "../../modules/TokenStorage"
+import { LoginResult, LogoutResult, RefreshToken, RegisterResult } from "./types"
 
 
 export default class Auth extends ApiUrlService {

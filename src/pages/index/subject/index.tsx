@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom"
 import { subjectsEndpoint } from "services"
-import { Col, Row, Tooltip, Typography,Button, theme } from "../../../components/UI"
+
 import QueryHandler from "../../../components/ReactQuery/QueryHandler"
+import { Col, Row, Tooltip, Typography, Button, theme } from "../../../components/UI"
 
 
 export default () => {

@@ -1,9 +1,10 @@
 import "./500.css"
 import { useEffect } from "react"
+
 import { css } from "@emotion/css"
-import tw from "twin.macro"
 import clsx from "clsx"
 import { HTMLMotionProps, motion } from "framer-motion"
+import tw from "twin.macro"
 
 function randomIntFromInterval(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min + 1) + min)

@@ -1,8 +1,9 @@
 import i18n from "i18next"
-import Tooltip from "./Tooltip"
-import { convertToElId } from "../../../modules/Util"
-import NumberFormat from "react-number-format"
 import millify from "millify"
+import NumberFormat from "react-number-format"
+
+import { convertToElId } from "../../../modules/Util"
+import Tooltip from "./Tooltip"
 
 
 interface NumberTooltipProps {

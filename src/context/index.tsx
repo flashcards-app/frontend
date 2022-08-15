@@ -1,9 +1,10 @@
 import { FC, ReactElement, useContext } from "react"
-import ThemeProvider from "../components/UI/Theme/ThemeProvider"
-import MainProvider from "../components/UI/Main/MainProvider"
-import CombineComponents from "./CombineComponents"
+
 import { MainContext } from "../components/UI/Main/MainContext"
+import MainProvider from "../components/UI/Main/MainProvider"
 import { ThemeContext } from "../components/UI/Theme/ThemeContext"
+import ThemeProvider from "../components/UI/Theme/ThemeProvider"
+import CombineComponents from "./CombineComponents"
 
 
 export interface ProvidersProps {

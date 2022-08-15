@@ -1,6 +1,7 @@
 import styled from "@emotion/styled"
-import tw from "twin.macro"
 import { motion } from "framer-motion"
+import tw from "twin.macro"
+
 import theme from "../Utils/theme"
 
 

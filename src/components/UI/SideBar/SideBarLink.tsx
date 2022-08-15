@@ -1,10 +1,10 @@
+import styled from "@emotion/styled"
+import clsx from 'clsx'
+import { motion } from "framer-motion"
+import i18n from 'i18next'
 import type { LinkProps } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import i18n from 'i18next'
-import clsx from 'clsx'
-import styled from "@emotion/styled"
 import tw, { css } from "twin.macro"
-import { motion } from "framer-motion"
 
 
 const LinkWrapper = styled(motion.div)(({ dir }: { dir?: string }) => [
