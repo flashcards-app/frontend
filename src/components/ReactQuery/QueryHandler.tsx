@@ -2,7 +2,6 @@ import type { ComponentProps, FC, ReactElement } from 'react'
 import ProgressSpinner from '../UI/Progress/ProgressSpinner'
 import { QueryStatus } from "react-query"
 import Skeleton from "../UI/Skeleton"
-import ConditionalAnimation from "../UI/Animation/ConditionalAnimation"
 
 
 const loadingComponents: Record<string, FC> = {

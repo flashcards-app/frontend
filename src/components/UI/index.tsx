@@ -39,7 +39,7 @@ export {default as Tab} from './Tabs/Tab'
 export {default as ThemeProvider} from './Theme/ThemeProvider'
 export {default as ThemeToggle} from './Theme/ThemeToggle'
 export {default as Tooltip} from './Tooltip/Tooltip'
-export {default as Typography} from './Typograpy'
+export {default as Typography} from './Typograpy/Typogrphy'
 export {default as theme} from './Utils/theme'
 
 

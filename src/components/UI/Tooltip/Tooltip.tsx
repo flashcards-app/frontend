@@ -4,11 +4,15 @@ import tw from "twin.macro"
 import { isDark } from '..'
 import theme from "../Utils/theme"
 import Portal from "../Portal"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { motion, HTMLMotionProps } from "framer-motion"
 import styled from "@emotion/styled"
 import { css } from "@emotion/react"
+import useIsMobile from "../../../hooks/useIsMobile"
+import { LongPressDetectEvents, useLongPress } from "use-long-press"
 
+
+type Placement = `${'top' | 'bottom' | 'center'}-${'left' | 'right' | 'center'}`
 
 interface TooltipDivProps {
 	dark?: boolean,
@@ -33,38 +37,35 @@ const TooltipDiv = styled(motion.div)(({ dark, top, left }: TooltipDivProps) => 
 		position: absolute;
 		white-space: nowrap;
 		z-index: ${theme.zIndex.tooltip};
-		top:${top}px;
+		top: ${top}px;
 		left: ${left}px;
 	`,
 ])
 
 
 const defaultProps = {
-	dark:      undefined,
-	offsetX:   15,
-	offsetY:   15,
+	dark:            undefined,
+	offsetX:         15,
+	offsetY:         15,
+	mobileTimeout:   1200,
+	mobileThreshold: 700
 }
 
 const getCoords = (elem: Element) => {
-	const box = elem.getBoundingClientRect()
+	const box                       = elem.getBoundingClientRect()
+	const { body, documentElement } = document
 
-	const { body } = document
-	const docEl    = document.documentElement
+	const scrollTop  = documentElement.scrollTop || body.scrollTop
+	const scrollLeft = documentElement.scrollLeft || body.scrollLeft
 
-	const scrollTop  = docEl.scrollTop || body.scrollTop
-	const scrollLeft = docEl.scrollLeft || body.scrollLeft
+	const clientTop  = documentElement.clientTop || body.clientTop
+	const clientLeft = documentElement.clientLeft || body.clientLeft
 
-	const clientTop  = docEl.clientTop || body.clientTop
-	const clientLeft = docEl.clientLeft || body.clientLeft
+	const top  = Math.round(box.top + scrollTop - clientTop)
+	const left = Math.round(box.left + scrollLeft - clientLeft)
 
-	const top  = box.top + scrollTop - clientTop
-	const left = box.left + scrollLeft - clientLeft
-
-
-	return { top: Math.round(top), left: Math.round(left) }
+	return { top, left }
 }
-
-type Placement = `${'top' | 'bottom' | 'center'}-${'left' | 'right' | 'center'}`
 
 interface CalcPlacementProps {
 	placement: Placement
@@ -76,42 +77,18 @@ interface CalcPlacementProps {
 	offsetY: number
 }
 
-const calcPlacement = ({
-	placement,
-	elementWidth,
-	elementHeight,
-	tooltipWidth,
-	tooltipHeight,
-	offsetX,
-	offsetY,
-}: CalcPlacementProps): { top: number, left: number } => {
-	let top
-	let left
+type CalcPlacement = (props: CalcPlacementProps) => { top: number, left: number }
+
+const calcPlacement: CalcPlacement = ({ placement, elementWidth, elementHeight, tooltipWidth, tooltipHeight, offsetX, offsetY, }) => {
+	let top            = 0
+	let left           = 0
 	const placementArr = placement.split('-')
 
-	switch (placementArr[0]) {
-	case 'top':
-		top = -(((elementHeight + tooltipHeight) / 2) + (offsetX))
-		break
-	case 'bottom':
-		top = (((elementHeight + tooltipHeight) / 2) + (offsetX))
-		break
-	default:
-		top = 0
-		break
-	}
+	if (placementArr[0] === 'top') top = -(((elementHeight + tooltipHeight) / 2) + (offsetX))
+	if (placementArr[0] === 'bottom') top = ((elementHeight + tooltipHeight) / 2) + (offsetX)
 
-	switch (placementArr[1]) {
-	case 'left':
-		left = -(((elementWidth + tooltipWidth) / 2) + (offsetY))
-		break
-	case 'right':
-		left = (((elementWidth + tooltipWidth) / 2) + (offsetY))
-		break
-	default:
-		left = 0
-		break
-	}
+	if (placementArr[1] === 'left') left = -(((elementWidth + tooltipWidth) / 2) + (offsetY))
+	if (placementArr[1] === 'right') left = ((elementWidth + tooltipWidth) / 2) + (offsetY)
 
 	return { left, top }
 }
@@ -123,10 +100,15 @@ interface TooltipProps extends HTMLMotionProps<"div"> {
 	placement: Placement
 	offsetX?: number
 	offsetY?: number
+	mobileTimeout?: number
+	mobileThreshold?: number
 }
 
 const Tooltip = (props: TooltipProps & typeof defaultProps) => {
+	const isMobile = useIsMobile()
+
 	const { children, tooltip, placement, className, offsetY, offsetX, dark, ...restProps } = props
+
 
 	const darkMode              = dark || isDark()
 	const [visible, setVisible] = useState(false)
@@ -135,6 +117,23 @@ const Tooltip = (props: TooltipProps & typeof defaultProps) => {
 	const elementWrapper        = useRef<HTMLDivElement>(null)
 	const tooltipElement        = useRef<HTMLDivElement>(null)
 
+	const callback = useCallback(() => {
+		setVisible(true)
+	}, [])
+
+	const longPress = useLongPress(callback, {
+		onFinish:         () => {
+			if (isMobile) {
+				setTimeout(() => {
+					setVisible(false)
+				}, 1000)
+			}
+		},
+		threshold:        500,
+		captureEvent:     true,
+		cancelOnMovement: false,
+		detect:           LongPressDetectEvents.BOTH
+	})
 
 	useEffect(() => {
 		if (elementWrapper.current && tooltipElement.current) {
@@ -151,7 +150,7 @@ const Tooltip = (props: TooltipProps & typeof defaultProps) => {
 				offsetY,
 			})
 
-			const tooltipTop = top + (height / 2) - (tooltipHeight / 2) + topOffset
+			const tooltipTop  = top + (height / 2) - (tooltipHeight / 2) + topOffset
 			const tooltipLeft = left + (width / 2) - (tooltipWidth / 2) + leftOffset
 
 			const tooltipTopPreventOverflow  = Math.min(Math.max(tooltipTop, 0), window.innerHeight - tooltipHeight)
@@ -181,8 +180,9 @@ const Tooltip = (props: TooltipProps & typeof defaultProps) => {
 			</Portal>
 			<div ref={elementWrapper}
 			     className="w-fit"
-			     onMouseEnter={() => setVisible(true)}
-			     onMouseLeave={() => setVisible(false)}>
+			     onMouseEnter={() => !isMobile && setVisible(true)}
+			     {...longPress()}
+			     onMouseLeave={() => !isMobile && setVisible(false)}>
 				{children}
 			</div>
 		</>
