@@ -27,7 +27,6 @@ const refreshTokenHandler = () => {
 			const originalRequest = error.config
 			const status = error.response ? error.response.status : null
 
-
 			// Logout user if token refresh didn't work or user is disabled
 			if (error.config.url?.includes('v1/auth/refresh-token') || error.response?.data?.message === 'Account is disabled.') {
 				TokenStorage.clearUserData()
@@ -47,10 +46,10 @@ const refreshTokenHandler = () => {
 
 
 			if (!originalRequest._retry && status === 401) {
-				originalRequest._retry                = true
-				const token                           = await TokenStorage.getNewToken()
+				originalRequest._retry = true
+				const token = await TokenStorage.getNewToken()
 				originalRequest.headers.Authorization = `Bearer ${token}`
-				originalRequest.baseURL               = undefined
+				originalRequest.baseURL = undefined
 
 				return axios.request(originalRequest)
 			}

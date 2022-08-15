@@ -52,8 +52,7 @@ export default defineConfig({
 		AutoImport({
 			resolvers: [
 				IconsResolver({
-					prefix:    'Icon',
-					extension: 'jsx'
+					componentPrefix: 'Icon',
 				})
 			],
 			include:   [
@@ -103,6 +102,7 @@ export default defineConfig({
 			includeAssets: [
 				'favicon.svg',
 				'locales/**/*.yaml',
+				'assets/**/*',
 				'apple-touch-icon.png'
 			],
 			manifest:      {

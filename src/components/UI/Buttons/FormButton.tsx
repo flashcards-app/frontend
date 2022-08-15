@@ -15,9 +15,9 @@ interface FormButtonProps extends ButtonProps {
 	centered?: boolean
 }
 
-const ButtonWrapper = styled(motion.div)(({ dark, centered }: { dark?: boolean, centered?: boolean }) => [
+const ButtonWrapper = styled(motion.div)(({ centered }: { centered?: boolean }) => [
 	tw`flex flex-col w-full`,
-	centered && tw`items-center`
+	centered && tw`items-center`,
 ])
 
 const FormButton = (props: FormButtonProps) => {
@@ -30,24 +30,32 @@ const FormButton = (props: FormButtonProps) => {
 	}, [buttonWrapperRef])
 
 	return (
-		<ButtonWrapper{...{ dark, centered }} ref={buttonWrapperRef}>
+		<ButtonWrapper {...{ dark, centered }} ref={buttonWrapperRef}>
 			{
-				helperText &&
-				<HelperText className="text-center" {...{ error }}>
-					{helperText}
-				</HelperText>
+				helperText
+				&& (
+					<HelperText className="text-center" {...{ error }}>
+						{helperText}
+					</HelperText>
+				)
 			}
 			<Button {...restProps}
 			        {...{ dark }}
 			        className={`${
 				        css`
-					        ${!!helperText ? tw`!mt-0` : tw`!mt-6`}
+					        ${helperText ? tw`!mt-0` : tw`!mt-6`}
 				        `} ${clsx(className)}`}
 			        type="submit">
 				{children}
 			</Button>
 		</ButtonWrapper>
 	)
+}
+
+FormButton.defaultProps = {
+	centered: true,
+	error: false,
+	helperText: '',
 }
 
 export default FormButton

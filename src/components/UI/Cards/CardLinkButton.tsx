@@ -4,7 +4,6 @@ import tw from "twin.macro"
 import clsx from "clsx"
 import { motion } from "framer-motion"
 import i18n from "i18next"
-import { isDark } from '..'
 import { css } from "@emotion/react"
 import theme from "../Utils/theme"
 
@@ -30,7 +29,7 @@ const CardLinkWrapper = styled(motion.div)(({ dir, dark }: { dir?: "ltr" | "rtl"
 			color: ${theme.colors.gray_900};
 		}
 	`,
-	(dark || isDark()) && css`
+	(props) => (dark || props.theme.isDark) && css`
 		&:focus {
 			background-color: ${theme.colors.gray_600};
 			color: ${theme.colors.white};

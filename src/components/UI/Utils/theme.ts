@@ -1,5 +1,6 @@
 import { conditionalMargins, conditionalRotate, conditionalTranslate } from './utils'
 import { css } from "@emotion/css"
+import { fadeInOut } from "./transitions"
 
 
 const theme = {
@@ -10,13 +11,30 @@ const theme = {
 	},
 
 	zIndex: {
-		mobileStepper: 1000,
-		fab:           1050,
-		appBar:        1100,
-		drawer:        1200,
-		modal:         1300,
-		snackbar:      1400,
-		tooltip:       1500,
+		backdrop:         800,
+		mobileStepper:    1000,
+		fab:              1050,
+		sideBar:          1080,
+		appBar:           1100,
+		permanentSideBar: 1150,
+		drawer:           1200,
+		modal:            1300,
+		snackbar:         1400,
+		tooltip:          1500,
+	},
+
+	screens: {
+		xs:  0,
+		sm:  576,
+		md:  768,
+		lg:  992,
+		xl:  1200,
+		xl2: 1500,
+		xl3: 1800,
+	},
+
+	animations: {
+		fadeInOut,
 	},
 
 	transforms: (transforms: string[]) => css`

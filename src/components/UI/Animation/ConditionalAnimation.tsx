@@ -2,7 +2,7 @@ import { useState, useEffect, ReactElement, FC } from 'react'
 
 
 interface ConditionalAnimationProps {
-	children: ReactElement
+	children: ReactElement | undefined
 	instantEntrance?: boolean
 	condition: boolean;
 	timeout?: number;
@@ -34,7 +34,7 @@ const ConditionalAnimation: FC<ConditionalAnimationProps> = (props) => {
 		renderController()
 	}, [condition])
 
-	return render ? children : <></>
+	return render && !!children ? children : <></>
 }
 
 ConditionalAnimation.defaultProps = {

@@ -5,7 +5,7 @@ import { Vars } from '../../../modules/vars'
 
 
 export const getInitialTheme = (): ThemeName => {
-	const { defaultTheme } = Vars.theme
+	const { theme } = Vars
 
 	const storedTheme = LocalStorage.getTheme()
 	if (storedTheme) {
@@ -17,7 +17,7 @@ export const getInitialTheme = (): ThemeName => {
 		return 'dark'
 	}
 
-	return defaultTheme
+	return theme.default
 }
 
 export const ThemeContext = createContext<ThemeContextType>({} as ThemeContextType)

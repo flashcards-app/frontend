@@ -1,15 +1,15 @@
 export interface EntityProps {
 	isDeleted?: boolean
-}
-
-const defaultData = {
-	isDeleted: false,
+	id?: string
 }
 
 export default class Entity {
-	constructor(object: EntityProps = defaultData) {
-		this.isDeleted = object.isDeleted ?? false
+	constructor(data: EntityProps) {
+		this.id        = data.id
+		this.isDeleted = data.isDeleted ?? false
 	}
+
+	id: string | undefined
 
 	isDeleted: boolean
 

@@ -13,9 +13,9 @@ export default class ApiUrlService {
 
 	apiFullRootUrl: string
 
-	constructor(api: ApiUrlServiceProps) {
-		this.apiRootUrl        = api.apiRootUrl
-		this.apiCurrentVersion = api.apiCurrentVersion ?? ''
+	constructor(data: ApiUrlServiceProps) {
+		this.apiRootUrl        = data.apiRootUrl
+		this.apiCurrentVersion = data.apiCurrentVersion ?? ''
 		this.apiFullRootUrl    = this.apiRootUrl + this.apiCurrentVersion
 	}
 

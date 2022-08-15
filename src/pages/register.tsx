@@ -10,6 +10,7 @@ import { useEffect } from "react"
 import Button from "../components/UI/Buttons/Button"
 import ApiError from "../modules/ApiError"
 import useErrorsHandler from "../hooks/useErrorsHandler"
+import theme from "../components/UI/Utils/theme"
 
 
 export default () => {
@@ -46,8 +47,8 @@ export default () => {
 		onSubmit:         async (values) => {
 			try {
 				const { username, email, password } = values
-				const result = await authEndpoint.register(email, username, password)
-				TokenStorage.storeUserData(result.data)
+				const { data }                      = await authEndpoint.register(email, username, password)
+				TokenStorage.storeUserData(data)
 				navigate('/')
 			} catch (error) {
 				if (error instanceof ApiError) {
@@ -60,7 +61,9 @@ export default () => {
 	})
 
 	return (
-		<Row className="w-full h-full justify-center">
+		<Row
+			{...theme.animations.fadeInOut}
+			className="w-full h-full justify-center">
 			<Col className="my-auto w-[300px]">
 				<form onSubmit={formik.handleSubmit}>
 

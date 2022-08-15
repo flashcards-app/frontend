@@ -1,6 +1,6 @@
 import type { ReactDivProps } from 'types'
 import { useEffect } from 'react'
-import WindowVars from '../../../hooks/WindowVars'
+import WindowVars from '../../../hooks/useWindowVars'
 import MainProvider from './MainProvider'
 import { useMain } from "../../../context"
 import { css } from "@emotion/css"

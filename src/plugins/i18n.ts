@@ -4,6 +4,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import Backend from 'i18next-http-backend'
 import moment from 'moment'
 import { LocalStorage } from 'modules/LocalStorage'
+import { Vars } from "../modules/vars"
 
 
 export type Language = 'en' | 'he';
@@ -51,21 +52,27 @@ const language = () => {
 		},
 	}))()
 
+const setFallbackLanguage = (lang: Language) => {
+	LocalStorage.setLanguage(lang)
+	i18n.changeLanguage(lang)
+		.then(() => {
+			document.dir = i18n.dir(lang)
+		})
+		.catch((error) => {
+			throw error
+		})
+}
+
 export const i18nInstall = () => {
 	const { i18n } = useTranslation()
 
 	useEffect(() => {
 		const language = LocalStorage.getLanguage()
 
+		setFallbackLanguage(Vars.language.default)
+
 		if (language.includes('-')) {
-			LocalStorage.setLanguage('en')
-			i18n.changeLanguage('en')
-				.then(() => {
-					document.dir = i18n.dir('en')
-				})
-				.catch((error) => {
-					throw error
-				})
+			setFallbackLanguage(Vars.language.default)
 		}
 
 		window.document.dir = i18n.dir(language)
