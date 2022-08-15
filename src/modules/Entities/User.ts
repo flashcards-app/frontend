@@ -1,5 +1,6 @@
-import Entity, { EntityProps } from './Entity'
 import { cloneDeep } from 'lodash'
+
+import Entity, { EntityProps } from './Entity'
 
 interface UserProps extends EntityProps {
 	id: string

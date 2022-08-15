@@ -1,6 +1,7 @@
 import { useContext } from 'react'
-import { ThemeContext } from './ThemeContext'
+
 import IconButton, { IconButtonProps } from '../Buttons/IconButton'
+import { ThemeContext } from './ThemeContext'
 
 
 const ThemeToggle = (props: IconButtonProps) => {

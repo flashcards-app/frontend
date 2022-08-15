@@ -1,5 +1,6 @@
-import Button, { ButtonProps } from "../../components/UI/Buttons/Button"
 import { Story } from "@storybook/react"
+
+import Button, { ButtonProps } from "../../components/UI/Buttons/Button"
 import IconButton, { IconButtonProps } from "../../components/UI/Buttons/IconButton"
 
 

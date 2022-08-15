@@ -1,12 +1,13 @@
-import Portal from "../Portal"
 import { css } from "@emotion/css"
-import tw from "twin.macro"
+import styled from "@emotion/styled"
 import clsx from "clsx"
+import { HTMLMotionProps } from "framer-motion"
+import tw from "twin.macro"
+
 import Backdrop from "../Backdrop"
 import Card from "../Cards/Card"
-import styled from "@emotion/styled"
+import Portal from "../Portal"
 import theme from "../Utils/theme"
-import { HTMLMotionProps } from "framer-motion"
 
 
 interface ModalWrapperProps {

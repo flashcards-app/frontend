@@ -1,5 +1,5 @@
-import { QueryKey } from "react-query/types/core/types";
 import { UseQueryOptions } from "react-query";
+import { QueryKey } from "react-query/types/core/types";
 
 export interface ApiErrorData {
 	code: number

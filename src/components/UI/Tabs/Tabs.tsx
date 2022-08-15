@@ -1,9 +1,10 @@
 import {
 	CSSProperties, useEffect, useState, useRef,
 } from 'react'
+
 import { css } from "@emotion/css"
-import tw from "twin.macro"
 import { HTMLMotionProps, motion } from "framer-motion"
+import tw from "twin.macro"
 
 
 const Tabs = (props: HTMLMotionProps<"div">) => {

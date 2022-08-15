@@ -1,11 +1,13 @@
-import { useFormik } from "formik"
-import * as Yup from "yup"
-import { questionsEndpoint, subjectsEndpoint } from "../../services"
-import Question from "../../modules/Entities/Question"
-import { Col, Row, Typography, Tooltip, Select, Button, TextArea, theme } from "../../components/UI"
 import { useEffect, useRef } from "react"
+
 import autoAnimate from "@formkit/auto-animate"
+import { useFormik } from "formik"
 import { useNavigate } from "react-router-dom"
+import * as Yup from "yup"
+
+import { Col, Row, Typography, Tooltip, Select, Button, TextArea, theme } from "../../components/UI"
+import Question from "../../modules/Entities/Question"
+import { questionsEndpoint, subjectsEndpoint } from "../../services"
 
 
 export default () => {
@@ -79,7 +81,7 @@ export default () => {
 					wrapperProps={{ ...theme.animations.fadeInOut, className: "w-full" }}
 					id="subject"
 					label="נושא"
-					options={!!subjects ? subjects.map(({ label, title: value }) => ({ label, value })) : []}
+					options={subjects ? subjects.map(({ label, title: value }) => ({ label, value })) : []}
 					placeholder="בחר נושא"
 					value={formik.values.subject}
 					onChange={async (value) => formik.setFieldValue("subject", value.value)}

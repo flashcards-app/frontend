@@ -1,14 +1,16 @@
-import type { ReactDivProps } from 'types'
 import { useEffect } from 'react'
-import WindowVars from '../../../hooks/useWindowVars'
-import MainProvider from './MainProvider'
-import { useMain } from "../../../context"
+
 import { css } from "@emotion/css"
-import tw from "twin.macro"
 import clsx from "clsx"
+import tw from "twin.macro"
+import type { ReactDivProps } from 'types'
+
+import { useMain } from "../../../context"
+import WindowVars from '../../../hooks/useWindowVars'
+import Backdrop from "../Backdrop"
 import theme from "../Utils/theme"
 import { marginTransition } from "../Utils/transitions"
-import Backdrop from "../Backdrop"
+import MainProvider from './MainProvider'
 
 
 interface MainProps extends ReactDivProps {

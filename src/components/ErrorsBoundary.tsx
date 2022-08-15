@@ -1,6 +1,8 @@
-import ErrorsFallback from "./ErrorsFallback"
-import { ErrorBoundary } from "react-error-boundary"
 import { ReactElement } from "react"
+
+import { ErrorBoundary } from "react-error-boundary"
+
+import ErrorsFallback from "./ErrorsFallback"
 
 
 interface ErrorsBoundaryProps {

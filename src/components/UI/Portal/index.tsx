@@ -1,5 +1,6 @@
-import { ReactDivProps } from "../../../types"
 import { createPortal } from "react-dom"
+
+import { ReactDivProps } from "../../../types"
 
 
 const Portal = ({ children }: ReactDivProps) => {

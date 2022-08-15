@@ -1,9 +1,10 @@
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
 
+import { ThemeProvider as EmotionThemeProvider } from '@emotion/react'
+
 import { LocalStorage } from '../../../modules/LocalStorage'
 import { ThemeContext, getInitialTheme } from './ThemeContext'
-import { ThemeProvider as EmotionThemeProvider } from '@emotion/react'
 import type { ThemeName, ThemeProviderOptions } from './types'
 
 

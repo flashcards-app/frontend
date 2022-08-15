@@ -1,14 +1,14 @@
+import * as React from 'react'
+
 import {
 	useRoutes,
 } from 'react-router-dom'
-
-import routes from '~react-pages'
-
-import ReloadPrompt from './components/ReloadPrompt'
 import { RecoilRoot } from 'recoil'
-import * as React from 'react'
-import Providers from "./context"
+
 import ErrorsBoundary from "./components/ErrorsBoundary"
+import ReloadPrompt from './components/ReloadPrompt'
+import Providers from "./context"
+import routes from '~react-pages'
 
 
 function Pages(): React.ReactElement | null {

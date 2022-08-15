@@ -1,9 +1,10 @@
+import { css } from "@emotion/react"
 import styled from "@emotion/styled"
 import { motion } from "framer-motion"
-import tw from "twin.macro"
-import { css } from "@emotion/react"
-import theme from "../Utils/theme"
 import i18n from "i18next";
+import tw from "twin.macro"
+
+import theme from "../Utils/theme"
 
 
 const Label = styled(motion.span)(({ dark, dir }: { dark?: boolean, dir?: "ltr" | "rtl" }) => [

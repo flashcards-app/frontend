@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom'
 import { useRef, useEffect } from 'react'
-import windowVars from '../../../hooks/useWindowVars'
-import './403.css'
+
 import clsx from 'clsx'
 import { HTMLMotionProps, motion } from "framer-motion"
+import { Link } from 'react-router-dom'
+
+import './403.css'
+import windowVars from '../../../hooks/useWindowVars'
 
 
 const Error403Page = (props: HTMLMotionProps<"div">) => {
@@ -28,7 +30,7 @@ const Error403Page = (props: HTMLMotionProps<"div">) => {
 
 	return (
 		<motion.div {...props}
-			className={`error-403 h-full pt-[12.5rem] ${clsx(props.className)}`}
+		            className={`error-403 h-full pt-[12.5rem] ${clsx(props.className)}`}
 		            initial={{
 			            opacity: 0,
 		            }}

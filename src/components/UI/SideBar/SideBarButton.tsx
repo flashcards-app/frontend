@@ -1,17 +1,18 @@
-import tw from "twin.macro"
 import { css } from "@emotion/css"
+import styled from "@emotion/styled"
+import clsx from "clsx"
+import { motion } from "framer-motion"
 import i18n from "i18next"
+import tw from "twin.macro"
+
+import { isDark } from '..'
 import { useMain } from "../../../context"
+import windowVariables from "../../../hooks/useWindowVars"
+import { ReactDivProps } from "../../../types"
 import IconButton from "../Buttons/IconButton"
 import theme from "../Utils/theme"
-import { conditionalRotate, conditionalTranslate } from "../Utils/utils"
 import { transformTransition } from "../Utils/transitions"
-import { ReactDivProps } from "../../../types"
-import windowVariables from "../../../hooks/useWindowVars"
-import styled from "@emotion/styled"
-import { motion } from "framer-motion"
-import clsx from "clsx"
-import { isDark } from '..'
+import { conditionalRotate, conditionalTranslate } from "../Utils/utils"
 
 
 const SideBarButtonWrapper = styled(motion.div)(({ dark, width, state }: { state: boolean, width?: number, dark?: boolean }) => [

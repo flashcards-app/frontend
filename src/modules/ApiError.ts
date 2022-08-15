@@ -1,5 +1,6 @@
-import { ApiErrorData, ApiErrorsOptions, ApiErrorObject } from "../services/types"
 import { AxiosError, AxiosRequestConfig, AxiosResponseHeaders } from "axios"
+
+import { ApiErrorData, ApiErrorsOptions, ApiErrorObject } from "../services/types"
 
 
 export default class ApiError {

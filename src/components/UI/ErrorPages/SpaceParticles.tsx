@@ -1,7 +1,8 @@
 import Particles from "react-tsparticles"
-import particles from "./Particles"
-import { Engine } from "tsparticles-engine"
 import { loadFull } from "tsparticles"
+import { Engine } from "tsparticles-engine"
+
+import particles from "./Particles"
 
 
 let initialized = false

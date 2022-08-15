@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
+
 import { useNavigate, useParams } from "react-router"
 import { questionsEndpoint } from "services"
-import { QuestionGetResult } from "../../../services/Questions/types"
+
 import QueryHandler from "../../../components/ReactQuery/QueryHandler"
-import { Button, Col, Row, Typography, Tooltip, theme } from "../../../components/UI"
 import QuestionAnswer from "../../../components/Subject/QuestionAnswer"
+import { Button, Col, Row, Typography, Tooltip, theme } from "../../../components/UI"
+import { QuestionGetResult } from "../../../services/Questions/types"
 
 
 export default () => {
@@ -74,8 +76,7 @@ export default () => {
 									<Row className="w-full justify-center text-center">
 										<Typography color={theme.colors.gray_400} as="h5">אין שאלות נוספות</Typography>
 									</Row>
-								)
-							}
+								)}
 						</QueryHandler>
 					</Col>
 				</Col>
