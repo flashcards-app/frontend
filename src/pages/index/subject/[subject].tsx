@@ -3,23 +3,50 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import { questionsEndpoint } from "services"
 
-import QueryHandler from "../../../components/ReactQuery/QueryHandler"
 import QuestionAnswer from "../../../components/Subject/QuestionAnswer"
 import { Button, Col, Row, Typography, Tooltip, theme } from "../../../components/UI"
 import { QuestionGetResult } from "../../../services/Questions/types"
+import QueryHandler from "../../../components/ReactQuery/QueryHandler"
+import usePagination from "../../../hooks/usePagination"
 
 
 export default () => {
-	const navigate         = useNavigate()
-	const { subject }      = useParams()
-	const { data, status } = questionsEndpoint.get(subject as string)
+	const navigate    = useNavigate()
+	const { subject } = useParams()
+
+	const { page, perPage, hasMorePages, paginationController } = usePagination()
+	const { data, status }                                      = questionsEndpoint.get(subject as string, page, perPage)
 
 	const [currentQuestion, setCurrentQuestion]           = useState<QuestionGetResult>()
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0)
 	const [showAns, setShowAns]                           = useState(false)
 
+	const questionSelector = (index: number) => {
+		if (data && hasMorePages) {
+			const action = paginationController(data.length, index)
+
+			if (action === 'back') {
+				setCurrentQuestionIndex(perPage - 1)
+				currentQuestionController(perPage - 1)
+				return true
+			}
+
+			if (action === 'next') {
+				setCurrentQuestionIndex(0)
+				currentQuestionController(0)
+				return true
+			}
+		}
+	}
+
 	const currentQuestionController = (index: number) => {
 		if (data) {
+			const hasPaginated = questionSelector(index)
+
+			if (hasPaginated) {
+				return
+			}
+
 			setCurrentQuestion(data[index])
 			setCurrentQuestionIndex(index)
 			setShowAns(false)
@@ -28,16 +55,13 @@ export default () => {
 
 
 	useEffect(() => {
-		if (status === "success" && data) {
-			currentQuestionController(0)
-		}
+		if (status === 'success') currentQuestionController(0)
 	}, [status])
 
 
 	return (
-		<Row
-			{...theme.animations.fadeInOut}
-			className="w-full h-full justify-center">
+		<Row {...theme.animations.fadeInOut}
+		     className="w-full h-full justify-center">
 			<Col className="h-full justify-between text-center w-[700px] lg:pt-10 xs:pt-4">
 				<Col>
 					<Row className="lg:pb-10 xs:pb-3 px-4 justify-around">
@@ -63,20 +87,19 @@ export default () => {
 
 					<Col className="h-full">
 						<QueryHandler status={status}>
-							{currentQuestion
-								? (
-									<QuestionAnswer {...{
-										currentQuestionController,
-										currentQuestion,
-										currentQuestionIndex,
-										showAns,
-										setShowAns,
-									}}/>
-								) : (
-									<Row className="w-full justify-center text-center">
-										<Typography color={theme.colors.gray_400} as="h5">אין שאלות נוספות</Typography>
-									</Row>
-								)}
+							{currentQuestion ? (
+								<QuestionAnswer {...{
+									currentQuestionController,
+									currentQuestion,
+									currentQuestionIndex,
+									showAns,
+									setShowAns,
+								}}/>
+							) : (
+								<Row className="w-full justify-center text-center">
+									<Typography color={theme.colors.gray_400} as="h5">אין שאלות נוספות</Typography>
+								</Row>
+							)}
 						</QueryHandler>
 					</Col>
 				</Col>

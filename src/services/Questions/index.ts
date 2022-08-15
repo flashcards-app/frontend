@@ -8,8 +8,6 @@ import TokenStorage from "../../modules/TokenStorage"
 import { QuestionCreateResult, QuestionGetResult } from "./types"
 
 
-const defaultQueryConfig: UseQueryOptions = {}
-
 export default class Questions extends ApiUrlService {
 	endpoint = `${this.apiFullRootUrl}/questions`
 
@@ -26,10 +24,10 @@ export default class Questions extends ApiUrlService {
 		}
 	}
 
-	get(subject: string) {
-		return useQuery<QuestionGetResult[]>(`questions-${subject}`, async () => {
-			const { data } = await http.get(`${this.endpoint}${this.buildUrlParams({ subject })}`, TokenStorage.getAuthentication())
+	get(subject: string, page: number = 1, perPage: number = 30) {
+		return useQuery<QuestionGetResult[]>(`questions-${subject}-page-${page}-perPage-${perPage}`, async () => {
+			const { data } = await http.get(`${this.endpoint}${this.buildUrlParams({ subject, page, perPage })}`, TokenStorage.getAuthentication())
 			return data
-		}, defaultQueryConfig as object)
+		}, { keepPreviousData : true })
 	}
 }
