@@ -1,11 +1,5 @@
 import { useState } from 'react'
-import Tab from '../components/UI/Tabs/Tab'
-import Tabs from '../components/UI/Tabs/Tabs'
-import Error404 from '../components/UI/ErrorPages/404'
-import Error403 from '../components/UI/ErrorPages/403'
-import Error404ServerSide from '../components/UI/ErrorPages/404ServerSide'
-import Subtitle from '../components/UI/Typograpy/Subtitle'
-import Error500Page from "../components/UI/ErrorPages/500"
+import { Typography, Tabs, Tab, ErrorPage403, ErrorPage404, ErrorPage404ServerSide, ErrorPage500 } from '../components/UI'
 import SpaceParticles from "../components/UI/ErrorPages/SpaceParticles"
 import { motion } from "framer-motion"
 import { css } from "@emotion/css"
@@ -77,22 +71,22 @@ export default () => {
 			</motion.div>
 
 			<div className="absolute flex w-full h-full bottom-0 justify-center items-end">
-				<Subtitle className="justify-self-center mb-5 z-[4]">
+				<Typography as="p" className="justify-self-center mb-5 z-[4]">
 					Credit to&nbsp;
 
 					<a className="font-bold" href={creditLink}>{`@${creditName}`}</a>
-				</Subtitle>
+				</Typography>
 			</div>
 
 
 			<div className="absolute w-full h-full top-0">
-				{tab === '404' && <Error404/>}
+				{tab === '404' && <ErrorPage404/>}
 
-				{tab === '403' && <Error403/>}
+				{tab === '403' && <ErrorPage403/>}
 
-				{tab === '404ServerSide' && <Error404ServerSide/>}
+				{tab === '404ServerSide' && <ErrorPage404ServerSide/>}
 
-				{tab === '500' && <Error500Page/>}
+				{tab === '500' && <ErrorPage500/>}
 			</div>
 		</div>
 	)

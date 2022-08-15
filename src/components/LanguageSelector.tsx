@@ -1,6 +1,7 @@
 import type { Language } from 'plugins/i18n'
-import IconButton, { IconButtonProps } from './UI/Buttons/IconButton'
+import { IconButton } from './UI'
 import { LocalStorage } from "../modules/LocalStorage"
+import { IconButtonProps } from "./UI/Buttons/IconButton"
 import { useEffect } from "react"
 import { useMain } from "../context"
 

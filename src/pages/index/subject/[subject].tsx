@@ -1,13 +1,9 @@
-import Button from "components/UI/Buttons/Button"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import { questionsEndpoint } from "services"
 import { QuestionGetResult } from "../../../services/Questions/types"
 import QueryHandler from "../../../components/ReactQuery/QueryHandler"
-import { Col, Row } from "../../../components/UI/Grid"
-import theme from "../../../components/UI/Utils/theme"
-import Typography from "../../../components/UI/Typograpy"
-import Tooltip from "../../../components/UI/Tooltip/Tooltip"
+import { Button, Col, Row, Typography, Tooltip, theme } from "../../../components/UI"
 import QuestionAnswer from "../../../components/Subject/QuestionAnswer"
 
 

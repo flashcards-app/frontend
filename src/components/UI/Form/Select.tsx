@@ -4,6 +4,7 @@ import theme from "../Utils/theme"
 import { isDark } from '..'
 import Select, {
 	defaultTheme, ControlProps, components, DropdownIndicatorProps, SingleValueProps, ContainerProps, MenuProps, Props, OptionProps,
+	LoadingIndicatorProps,
 } from "react-select"
 import { css } from "@emotion/css"
 import { conditionalRotate } from "../Utils/utils"
@@ -23,16 +24,24 @@ const DropdownIndicator = (props: DropdownIndicatorProps<any>) => {
 		<components.DropdownIndicator {...props}>
 			<div className={css`
 				${[
-			theme.transitions([transformTransition('300ms')]),
-			theme.transforms([
-				conditionalRotate(isFocused, 180),
-			]),
-		]}
+					theme.transitions([transformTransition('300ms')]),
+					theme.transforms([
+						conditionalRotate(isFocused, 180),
+					]),
+				]}
 			`}>
 				<IconIonChevronDown/>
 			</div>
 		</components.DropdownIndicator>
 	)
+}
+
+const LoadingIndicator = (props: LoadingIndicatorProps) => {
+	return <components.LoadingIndicator
+		{...props}
+		theme={produce(props.theme, (draft) => {
+			draft.colors.neutral20   = theme.colors.gray_400
+		})}/>
 }
 
 const SingleValue = (props: SingleValueProps<any>) => {
@@ -243,6 +252,7 @@ const SelectWithLabel = (props: SelectProps) => {
 					        Control,
 					        SingleValue,
 					        SelectContainer,
+					        LoadingIndicator,
 					        Menu,
 				        }}/>
 			</motion.div>

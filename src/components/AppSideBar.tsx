@@ -1,15 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
-
-import SideBar from './UI/SideBar/SideBar'
+import { SideBar,ThemeToggle,LongDivider,IconButton,Tooltip,Row,Col,SideBarLink,SideBarLinkWrapper } from './UI'
 import LanguageSelector from './LanguageSelector'
-import ThemeToggle from './UI/Theme/ThemeToggle'
-import LongDivider from './UI/Dividers/LongDivider'
-import IconButton from './UI/Buttons/IconButton'
-import Tooltip from './UI/Tooltip/Tooltip'
-import Row from './UI/Grid/Row'
-import Col from './UI/Grid/Col'
-import SideBarLink from './UI/SideBar/SideBarLink'
-import SideBarLinkWrapper from './UI/SideBar/SideBarLinkWrapper'
 import TokenStorage from "../modules/TokenStorage"
 import { css } from "@emotion/css"
 import tw from "twin.macro"

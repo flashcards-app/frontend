@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router'
-import Main from '../components/UI/Main/Main'
 import { useEffect } from "react"
 import TokenStorage from "../modules/TokenStorage"
 import { useNavigate } from "react-router-dom"
 import { css } from "@emotion/css"
 import tw from "twin.macro"
 import { useMain } from "../context"
+import { Main } from "../components/UI"
 
 
 export default () => {

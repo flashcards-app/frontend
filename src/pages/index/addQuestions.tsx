@@ -1,19 +1,11 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import TextArea from "../../components/UI/Form/TextArea"
 import { questionsEndpoint, subjectsEndpoint } from "../../services"
-import Button from "../../components/UI/Buttons/Button"
 import Question from "../../modules/Entities/Question"
-import Select from "../../components/UI/Form/Select"
-import QueryHandler from "../../components/ReactQuery/QueryHandler"
-import theme from "../../components/UI/Utils/theme"
-import { Col, Row } from "../../components/UI/Grid"
+import { Col, Row, Typography, Tooltip, Select, Button, TextArea, theme } from "../../components/UI"
 import { useEffect, useRef } from "react"
 import autoAnimate from "@formkit/auto-animate"
-import Tooltip from "../../components/UI/Tooltip/Tooltip"
 import { useNavigate } from "react-router-dom"
-import Typography from "../../components/UI/Typograpy"
-import ConditionalAnimation from "../../components/UI/Animation/ConditionalAnimation"
 
 
 export default () => {
@@ -83,33 +75,18 @@ export default () => {
 				ref={formRef}
 				className="flex-col pb-36 my-auto"
 				onSubmit={formik.handleSubmit}>
-				<QueryHandler
-					status={subjectsStatus}
-					animateLoading
-					loadingComponent="skeleton"
-					loadingComponentProps={{
-						...theme.animations.fadeInOut,
-						className: "w-full rounded-lg my-[24px]",
-						height:    46,
-					}}
-				>
-					<ConditionalAnimation condition={!!subjects} timeout={300}>
-						{subjects && (
-								<Select
-									wrapperProps={{ ...theme.animations.fadeInOut, className: "w-full" }}
-									id="subject"
-									label="נושא"
-									options={subjects.map(({ label, title: value }) => ({ label, value }))}
-									placeholder="בחר נושא"
-									value={formik.values.subject}
-									onChange={async (value) => formik.setFieldValue("subject", value.value)}
-									onBlur={async () => formik.validateField('subject')}
-									error={!!formik.errors.subject}
-									helperText={formik.errors.subject}/>
-							)}
-					</ConditionalAnimation>
-				</QueryHandler>
-
+				<Select
+					wrapperProps={{ ...theme.animations.fadeInOut, className: "w-full" }}
+					id="subject"
+					label="נושא"
+					options={!!subjects ? subjects.map(({ label, title: value }) => ({ label, value })) : []}
+					placeholder="בחר נושא"
+					value={formik.values.subject}
+					onChange={async (value) => formik.setFieldValue("subject", value.value)}
+					isLoading={!subjects}
+					onBlur={async () => formik.validateField('subject')}
+					error={!!formik.errors.subject}
+					helperText={formik.errors.subject}/>
 				<TextArea
 					id="question"
 					label="שאלה"

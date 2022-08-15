@@ -18,6 +18,7 @@ const Card = styled(motion.div)(({ dark, height, width }: CardProps) => [
 		height: ${height};
 		width: ${width};
 	`,
+
 	(props) => (dark || props.theme.isDark) && css`
 		background-color: ${theme.colors.dark_400};
 	`,

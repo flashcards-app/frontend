@@ -1,16 +1,13 @@
-import Button from "components/UI/Buttons/Button"
 import { useNavigate } from "react-router-dom"
 import { subjectsEndpoint } from "services"
-import { Col, Row } from "../../../components/UI/Grid"
+import { Col, Row, Tooltip, Typography,Button, theme } from "../../../components/UI"
 import QueryHandler from "../../../components/ReactQuery/QueryHandler"
-import theme from "../../../components/UI/Utils/theme"
-import Typography from "../../../components/UI/Typograpy"
-import Tooltip from "../../../components/UI/Tooltip/Tooltip"
 
 
 export default () => {
 	const { data, status } = subjectsEndpoint.get()
 	const navigate         = useNavigate()
+
 
 	return (
 		<QueryHandler status={status}>
@@ -37,7 +34,7 @@ export default () => {
 								בחר נושא
 							</Typography>
 						</Col>
-						<Col cols={1} />
+						<Col cols={1}/>
 					</Row>
 
 					<Row className="justify-around pt-20">

@@ -1,6 +1,7 @@
 import styled, { StyledTags } from "@emotion/styled"
 import tw from "twin.macro"
 import { css } from "@emotion/react"
+import theme from "../Utils/theme"
 
 
 interface TypographyProps {
@@ -8,9 +9,10 @@ interface TypographyProps {
 	bold?: boolean
 	semiBold?: boolean
 	color?: string | undefined
+	dark?: boolean
 }
 
-const Typography = styled.div(({ as, bold, semiBold, color }: TypographyProps) => [
+const Typography = styled.div(({ as, bold, semiBold, color, dark }: TypographyProps) => [
 	color && css`
 		color: ${color};
 	`,
@@ -21,6 +23,21 @@ const Typography = styled.div(({ as, bold, semiBold, color }: TypographyProps) =
 	as === "h4" && tw`text-2xl`,
 	as === "h5" && tw`text-xl`,
 	as === "h6" && tw`text-lg`,
+	as === "p" && [
+		tw`text-base flex flex-row`,
+
+		css`
+			color: ${theme.colors.gray_500};
+		`,
+
+		(props) => (dark || props.theme.isDark) && css`
+			color: ${theme.colors.gray_300};
+		`,
+	],
+
+	(props) => (dark || props.theme.isDark) && css`
+		color: ${theme.colors.white};
+	`,
 
 	semiBold && tw`font-semibold`,
 	bold && tw`font-bold`,
