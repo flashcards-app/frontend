@@ -13,8 +13,17 @@ import ConditionalLabel from "./ConditionalLabel"
 import HelperText from "./HelperText"
 
 
-export const TextAreaInput = styled(motion.textarea)(({ dark, centered }: { dark?: boolean, centered?: boolean }) => [
+interface TextAreaProps {
+	dark?: boolean,
+	minHeight?: `${number}px` | `${number}rem`,
+	centered?: boolean
+}
+
+export const TextAreaInput = styled(motion.textarea)(({ dark, minHeight, centered }: TextAreaProps) => [
 	tw`w-full p-2 border border-2 rounded-md shadow-sm  place-self-center h-[45px] min-h-[45px]`,
+	minHeight && css`
+		min-height: ${minHeight};
+	`,
 	centered && tw`text-center`,
 
 
@@ -43,6 +52,7 @@ interface TextAreaProps extends HTMLMotionProps<"textarea"> {
 	placeholder?: string
 	centered?: boolean
 	persistentLabel?: boolean
+	minHeight?: `${number}px` | `${number}rem`
 	value?: string | readonly string[] | number | undefined
 	error?: boolean
 	helperText?: string
@@ -50,7 +60,7 @@ interface TextAreaProps extends HTMLMotionProps<"textarea"> {
 }
 
 const TextArea = (props: TextAreaProps) => {
-	const { className, label, placeholder, persistentLabel, onChange, centered, value, error, helperText, ...restProps } = props
+	const { className, label, placeholder, minHeight, persistentLabel, onChange, centered, value, error, helperText, ...restProps } = props
 
 	const sectionRef  = useRef(null)
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -78,6 +88,7 @@ const TextArea = (props: TextAreaProps) => {
 
 			<TextAreaInput {...restProps}
 			               ref={textareaRef}
+			               minHeight={minHeight}
 			               className={`${classCss`
 				                ${(value && label) || (label && persistentLabel) ? tw`mt-0` : tw`mt-6`}
 				                ${helperText ? tw`mb-0` : tw`mb-6`}
