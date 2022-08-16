@@ -30,12 +30,12 @@ const defaultProps = {
 	loadingComponentProps: {},
 }
 
-const QueryHandler = <LoadingComponent extends keyof typeof loadingComponents = "spinner">({
+const QueryHandler = <LoadingComponentType extends keyof typeof loadingComponents = "spinner">({
 	children,
 	status,
 	loadingComponent,
 	loadingComponentProps,
-}: QueryHandlerProps<LoadingComponent> & typeof defaultProps) => {
+}: QueryHandlerProps<LoadingComponentType> & typeof defaultProps) => {
 	const LoadingComponent = loadingComponents[loadingComponent]
 
 	return (

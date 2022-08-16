@@ -6,10 +6,15 @@ const MAX_PER_PAGE = 30
 
 const defaultProps = {
 	initialPage:    INITIAL_PAGE,
-	initialPerPage: MAX_PER_PAGE
+	initialPerPage: MAX_PER_PAGE,
 }
 
-const usePagination = ({ initialPage = INITIAL_PAGE, initialPerPage = MAX_PER_PAGE } = defaultProps) => {
+interface UsePaginationProps {
+	initialPage?: number
+	initialPerPage?: number
+}
+
+const usePagination = ({ initialPage = INITIAL_PAGE, initialPerPage = MAX_PER_PAGE }: UsePaginationProps = defaultProps) => {
 	const [page, setPage]                 = useState(initialPage ?? INITIAL_PAGE)
 	const [perPage, setPerPage]           = useState(initialPerPage ?? MAX_PER_PAGE)
 	const [hasMorePages, setHasMorePages] = useState(true)

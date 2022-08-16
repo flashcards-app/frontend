@@ -20,7 +20,8 @@ const handleRegisterError = (error: ApiError): [string, string] | undefined => {
 }
 
 const UseErrorsHandler = () => {
-	const handleError = useErrorHandler()
+	// const handleError =
+	useErrorHandler()
 
 	return {
 		handleLoginError,

@@ -12,7 +12,8 @@ interface ErrorsBoundaryProps {
 const ErrorsBoundary = (props: ErrorsBoundaryProps) => {
 	const { children } = props
 
-	const errorHandler = (error: any, errorInfo: any) => {}
+	const errorHandler = () => {}
+	// error: any, errorInfo: any
 
 	return (
 		<ErrorBoundary fallback={ErrorsFallback({ children })} onError={errorHandler}>
