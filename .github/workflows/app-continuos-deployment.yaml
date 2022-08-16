@@ -1,9 +1,5 @@
 name: CD Workflow
-on:
-  push:
-    branches:
-      - master
-      - main
+on: workflow_dispatch
 
 jobs:
   deploy:
