@@ -8,8 +8,8 @@ import theme from "../Utils/theme"
 
 export interface CardProps extends HTMLMotionProps<"div"> {
 	dark?: boolean,
-	height?: `${number}px` | `${number}%`,
-	width?: `${number}px` | `${number}%`
+	height?: `${number}px` | `${number}%` | 'auto',
+	width?: `${number}px` | `${number}%` | 'auto'
 }
 
 const Card = styled(motion.div)(({ dark, height, width }: CardProps) => [
