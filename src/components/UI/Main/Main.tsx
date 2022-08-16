@@ -60,11 +60,15 @@ const Main = (props: MainProps) => {
 			     `}>
 
 
-				<Backdrop {...{ dark }}
-				          active={overlayState}
-				          id="overlay-background"
-				          role="presentation"
-				          onClick={overlayAction}/>
+				{
+					sideBar && (
+						<Backdrop {...{ dark }}
+						          active={overlayState}
+						          id="overlay-background"
+						          role="presentation"
+						          onClick={overlayAction}/>
+					)
+				}
 
 				{children}
 
@@ -74,7 +78,7 @@ const Main = (props: MainProps) => {
 }
 
 Main.defaultProps = {
-	dark:              undefined,
+	dark: undefined,
 }
 
 export default Main
