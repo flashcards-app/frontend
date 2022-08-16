@@ -53,6 +53,7 @@ export default defineConfig({
 			resolvers: [
 				IconsResolver({
 					componentPrefix: 'Icon',
+					extension:       'jsx'
 				})
 			],
 			include:   [
@@ -98,13 +99,19 @@ export default defineConfig({
 
 		// https://github.com/antfu/vite-plugin-pwa
 		VitePWA({
-			registerType:  'autoUpdate',
+			base:         '/',
+			registerType: 'autoUpdate',
 			includeAssets: [
 				'favicon.svg',
 				'locales/**/*.yaml',
 				'assets/**/*',
 				'apple-touch-icon.png'
 			],
+			devOptions: {
+				enabled:          true,
+				type:             'module',
+				navigateFallback: 'index.html'
+			},
 			manifest:      {
 				theme_color: '#ffffff',
 				icons:       [

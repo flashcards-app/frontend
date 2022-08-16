@@ -13,11 +13,12 @@ interface QuestionAnswerProps {
 	currentQuestionController: (index: number) => void
 	currentQuestionIndex: number
 	showAns: boolean
+	page: number
 	setShowAns: (showAns: boolean) => void
 }
 
 const QuestionAnswer = (props: QuestionAnswerProps) => {
-	const { currentQuestion, currentQuestionController, currentQuestionIndex, showAns, setShowAns } = props
+	const { currentQuestion, currentQuestionController, currentQuestionIndex, showAns, page, setShowAns } = props
 
 	const colRef        = useRef(null)
 	const actionsRowRef = useRef(null)
@@ -51,7 +52,7 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 				ref={actionsRowRef}
 				className="w-full justify-around lg:px-10 xs:px-2">
 				<Col className="w-[45px]" justify="center">
-					{currentQuestionIndex > 0 && (
+					{(page > 1 || currentQuestionIndex > 0) && (
 						<Tooltip tooltip="לשאלה הקודמת" placement="center-left">
 							<Button
 								fab

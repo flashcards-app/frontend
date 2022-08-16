@@ -3,18 +3,18 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import { questionsEndpoint } from "services"
 
+import QueryHandler from "../../../components/ReactQuery/QueryHandler"
 import QuestionAnswer from "../../../components/Subject/QuestionAnswer"
 import { Button, Col, Row, Typography, Tooltip, theme } from "../../../components/UI"
-import { QuestionGetResult } from "../../../services/Questions/types"
-import QueryHandler from "../../../components/ReactQuery/QueryHandler"
 import usePagination from "../../../hooks/usePagination"
+import { QuestionGetResult } from "../../../services/Questions/types"
 
 
 export default () => {
 	const navigate    = useNavigate()
 	const { subject } = useParams()
 
-	const { page, perPage, hasMorePages, paginationController } = usePagination()
+	const { page, perPage, hasMorePages, paginationController } = usePagination({ initialPerPage: 1 })
 	const { data, status }                                      = questionsEndpoint.get(subject as string, page, perPage)
 
 	const [currentQuestion, setCurrentQuestion]           = useState<QuestionGetResult>()
@@ -93,6 +93,7 @@ export default () => {
 									currentQuestion,
 									currentQuestionIndex,
 									showAns,
+									page,
 									setShowAns,
 								}}/>
 							) : (

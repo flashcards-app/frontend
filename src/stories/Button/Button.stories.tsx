@@ -47,7 +47,7 @@ IconLight.parameters   = {
 }
 IconLight.args         = {
 	dark:     false,
-	children: <IconCarbonLanguage/>,
+	children: 'light',
 	disabled: false,
 }
 
@@ -57,6 +57,6 @@ IconDark.parameters   = {
 }
 IconDark.args         = {
 	dark:     true,
-	children: <IconCarbonLanguage/>,
+	children: 'dark',
 	disabled: false,
 }
