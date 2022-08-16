@@ -7,56 +7,27 @@ import QueryHandler from "../../../components/ReactQuery/QueryHandler"
 import QuestionAnswer from "../../../components/Subject/QuestionAnswer"
 import { Button, Col, Row, Typography, Tooltip, theme } from "../../../components/UI"
 import usePagination from "../../../hooks/usePagination"
-import { QuestionGetResult } from "../../../services/Questions/types"
 
 
 export default () => {
 	const navigate    = useNavigate()
 	const { subject } = useParams()
 
-	const { page, perPage, hasMorePages, paginationController } = usePagination({ initialPerPage: 1 })
-	const { data, status }                                      = questionsEndpoint.get(subject as string, page, perPage)
+	const { page, setPage, perPage } = usePagination({ initialPerPage: 1 })
+	const { data, status }           = questionsEndpoint.get(subject as string, page, perPage)
 
-	const [currentQuestion, setCurrentQuestion]           = useState<QuestionGetResult>()
-	const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0)
-	const [showAns, setShowAns]                           = useState(false)
+	const [showAns, setShowAns] = useState(false)
 
-	const questionSelector = (index: number) => {
-		if (data && hasMorePages) {
-			const action = paginationController(data.length, index)
 
-			if (action === 'back') {
-				setCurrentQuestionIndex(perPage - 1)
-				currentQuestionController(perPage - 1)
-				return true
-			}
+	const currentQuestionController = (action: 'next' | 'back') => {
+		if (data && data[0] && action === 'next') {
+			setPage(page + 1)
+		}
 
-			if (action === 'next') {
-				setCurrentQuestionIndex(0)
-				currentQuestionController(0)
-				return true
-			}
+		if (action === 'back' && page > 1) {
+			setPage(page - 1)
 		}
 	}
-
-	const currentQuestionController = (index: number) => {
-		if (data) {
-			const hasPaginated = questionSelector(index)
-
-			if (hasPaginated) {
-				return
-			}
-
-			setCurrentQuestion(data[index])
-			setCurrentQuestionIndex(index)
-			setShowAns(false)
-		}
-	}
-
-
-	useEffect(() => {
-		if (status === 'success') currentQuestionController(0)
-	}, [status])
 
 
 	return (
@@ -87,11 +58,10 @@ export default () => {
 
 					<Col className="h-full">
 						<QueryHandler status={status}>
-							{currentQuestion ? (
+							{data && data[0] ? (
 								<QuestionAnswer {...{
 									currentQuestionController,
-									currentQuestion,
-									currentQuestionIndex,
+									currentQuestion: data[0],
 									showAns,
 									page,
 									setShowAns,
