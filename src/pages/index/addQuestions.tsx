@@ -92,6 +92,7 @@ export default () => {
 				<TextArea
 					id="question"
 					label="שאלה"
+					minHeight="100px"
 					value={formik.values.question}
 					onChange={formik.handleChange}
 					onBlur={async () => formik.validateField("question")}
@@ -101,6 +102,7 @@ export default () => {
 				<TextArea
 					id="answer"
 					label="תשובה"
+					minHeight="100px"
 					value={formik.values.answer}
 					onChange={formik.handleChange}
 					onBlur={async () => formik.validateField("answer")}
