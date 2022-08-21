@@ -28,6 +28,7 @@ export default () => {
 				transition: none !important;
 			}`}`}>
 
+
 			<Main>
 				<Outlet/>
 			</Main>

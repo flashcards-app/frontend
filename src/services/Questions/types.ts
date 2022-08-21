@@ -1,4 +1,5 @@
 export interface QuestionGetResult {
+	id: string
 	isDeleted: boolean
 	question: string
 	answer: string

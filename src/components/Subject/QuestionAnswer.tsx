@@ -2,22 +2,33 @@ import { useEffect, useRef } from "react"
 
 import { css } from "@emotion/css"
 import autoAnimate from "@formkit/auto-animate"
+import { AnimatePresence } from "framer-motion"
 import tw from "twin.macro"
 
 import { QuestionGetResult } from "../../services/Questions/types"
-import { Col, Row, Label, Button, Card, Tooltip } from "../UI"
+import { Col, Row, Label, Button, Card, Tooltip, theme } from "../UI"
 
 
-interface QuestionAnswerProps {
+interface QuestionAnswerBasic {
 	currentQuestion: QuestionGetResult
-	currentQuestionController: (action: 'next' | 'back') => void
 	showAns: boolean
 	page: number
 	setShowAns: (showAns: boolean) => void
 }
 
+interface QuestionAnswerWithNavigation extends QuestionAnswerBasic {
+	currentQuestionController: (action: 'next' | 'back') => void
+	hasNavigation: true
+}
+
+interface QuestionAnswerWithoutNavigation extends QuestionAnswerBasic {
+	hasNavigation: false
+}
+
+type QuestionAnswerProps = QuestionAnswerWithNavigation | QuestionAnswerWithoutNavigation
+
 const QuestionAnswer = (props: QuestionAnswerProps) => {
-	const { currentQuestion, currentQuestionController, showAns, page, setShowAns } = props
+	const { currentQuestion, hasNavigation, showAns, page, setShowAns } = props
 
 	const colRef        = useRef(null)
 	const actionsRowRef = useRef(null)
@@ -50,22 +61,27 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 			<Row
 				ref={actionsRowRef}
 				className="w-full justify-around lg:px-10 xs:px-2">
-				<Col className="w-[45px]" justify="center">
-					{(page > 1) && (
-						<Tooltip tooltip="לשאלה הקודמת" placement="center-left">
-							<Button
-								fab
-								icon
-								size={24}
-								onClick={() => {
-									currentQuestionController('back')
-									setShowAns(false)
-								}}>
-								<IconMdiArrowRight/>
-							</Button>
-						</Tooltip>
-					)}
-				</Col>
+				{hasNavigation && (
+					<Col className="w-[45px]" justify="center">
+						<AnimatePresence>
+							{(page > 1) && (
+								<Tooltip tooltip="לשאלה הקודמת" placement="center-left">
+									<Button
+										{...theme.animations.fadeInOut}
+										fab
+										icon
+										size={24}
+										onClick={() => {
+											props.currentQuestionController('back')
+											setShowAns(false)
+										}}>
+										<IconMdiArrowRight/>
+									</Button>
+								</Tooltip>
+							)}
+						</AnimatePresence>
+					</Col>
+				)}
 
 				<Col className="mx-4 my-2" align="center">
 					<Button
@@ -76,22 +92,27 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 					</Button>
 				</Col>
 
-				<Col className="w-[45px]" justify="center">
-					{showAns && (
-						<Tooltip tooltip="לשאלה הבאה" placement="center-right">
-							<Button
-								fab
-								icon
-								size={24}
-								onClick={() => {
-									currentQuestionController('next')
-									setShowAns(false)
-								}}>
-								<IconMdiArrowLeft/>
-							</Button>
-						</Tooltip>
-					)}
-				</Col>
+				{hasNavigation && (
+					<Col className="w-[45px]" justify="center">
+						<AnimatePresence>
+							{showAns && (
+								<Tooltip tooltip="לשאלה הבאה" placement="center-right">
+									<Button
+										{...theme.animations.fadeInOut}
+										fab
+										icon
+										size={24}
+										onClick={() => {
+											props.currentQuestionController('next')
+											setShowAns(false)
+										}}>
+										<IconMdiArrowLeft/>
+									</Button>
+								</Tooltip>
+							)}
+						</AnimatePresence>
+					</Col>
+				)}
 			</Row>
 
 
@@ -112,4 +133,10 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 		</Col>
 	)
 }
+
+
+QuestionAnswer.defaultProps = {
+	hasNavigation: false,
+}
+
 export default QuestionAnswer
