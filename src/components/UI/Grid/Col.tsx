@@ -18,10 +18,9 @@ const Col = styled(motion.div)(({ grid, center, cols, justify, align }: ColProps
 	css`
 		display: flex;
 		flex-direction: column;
+		justify-content: ${justify};
+		align-items: ${align};
 	`,
-
-	align && css`justify-content: ${justify};`,
-	justify && css`align-items: ${align};`,
 
 	!grid && !!cols && css`
 		flex: ${cols};

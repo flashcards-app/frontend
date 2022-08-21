@@ -107,8 +107,6 @@ TextArea.defaultProps = {
 	persistentLabel: false,
 	value:           undefined,
 	error:           false,
-	dark:            undefined,
-	minHeight:       undefined,
 	helperText:      undefined,
 	label:           undefined,
 }

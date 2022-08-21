@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react'
+import * as React from 'react'
 
 import {
 	useRoutes,
@@ -20,10 +20,8 @@ const App = () => {
 		<ErrorsBoundary>
 			<Providers>
 				<RecoilRoot>
-					<StrictMode>
-						<ReloadPrompt/>
-						<Pages/>
-					</StrictMode>
+					<ReloadPrompt/>
+					<Pages/>
 				</RecoilRoot>
 			</Providers>
 		</ErrorsBoundary>

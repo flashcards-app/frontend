@@ -99,6 +99,7 @@ export default defineConfig({
 
 		// https://github.com/antfu/vite-plugin-pwa
 		VitePWA({
+			base:         '/',
 			registerType: 'autoUpdate',
 			includeAssets: [
 				'favicon.svg',
@@ -107,7 +108,9 @@ export default defineConfig({
 				'apple-touch-icon.png'
 			],
 			devOptions: {
-				enabled:          true
+				enabled:          true,
+				type:             'module',
+				navigateFallback: 'index.html'
 			},
 			manifest:      {
 				theme_color: '#ffffff',

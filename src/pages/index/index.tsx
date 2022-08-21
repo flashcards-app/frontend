@@ -40,7 +40,6 @@ export default () => {
 				align="center"
 				cols={1}>
 				<Typography className="mt-8"
-				            centered
 				            color={windowWidth < theme.screens.md ? theme.colors.white : undefined}
 				            semiBold
 				            as="h1">

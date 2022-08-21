@@ -1,37 +1,33 @@
 import { useEffect, useState } from "react"
 
 import { useNavigate, useParams } from "react-router"
-import { userQuestionsEndpoint } from "services"
+import { questionsEndpoint } from "services"
 
 import QueryHandler from "../../../components/ReactQuery/QueryHandler"
 import QuestionAnswer from "../../../components/Subject/QuestionAnswer"
 import { Button, Col, Row, Typography, Tooltip, theme } from "../../../components/UI"
 import usePagination from "../../../hooks/usePagination"
-import { useQueryClient } from "react-query"
-import { DisplayIn, displayInOptions } from "../../../modules/Entities/UserQuestion"
 
 
 export default () => {
-	const queryClient = useQueryClient()
 	const navigate    = useNavigate()
 	const { subject } = useParams()
 
-	const { page, perPage } = usePagination({ initialPerPage: 1 })
-	const { data, status }  = userQuestionsEndpoint.list(subject as string, page, perPage)
+	const { page, setPage, perPage } = usePagination({ initialPerPage: 1 })
+	const { data, status }           = questionsEndpoint.get(subject as string, page, perPage)
 
 	const [showAns, setShowAns] = useState(false)
 
-	const currentQuestionController = async (action: 'next' | 'back', displayIn: DisplayIn) => {
+
+	const currentQuestionController = (action: 'next' | 'back') => {
 		if (data && data[0] && action === 'next') {
-			await userQuestionsEndpoint.add({ questionId: data[0].id, displayIn })
-			await queryClient.invalidateQueries(`user-questions-${subject}-page-${page}-perPage-${perPage}`)
-			setShowAns(false)
+			setPage(page + 1)
+		}
+
+		if (action === 'back' && page > 1) {
+			setPage(page - 1)
 		}
 	}
-
-	useEffect(() => {
-		(async () => await queryClient.invalidateQueries(`user-questions-${subject}-page-${page}-perPage-${perPage}`))()
-	}, [])
 
 
 	return (
@@ -63,13 +59,13 @@ export default () => {
 					<Col className="h-full">
 						<QueryHandler status={status}>
 							{data && data[0] ? (
-								<QuestionAnswer
-									currentQuestion={data[0]}
-									{...{
-										showAns,
-										page,
-										setShowAns,
-									}}/>
+								<QuestionAnswer {...{
+									currentQuestionController,
+									currentQuestion: data[0],
+									showAns,
+									page,
+									setShowAns,
+								}}/>
 							) : (
 								<Row className="w-full justify-center text-center">
 									<Typography color={theme.colors.gray_400} as="h5">אין שאלות נוספות</Typography>
@@ -77,18 +73,6 @@ export default () => {
 							)}
 						</QueryHandler>
 					</Col>
-
-					<Row className="px-6 pb-3 w-full" justify="space-between">
-						{showAns && displayInOptions.map(({ label, value }) => (
-							<Col className="px-2"
-							     key={value}
-							     cols={displayInOptions.length}>
-								<Button
-									onClick={() => currentQuestionController('next', value)}
-									className="w-full h-full">{label}</Button>
-							</Col>
-						))}
-					</Row>
 				</Col>
 			</Col>
 		</Row>

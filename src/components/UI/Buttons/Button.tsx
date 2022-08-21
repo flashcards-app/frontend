@@ -37,7 +37,6 @@ const Button = styled(motion.button)(({ icon, height, size, width, fab, centered
 	css`
 		color: ${theme.colors.gray_900};
 		background-color: ${theme.colors.gray_200};
-		transition: color 300ms ease-in-out;
 
 		&:hover {
 			background-color: ${theme.colors.light_700};

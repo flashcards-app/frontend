@@ -24,7 +24,7 @@ export default class Questions extends ApiUrlService {
 		}
 	}
 
-	list(subject: string, page = 1, perPage = 30) {
+	get(subject: string, page = 1, perPage = 30) {
 		return useQuery<QuestionGetResult[]>(`questions-${subject}-page-${page}-perPage-${perPage}`, async () => {
 			const { data } = await http.get(`${this.endpoint}${this.buildUrlParams({ subject, page, perPage })}`, TokenStorage.getAuthentication())
 			return data

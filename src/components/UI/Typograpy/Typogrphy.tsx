@@ -11,15 +11,12 @@ interface TypographyProps {
 	semiBold?: boolean
 	color?: string | undefined
 	dark?: boolean
-	centered?: boolean
 }
 
-const Typography = styled.div(({ as, bold, semiBold, color, dark, centered }: TypographyProps) => [
+const Typography = styled.div(({ as, bold, semiBold, color, dark }: TypographyProps) => [
 	color && css`
 		color: ${color};
 	`,
-
-	centered && tw`text-center`,
 
 	as === "h1" && tw`text-5xl`,
 	as === "h2" && tw`text-4xl`,
