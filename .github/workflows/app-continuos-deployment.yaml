@@ -21,6 +21,6 @@ jobs:
           deliverables: app.yaml
           project_id: ${{ secrets.PROJECT_GCP_ID }}
           credentials: ${{ secrets.PROJECT_GCP_KEY }}
-          promote: true
+          promote: false
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
