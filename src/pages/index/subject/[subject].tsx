@@ -8,7 +8,7 @@ import QuestionAnswer from "../../../components/Subject/QuestionAnswer"
 import { Button, Col, Row, Typography, Tooltip, theme } from "../../../components/UI"
 import usePagination from "../../../hooks/usePagination"
 import { useQueryClient } from "react-query"
-import { DisplayIn, displayInOptions } from "../../../modules/Entities/UserQuestion"
+import { DisplayIn, difficultyOptions, colorForDifficulty } from "../../../modules/Entities/UserQuestion"
 
 
 export default () => {
@@ -38,9 +38,12 @@ export default () => {
 		<Row {...theme.animations.fadeInOut}
 		     className="w-full h-full justify-center">
 			<Col className="h-full justify-between text-center w-[700px] lg:pt-10 xs:pt-4">
+
 				<Col>
-					<Row className="lg:pb-10 xs:pb-3 px-4 justify-around">
+					<Row className="lg:pb-10 xs:pb-2 px-4 justify-around">
+
 						<Col cols={1}>
+
 							<Tooltip tooltip="חזרה לבחירת נושא" placement="bottom-center">
 								<Button
 									fab
@@ -49,46 +52,67 @@ export default () => {
 									onClick={() => navigate('/subject')}>
 									<IconMdiArrowRight/>
 								</Button>
+
 							</Tooltip>
 						</Col>
+
 						<Col cols={10}>
+
 							<Typography as="h2" className="h-full">
 								{`תרגול - ${subject}`}
+
 							</Typography>
 						</Col>
+
 						<Col cols={1}/>
 					</Row>
 
 
 					<Col className="h-full">
+
 						<QueryHandler status={status}>
+
 							{data && data[0] ? (
-								<QuestionAnswer
-									currentQuestion={data[0]}
-									{...{
-										showAns,
-										page,
-										setShowAns,
-									}}/>
-							) : (
-								<Row className="w-full justify-center text-center">
-									<Typography color={theme.colors.gray_400} as="h5">אין שאלות נוספות</Typography>
-								</Row>
-							)}
+									<QuestionAnswer
+										currentQuestion={data[0]}
+										{...{
+											showAns,
+											page,
+											setShowAns,
+										}}/>
+								)
+								:
+								(
+									<Row className="w-full justify-center text-center">
+										<Typography color={theme.colors.gray_400} as="h5">אין שאלות נוספות</Typography>
+									</Row>
+								)}
 						</QueryHandler>
+
 					</Col>
 
 					<Row className="px-6 pb-3 w-full" justify="space-between">
-						{showAns && displayInOptions.map(({ label, value }) => (
+
+						{showAns && difficultyOptions.map(({ label, value }) => (
+
 							<Col className="px-2"
 							     key={value}
-							     cols={displayInOptions.length}>
+							     cols={difficultyOptions.length}>
+
 								<Button
 									onClick={() => currentQuestionController('next', value)}
-									className="w-full h-full">{label}</Button>
+									dark
+									colorsForStates={colorForDifficulty[value]}
+									className="w-full h-full">
+									{label}
+								</Button>
+
 							</Col>
+
 						))}
+
 					</Row>
+
 				</Col>
 			</Col>
 		</Row>

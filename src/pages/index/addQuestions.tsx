@@ -53,9 +53,14 @@ export default () => {
 		<Col
 			{...theme.animations.fadeInOut}
 			className="h-full w-full mx-auto lg:px-[20%] sm:px-[50px] xs:px-[30px] pt-5">
+
 			<Row className="pb-10 justify-around">
 				<Col cols={1}>
-					<Tooltip tooltip="לדף הראשי" placement="bottom-center">
+
+					<Tooltip
+						tooltip="לדף הראשי"
+						placement="bottom-center">
+
 						<Button
 							fab
 							icon
@@ -63,13 +68,18 @@ export default () => {
 							onClick={() => navigate('/')}>
 							<IconMdiArrowRight/>
 						</Button>
+
 					</Tooltip>
+
 				</Col>
+
 				<Col cols={10}>
-					<Typography as="h2" className="h-full text-center">
+					<Typography as="h2"
+					            className="h-full text-center">
 						הוספת שאלה
 					</Typography>
 				</Col>
+
 				<Col cols={1}/>
 			</Row>
 
@@ -77,6 +87,7 @@ export default () => {
 				ref={formRef}
 				className="flex-col pb-36 my-auto"
 				onSubmit={formik.handleSubmit}>
+
 				<Select
 					wrapperProps={{ ...theme.animations.fadeInOut, className: "w-full" }}
 					id="subject"
@@ -84,11 +95,13 @@ export default () => {
 					options={subjects ? subjects.map(({ label, title: value }) => ({ label, value })) : []}
 					placeholder="בחר נושא"
 					value={formik.values.subject}
-					onChange={async (value) => formik.setFieldValue("subject", value.value)}
+					onChange={
+						(value) => formik.setFieldValue("subject", value.value)}
 					isLoading={!subjects}
 					onBlur={async () => formik.validateField('subject')}
 					error={!!formik.errors.subject}
 					helperText={formik.errors.subject}/>
+
 				<TextArea
 					id="question"
 					label="שאלה"
@@ -110,9 +123,13 @@ export default () => {
 					error={!!formik.errors.answer}/>
 
 				<div className="flex justify-center">
-					<Button type="submit" disabled={!formik.isValid}>
+					<Button
+						width={200}
+						type="submit"
+						disabled={!formik.isValid}>
 						שמירה
 					</Button>
+
 				</div>
 			</form>
 		</Col>
