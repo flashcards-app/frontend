@@ -19,7 +19,9 @@ export default () => {
 
 				<Col className="h-full text-center w-[700px] pt-10">
 					<Row className="pb-10 justify-around px-4">
+
 						<Col cols={1}>
+
 							<Tooltip tooltip="לדף הראשי" placement="bottom-center">
 								<Button
 									fab
@@ -29,24 +31,32 @@ export default () => {
 									<IconMdiArrowRight/>
 								</Button>
 							</Tooltip>
+
 						</Col>
+
 						<Col cols={10}>
+
 							<Typography as="h1" className="h-full text-center">
 								בחר נושא
 							</Typography>
+
 						</Col>
+
 						<Col cols={1}/>
 					</Row>
 
 					<Row className="justify-around pt-20">
 						{data?.map((subject) => (
 							<Button
+								className="mx-4"
 								onClick={() => navigate(`${subject.title}`)}
+								width={'100%'}
 								key={subject.id}>
 								{subject.label}
 							</Button>
 						))}
 					</Row>
+
 				</Col>
 			</Row>
 		</QueryHandler>

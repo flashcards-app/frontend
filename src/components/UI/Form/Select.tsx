@@ -26,11 +26,11 @@ const DropdownIndicator = (props: DropdownIndicatorProps<any>) => {
 		<components.DropdownIndicator {...props}>
 			<div className={css`
 				${[
-			theme.transitions([transformTransition('300ms')]),
-			theme.transforms([
-				conditionalRotate(isFocused, 180),
-			]),
-		]}
+					theme.transitions([transformTransition('300ms')]),
+					theme.transforms([
+						conditionalRotate(isFocused, 180),
+					]),
+				]}
 			`}>
 				<IconIonChevronDown/>
 			</div>
@@ -43,7 +43,7 @@ const LoadingIndicator = (props: LoadingIndicatorProps) => {
 		<components.LoadingIndicator
 			{...props}
 			theme={produce(props.theme, (draft) => {
-				draft.colors.neutral20   = theme.colors.gray_400
+				draft.colors.neutral20 = theme.colors.gray_400
 			})}/>
 	)
 }
@@ -79,7 +79,7 @@ const Control = (props: ControlProps<any>) => {
 			                    `}
 		                    `}
 		                    theme={produce(props.theme, (draft) => {
-			                    draft.borderRadius     = 8
+			                    draft.borderRadius     = 5
 			                    draft.colors.primary   = theme.colors.gray_300
 			                    draft.colors.neutral20 = theme.colors.gray_200
 			                    draft.colors.neutral30 = theme.colors.gray_200
