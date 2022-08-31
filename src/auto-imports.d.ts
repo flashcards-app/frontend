@@ -6,7 +6,6 @@ declare global {
   const IconCarbonLight: typeof import('~icons/carbon/light.jsx')['default']
   const IconCarbonMoon: typeof import('~icons/carbon/moon.jsx')['default']
   const IconIonChevronDown: typeof import('~icons/ion/chevron-down.jsx')['default']
-  const IconMdiArrowLeft: typeof import('~icons/mdi/arrow-left.jsx')['default']
   const IconMdiArrowRight: typeof import('~icons/mdi/arrow-right.jsx')['default']
   const IconMdiLogout: typeof import('~icons/mdi/logout.jsx')['default']
   const http: typeof import('axios')['default']

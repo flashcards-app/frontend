@@ -12,3 +12,6 @@ dist-ssr
 coverage
 cypress/screenshots
 cypress/videos
+
+# Local Netlify folder
+.netlify/state.json
