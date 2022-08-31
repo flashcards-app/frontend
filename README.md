@@ -31,7 +31,7 @@ For small issues, like a typo or broken link, use Github's inline file editor or
 
 For more complex contributions, like new features, you should work on the project on your local system. 
 
-First, follow the steps in [Running the project](#Running the project).
+First, follow the steps in [Running the project](https://github.com/flashcards-app/frontend#running-the-project).
 
 ```shell
 git checkout -b my-fix
