@@ -42,15 +42,15 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 	}, [actionsRowRef])
 
 	return (
-		<Col ref={colRef}>
-			<Col className="pt-2" center>
+		<Col className="h-full" ref={colRef}>
+			<Col className="h-full pt-2" center>
 
 				<Label className="text-center mx-auto">
 					שאלה
 				</Label>
 
-				<Row className="w=full px-4 py-2">
-					<Card className="flex justify-center items-center w-full h-[180px]">
+				<Row className="w=full h-full px-4 py-2">
+					<Card className="flex justify-center items-center w-full h-full">
 						<p>
 							{currentQuestion.question}
 						</p>
@@ -118,12 +118,12 @@ const QuestionAnswer = (props: QuestionAnswerProps) => {
 
 
 			{showAns && (
-				<Col className="pt-2">
+				<Col className="pt-2 h-full">
 					<Label className="text-center mx-auto">
 						תשובה
 					</Label>
-					<Row className="w=full p-4 pt-2">
-						<Card className="flex justify-center items-center w-full h-[180px]">
+					<Row className="w=full p-2 pt-2 h-full">
+						<Card className="flex justify-center items-center w-full h-full">
 							<p>
 								{currentQuestion.answer}
 							</p>

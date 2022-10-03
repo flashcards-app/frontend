@@ -45,10 +45,12 @@ export default () => {
 						<Col cols={1}/>
 					</Row>
 
-					<Row className="justify-around pt-20">
+					<Row
+						dir="ltr"
+						className="px-2 pt-20 gap-y-6 justify-around flex-wrap gap-x-3">
 						{data?.map((subject) => (
 							<Button
-								className="mx-4"
+								className="py-2 px-8 w-fit max-w-[200px] flex-[3] whitespace-nowrap"
 								onClick={() => navigate(`${subject.title}`)}
 								width={'100%'}
 								key={subject.id}>
