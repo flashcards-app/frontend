@@ -5,7 +5,7 @@ import { userQuestionsEndpoint } from "services"
 
 import QueryHandler from "../../../components/ReactQuery/QueryHandler"
 import QuestionAnswer from "../../../components/Subject/QuestionAnswer"
-import { Button, Col, Row, Typography, Tooltip, theme } from "../../../components/UI"
+import { Button, Col, Row, Typography, Tooltip, theme, Label } from "../../../components/UI"
 import usePagination from "../../../hooks/usePagination"
 import { useQueryClient } from "react-query"
 import { DisplayIn, difficultyOptions, colorForDifficulty } from "../../../modules/Entities/UserQuestion"
@@ -36,10 +36,10 @@ export default () => {
 
 	return (
 		<Row {...theme.animations.fadeInOut}
-		     className="w-full h-full justify-center">
+		     className="w-full h-full justify-center pb-4">
 			<Col className="h-full justify-between text-center w-[700px] lg:pt-10 xs:pt-4">
 
-				<Col>
+				<Col className="h-full">
 					<Row className="lg:pb-10 xs:pb-2 px-4 justify-around">
 
 						<Col cols={1}>
@@ -90,29 +90,35 @@ export default () => {
 						</QueryHandler>
 
 					</Col>
+					{showAns && (
+						<Col>
+							<Label className="text-center mx-auto pb-1">
+								הצג שוב בעוד:
+							</Label>
+							<Row className="flex-wrap gap-y-4 px-6 pb-3 w-full" justify="space-between">
 
-					<Row className="px-6 pb-3 w-full" justify="space-between">
+								{difficultyOptions.map(({ label, value }) => (
 
-						{showAns && difficultyOptions.map(({ label, value }) => (
+									<Col className="px-2"
+									     key={value}
+									     cols={difficultyOptions.length}>
 
-							<Col className="px-2"
-							     key={value}
-							     cols={difficultyOptions.length}>
+										<Button
+											onClick={() => currentQuestionController('next', value)}
+											dark
+											colorsForStates={colorForDifficulty[value]}
+											className="w-full h-full whitespace-nowrap">
+											{label}
+										</Button>
 
-								<Button
-									onClick={() => currentQuestionController('next', value)}
-									dark
-									colorsForStates={colorForDifficulty[value]}
-									className="w-full h-full">
-									{label}
-								</Button>
+									</Col>
 
-							</Col>
+								))}
 
-						))}
+							</Row>
 
-					</Row>
-
+						</Col>
+					)}
 				</Col>
 			</Col>
 		</Row>
