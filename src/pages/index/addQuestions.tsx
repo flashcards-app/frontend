@@ -8,6 +8,7 @@ import * as Yup from "yup"
 import { Col, Row, Typography, Tooltip, Select, Button, TextArea, theme } from "../../components/UI"
 import Question from "../../modules/Entities/Question"
 import { questionsEndpoint, subjectsEndpoint } from "../../services"
+import Subject from "../../modules/Entities/Subject"
 
 
 export default () => {
@@ -89,7 +90,13 @@ export default () => {
 				onSubmit={formik.handleSubmit}>
 
 				<Select
+					createable
 					wrapperProps={{ ...theme.animations.fadeInOut, className: "w-full" }}
+					onCreateOption={async (value) => {
+						await subjectsEndpoint.create(new Subject({ label: value }))
+						await subjectsQuery.refetch()
+					}}
+					isSearchable
 					id="subject"
 					label="נושא"
 					options={subjects ? subjects.map(({ label, title: value }) => ({ label, value })) : []}

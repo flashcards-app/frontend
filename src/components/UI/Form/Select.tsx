@@ -9,6 +9,7 @@ import Select, {
 	defaultTheme, ControlProps, components, DropdownIndicatorProps, SingleValueProps, ContainerProps, MenuProps, Props, OptionProps,
 	LoadingIndicatorProps,
 } from "react-select"
+import CreatableSelect from 'react-select/creatable'
 import tw from "twin.macro"
 
 import { isDark } from '..'
@@ -17,6 +18,7 @@ import { transformTransition } from "../Utils/transitions"
 import { conditionalRotate } from "../Utils/utils"
 import HelperText from "./HelperText"
 import Label from "./Label"
+import { CreatableAdditionalProps } from "react-select/dist/declarations/src/useCreatable"
 
 
 const DropdownIndicator = (props: DropdownIndicatorProps<any>) => {
@@ -147,6 +149,7 @@ const Menu = (props: MenuProps) => {
 
 interface SelectProps extends Omit<Props, 'isRtl' | 'onChange'> {
 	label?: string
+	createable?: boolean
 	persistentLabel?: boolean
 	dir?: "rtl" | "ltr"
 	disableLabel?: boolean
@@ -158,11 +161,13 @@ interface SelectProps extends Omit<Props, 'isRtl' | 'onChange'> {
 	onChange?: (value: { label: string, value: string }) => void
 	helperText?: string | FormikErrors<any>
 	wrapperProps?: HTMLMotionProps<"div">
+	onCreateOption?: (inputValue: string) => void;
 }
 
 const SelectWithLabel = (props: SelectProps) => {
 	const {
 		      label,
+		      createable,
 		      dir,
 		      className,
 		      placeholder,
@@ -228,37 +233,83 @@ const SelectWithLabel = (props: SelectProps) => {
 					${(!disableLabel && !!label && ((isFocused || !!value) || persistentLabel)) ? tw`mt-0` : tw`mt-6`}
 					${!disableHelperText && !!helperText ? tw`mb-0` : tw`mb-6`}
 				`} ${clsx(className)}`}>
-				<Select blurInputOnSelect
-				        {...restProps}
-				        isSearchable={false}
-				        placeholder={(placeholder || !isFocused) && (label)}
-				        onFocus={(event) => {
-					        setIsFocused(true)
-					        if (onFocus) {
-						        onFocus(event)
-					        }
-				        }}
-				        onBlur={() => {
-					        setIsFocused(false)
-				        }}
-				        onChange={(value) => !!onChange && onChange(value as { label: string, value: string })}
-				        isRtl={dir && dir === "rtl"}
-				        theme={produce(defaultTheme, (draft) => {
-					        if (isDark()) {
-						        draft.colors.primary   = theme.colors.dark_400
-						        draft.colors.primary50 = theme.colors.dark_300
-						        draft.colors.primary25 = theme.colors.dark_100
-					        }
-				        })}
-				        components={{
-					        DropdownIndicator,
-					        Option,
-					        Control,
-					        SingleValue,
-					        SelectContainer,
-					        LoadingIndicator,
-					        Menu,
-				        }}/>
+				{createable ? (
+					<CreatableSelect
+						blurInputOnSelect
+						{...restProps}
+						placeholder={(placeholder || !isFocused) && (label)}
+						onFocus={(event) => {
+							setIsFocused(true)
+							if (onFocus) {
+								onFocus(event)
+							}
+						}}
+						styles={{
+							input: (provided) => ({
+								...provided,
+								color: isDark() ? theme.colors.gray_200 : theme.colors.dark_800,
+							})
+						}}
+						onBlur={() => {
+							setIsFocused(false)
+						}}
+						onChange={(value) => !!onChange && onChange(value as { label: string, value: string })}
+						isRtl={dir && dir === "rtl"}
+						theme={produce(defaultTheme, (draft) => {
+							if (isDark()) {
+								draft.colors.primary   = theme.colors.dark_400
+								draft.colors.primary50 = theme.colors.dark_300
+								draft.colors.primary25 = theme.colors.dark_100
+							}
+						})}
+						components={{
+							DropdownIndicator,
+							Option,
+							Control,
+							SingleValue,
+							SelectContainer,
+							LoadingIndicator,
+							Menu,
+						}}/>
+				) : (
+					<Select
+						blurInputOnSelect
+						{...restProps}
+						placeholder={(placeholder || !isFocused) && (label)}
+						onFocus={(event) => {
+							setIsFocused(true)
+							if (onFocus) {
+								onFocus(event)
+							}
+						}}
+						styles={{
+							input: (provided) => ({
+								...provided,
+								color: isDark() ? theme.colors.gray_200 : theme.colors.dark_800,
+							})
+						}}
+						onBlur={() => {
+							setIsFocused(false)
+						}}
+						onChange={(value) => !!onChange && onChange(value as { label: string, value: string })}
+						isRtl={dir && dir === "rtl"}
+						theme={produce(defaultTheme, (draft) => {
+							if (isDark()) {
+								draft.colors.primary   = theme.colors.dark_400
+								draft.colors.primary50 = theme.colors.dark_300
+								draft.colors.primary25 = theme.colors.dark_100
+							}
+						})}
+						components={{
+							DropdownIndicator,
+							Option,
+							Control,
+							SingleValue,
+							SelectContainer,
+							LoadingIndicator,
+							Menu,
+						}}/>
+				)}
 			</motion.div>
 			{!disableHelperText && helperText && (
 				<HelperText
