@@ -83,6 +83,14 @@ body {
 	height: 4px;
 }
 
+input {
+	@apply ring-offset-0 ring-0
+}
+
+input {
+	--tw-ring-shadow: 0 0 #000 !important;
+}
+
 /*.btn {*/
 /*    @apply px-4 py-1 rounded inline-block*/
 /*    bg-teal-600 text-white cursor-pointer*/
